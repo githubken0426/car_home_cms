@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+	<package name="group" extends="globalResult">
+		
+		<!-- 用户组 -->
+		<action name="group_*" class="com.gtercn.carhome.cms.action.GroupAction" method="{1}">
+			<result name="groupList">/jsp/group/groupList.jsp</result>
+			<result name="index" >/jsp/index.jsp</result>
+			<result name="addPage">/jsp/group/groupAdd.jsp</result>
+			<result name="updatePage">/jsp/group/groupUpdate.jsp</result>
+			
+			<interceptor-ref name="authrity"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+	</package>
+</struts>    

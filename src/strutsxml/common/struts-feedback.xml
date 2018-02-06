@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="feedback" extends="globalResult">
+		<!-- feedback : 意见反馈-->
+		<action name="feedback_*" class="com.gtercn.carhome.cms.action.FeedbackAction" method="{1}">
+			<result name="list"  >/jsp/feedback/list.jsp</result>
+			<result name="add"   >/jsp/feedback/add.jsp</result>
+			<result name="update">/jsp/feedback/update.jsp</result>
+		</action>
+	</package>
+</struts>    

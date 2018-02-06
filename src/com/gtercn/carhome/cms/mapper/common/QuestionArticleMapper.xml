@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.QuestionArticleMapper">
+	<sql id="Base_Column_List">
+		id, user_id, type, title, support_number, favor_number,
+		glance_number,introduction,
+		content, res_url_list,
+		html_url, delete_flag,city_code,
+		insert_time, update_time
+  </sql>
+	<!-- 查询所有文章 -->
+	<!-- <![CDATA[ right(left(content,position('</' in content)-1),position('>' in content)) as content,]]>  -->
+	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.QuestionArticle" parameterType="java.util.Map">
+		select id,
+		(select expert_name from tb_expert_top u where u.user_id=q.user_id) as user_id,
+		type, title, support_number, favor_number,glance_number,content,introduction,
+		res_url_list,html_url, delete_flag,insert_time, update_time
+		from tb_question_and_article q
+		<where>
+			type=#{type} and city_code=#{cityCode}
+			<if test="expertName!=null and expertName!=''">
+				and (select expert_name from tb_expert_top u where u.user_id=q.user_id) like '%${expertName}%'
+			</if>
+			<if test="title!=null and title!=''">
+				and q.title like '%${title}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				and delete_flag = #{deleteFlag}
+			</if>
+		</where>
+		order by q.insert_time desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有问题 -->
+	<select id="queryAllQuestionData" resultType="com.gtercn.carhome.cms.entity.QuestionArticle" parameterType="java.util.Map">
+		select id,
+		(select nickname from tc_user u where u.user_id=q.user_id) as nickName,
+		(select login_phone from tc_user u where u.user_id=q.user_id) as loginPhone,
+		(select count(1) from tb_reply r where r.reference_id=q.id and type_id=0 ) as replyNum,
+		type,content,delete_flag,insert_time, update_time
+		from tb_question_and_article q
+		<where>
+			type=#{type}
+			<if test="questionTitle!=null and questionTitle!=''">
+				and q.content like '%${questionTitle}%'
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				and delete_flag=#{deleteFlag,jdbcType=VARCHAR}
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+		order by q.insert_time desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from tb_question_and_article q
+		<where>
+			type=#{type}
+			<if test="expertName!=null and expertName!=''">
+				and (select expert_name from tb_expert_top u where u.user_id=q.user_id) like '%${expertName}%'
+			</if>
+			<if test="title!=null and title!=''">
+				and q.title like '%${title}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				and delete_flag = #{deleteFlag}
+			</if>
+		</where>
+	</select>
+
+   <!-- 插入数据 -->
+	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.write.WriteQuestionArticle">
+		insert into tb_question_and_article 
+			(id, user_id, type,title, support_number,favor_number,
+			glance_number,introduction,content, res_url_list,city_code,
+			html_url,delete_flag, insert_time,update_time)
+		values 
+			(#{id,jdbcType=VARCHAR},
+			#{userId,jdbcType=VARCHAR},
+			#{type,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},0,0,0,
+			#{introduction,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR},
+			#{resUrlList,jdbcType=VARCHAR},
+			#{cityCode,jdbcType=VARCHAR},
+			#{htmlUrl,jdbcType=VARCHAR}, 0,
+			now(),now())
+	</insert>
+	<!-- 修改文章 -->
+	<update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.write.WriteQuestionArticle">
+		update tb_question_and_article
+		set 
+			user_id = #{userId,jdbcType=VARCHAR},
+			title = #{title,jdbcType=VARCHAR},
+			res_url_list=#{resUrlList,jdbcType=VARCHAR},
+			introduction=#{introduction,jdbcType=VARCHAR},
+			content = #{content,jdbcType=VARCHAR},
+			html_url = #{htmlUrl,jdbcType=VARCHAR},
+			delete_flag = #{deleteFlag,jdbcType=INTEGER},
+			update_time = now()
+		where 
+			id = #{id,jdbcType=VARCHAR} 
+			and type = #{type,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 修改问题 -->
+	<update id="updateQuestionById" parameterType="com.gtercn.carhome.cms.entity.write.WriteQuestionArticle">
+		update tb_question_and_article
+		set 
+			content = #{content,jdbcType=VARCHAR},
+			res_url_list = #{resUrlList,jdbcType=VARCHAR},
+			delete_flag = #{deleteFlag,jdbcType=INTEGER},
+			update_time = now()
+		where 
+			id = #{id,jdbcType=VARCHAR} 
+			and type = #{type,jdbcType=INTEGER}
+	</update>
+	
+	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.QuestionArticle"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tb_question_and_article
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<!-- 问题主键查询 -->
+	<select id="selectQuestionByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.QuestionArticle"
+		parameterType="java.lang.String">
+		select id,
+		(select nickname from tc_user u where u.user_id=q.user_id) as nickName,
+		(select login_phone from tc_user u where u.user_id=q.user_id) as loginPhone,
+		(select count(1) from tb_reply r where r.reference_id=q.id and type_id=0 ) as replyNum,
+		res_url_list,type,content,delete_flag,insert_time, update_time
+		from tb_question_and_article q
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="deleteByPrimaryKey" parameterType="java.lang.String">
+		update tb_question_and_article
+		set delete_flag=1
+		where id = #{id,jdbcType=VARCHAR}
+  </update>	
+  
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="dealerUser" extends="globalResult">
+		<!-- dealerUser : 经销商表-->
+		<action name="dealerUser_*" class="com.gtercn.carhome.cms.action.DealerUserAction" method="{1}">
+			<result name="list"  >/jsp/dealerUser/list.jsp</result>
+			<result name="add"   >/jsp/dealerUser/add.jsp</result>
+			<result name="update">/jsp/dealerUser/update.jsp</result>
+			<result name="changePwdPage">/jsp/dealerUser/changePassword.jsp</result>
+			<result name="updatepwd">/jsp/dealerUser/changePwd.jsp</result>
+		</action>
+	</package>
+</struts>    

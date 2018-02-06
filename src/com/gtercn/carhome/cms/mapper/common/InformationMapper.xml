@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.InformationMapper" >
+  <sql id="Base_Column_List" >
+    id, title, introduction,content, resource, picture_list,html_url, delete_flag, insert_time, update_time
+  </sql>
+  
+  <!-- 查询所有数据 -->
+  <select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.Information" parameterType="java.util.Map">
+    select id, title,introduction, content, resource, picture_list,html_url,delete_flag,
+    (select count(0) from tb_favor where favor_id=i.id and favor_type=4 and delete_flag=0) as favorCount,
+    insert_time,update_time 
+	from tb_information i 
+	<where>
+		<if test="title!=null and title!=''">
+			i.title like '%${title}%'
+		</if>
+		<if test="beginTime!=null and beginTime!=''">
+			and DATE_FORMAT(i.insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			and DATE_FORMAT(i.insert_time,'%Y-%m-%d')&lt;=#{endTime}
+		</if>
+		<if test="deleteFlag!=null and deleteFlag!=''">
+			and i.delete_flag=#{deleteFlag,jdbcType=VARCHAR}
+		</if>
+	</where>
+	order by i.insert_time desc
+  </select>
+  
+  <select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+	select count(1) from tb_information i
+	<where>
+		<if test="title!=null and title!=''">
+			i.title like '%${title}%'
+		</if>
+		<if test="beginTime!=null and beginTime!=''">
+			and DATE_FORMAT(i.insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			and DATE_FORMAT(i.insert_time,'%Y-%m-%d')&lt;=#{endTime}
+		</if>
+		<if test="deleteFlag!=null and deleteFlag!=''">
+			and i.delete_flag=#{deleteFlag,jdbcType=VARCHAR}
+		</if>
+	</where>
+ </select>
+ 
+  <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.Information" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List" />  from tb_information
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    update tb_information set delete_flag=1
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.Information" >
+    insert into tb_information (id, title,introduction, content, 
+      resource, picture_list, html_url,delete_flag, 
+      insert_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{resource,jdbcType=VARCHAR}, #{pictureList,jdbcType=VARCHAR},#{htmlUrl,jdbcType=VARCHAR},
+       #{deleteFlag,jdbcType=INTEGER}, now(),now())
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.Information" >
+    update tb_information
+    set title = #{title,jdbcType=VARCHAR},
+      introduction=#{introduction,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      html_url = #{htmlUrl,jdbcType=VARCHAR},
+      resource = #{resource,jdbcType=VARCHAR},
+      picture_list = #{pictureList,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      update_time = now()
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

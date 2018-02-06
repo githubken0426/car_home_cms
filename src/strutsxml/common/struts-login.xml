@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+	<package name="login" extends="globalResult">
+		<!-- 登陆 -->
+		<action name="signin_*" class="com.gtercn.carhome.cms.action.LoginAction" method="{1}">
+			<result name="success" type="redirectAction">index</result>
+			<result name="input">/login.jsp</result>
+			<!--<result name="success1" type="redirectAction">index1</result>
+			<result name="input1">/logindeal.jsp</result>-->
+			<interceptor-ref name="authrity"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="index" class="com.gtercn.carhome.cms.action.LoginAction">
+			<result name="success">/jsp/index.jsp</result> 
+		</action>
+		<!--<action name="index1" class="com.gtercn.carhome.cms.action.LoginAction">
+			<result name="success">/jsp/indexdeal.jsp</result> 
+		</action>-->
+	</package>
+</struts>    

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.APIUserMapper" >
+	<!-- 前台注册用户相关 -->
+   <sql id="Base_Column_List" >
+	    user_id,  login_phone, password, real_name, nickname,sex, avatar_url,device_token, 
+	    device_type, sex,  delete_flag,  update_time, insert_time
+  </sql>
+  
+  	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.APIUser" parameterType="java.util.Map">
+		select <include refid="Base_Column_List" />,
+		(select count(1) from tb_expert_top e where e.user_id=u.user_id) as isExpert 
+		from tc_user u
+		<where>
+			<if test="loginPhone!=null and loginPhone!=''">
+				u.login_phone like '%${loginPhone}%'
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				and u.delete_flag=${deleteFlag}
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+		order by u.insert_time desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from tc_user u
+		<where>
+			<if test="loginPhone!=null and loginPhone!=''">
+				u.login_phone like '%${loginPhone}%'
+			</if>
+			<if test="deleteFlag!=null and deleteFlag!=''">
+				and u.delete_flag=${deleteFlag}
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+	</select>
+	
+  <!-- 查询账号是否存在 -->
+   <select id="getUserByLoginPhone" parameterType="java.util.Map" resultType="com.gtercn.carhome.cms.entity.APIUser">
+  		select * from tc_user 
+  		<where>
+  			login_phone=#{loginPhone}
+  			<if test="userId!=null and userId!=''">
+  				and user_id!=#{userId}
+  			</if>
+  		</where> 
+  </select>
+  
+   <!-- 主键查询 select <include refid="Base_Column_List"/> from tc_user -->
+   <select id="getUserById" resultType="com.gtercn.carhome.cms.entity.APIUser" parameterType="java.lang.String" >
+    select * from tc_user
+    where user_id = #{userId,jdbcType=VARCHAR} and delete_flag = 0
+  </select>
+  
+  <!--修改 -->
+  <update id="update" parameterType="com.gtercn.carhome.cms.entity.APIUser" >
+	update tc_user set login_phone=#{loginPhone,jdbcType=VARCHAR}, 
+      password= #{password,jdbcType=VARCHAR}, 
+      avatar_url=#{avatarUrl,jdbcType=VARCHAR},
+      nickname=#{nickname,jdbcType=VARCHAR},  
+      delete_flag= #{deleteFlag,jdbcType=INTEGER}, 
+      update_time=now(), insert_time=now()
+     where user_id=#{userId}
+  </update>
+  
+  <!-- 插入 -->
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.APIUser" >
+    insert into tc_user (user_id,login_phone, real_name,sex,
+      password, avatar_url,nickname, device_token, 
+      device_type, delete_flag, update_time, insert_time)
+    values (#{userId,jdbcType=VARCHAR},#{loginPhone,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR},#{avatarUrl,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{deviceToken,jdbcType=VARCHAR}, 
+      #{deviceType,jdbcType=INTEGER}, #{deleteFlag,jdbcType=INTEGER},now(), now())
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    update tc_user set delete_flage=1,update_time=now() where user_id=#{userId}
+  </delete>
+ 
+
+</mapper>

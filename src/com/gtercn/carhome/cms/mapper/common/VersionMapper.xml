@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.VersionMapper" >
+  <resultMap id="BaseResultMap" type="com.gtercn.carhome.cms.entity.Version" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="version_code" property="versionCode" jdbcType="INTEGER" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="min_code" property="minCode" jdbcType="INTEGER" />
+    <result column="min_version" property="minVersion" jdbcType="VARCHAR" />
+    <result column="min_content" property="minContent" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="system_bj" property="systemBj" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, version_code, version_name, content, url, min_code, min_version, min_content, 
+    state, system_bj
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tc_version
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tc_version
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.Version" >
+    insert into tc_version (id, version_code, version_name, 
+      content, url, min_code, 
+      min_version, min_content, state, 
+      system_bj)
+    values (#{id,jdbcType=VARCHAR}, #{versionCode,jdbcType=INTEGER}, #{versionName,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{minCode,jdbcType=INTEGER}, 
+      #{minVersion,jdbcType=VARCHAR}, #{minContent,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{systemBj,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gtercn.carhome.cms.entity.Version" >
+    insert into tc_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="versionCode != null" >
+        version_code,
+      </if>
+      <if test="versionName != null" >
+        version_name,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="minCode != null" >
+        min_code,
+      </if>
+      <if test="minVersion != null" >
+        min_version,
+      </if>
+      <if test="minContent != null" >
+        min_content,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="systemBj != null" >
+        system_bj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="versionCode != null" >
+        #{versionCode,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="minCode != null" >
+        #{minCode,jdbcType=INTEGER},
+      </if>
+      <if test="minVersion != null" >
+        #{minVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="minContent != null" >
+        #{minContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="systemBj != null" >
+        #{systemBj,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <!-- 更新版本 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.gtercn.carhome.cms.entity.Version" >
+    update tc_version
+    <set >
+      <if test="versionCode != null" >
+        version_code = #{versionCode,jdbcType=INTEGER},
+      </if>
+      <if test="versionName != null" >
+        version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="minCode != null" >
+        min_code = #{minCode,jdbcType=INTEGER},
+      </if>
+      <if test="minVersion != null" >
+        min_version = #{minVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="minContent != null" >
+        min_content = #{minContent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="systemBj != null" >
+        system_bj = #{systemBj,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.Version" >
+    update tc_version
+    set version_code = #{versionCode,jdbcType=INTEGER},
+      version_name = #{versionName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      min_code = #{minCode,jdbcType=INTEGER},
+      min_version = #{minVersion,jdbcType=VARCHAR},
+      min_content = #{minContent,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      system_bj = #{systemBj,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询所有信息 -->
+	<select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select 
+		<include refid="Base_Column_List" />
+		from tc_version
+		<where>
+			1 = 1
+			<if test="versionCode !=null and versionCode !=''">
+				and version_code = #{versionCode}
+			</if>
+			<if test="content !=null and content !=''">
+				and content LIKE '%${content}%'
+			</if>
+		</where> 
+		order by version_code desc limit #{beginResult},#{pageSize}
+	</select>
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1)
+		from tc_version
+		<where>
+		    1 = 1
+			<if test="versionCode !=null and versionCode !=''">
+				and version_code = #{versionCode}
+			</if>
+			<if test="content !=null and content !=''">
+				and content LIKE '%${content}%'
+			</if>
+		</where> 
+	</select>
+</mapper>

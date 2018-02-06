@@ -1,0 +1,461 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/repos/!svn/ver/19700/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib
+END
+proxool-0.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/proxool-0.9.1.jar
+END
+aopalliance.jar
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/aopalliance.jar
+END
+commons-jexl-2.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-jexl-2.0.jar
+END
+xmlbeans-2.6.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/xmlbeans-2.6.0.jar
+END
+javassist-3.11.0.GA.jar
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/javassist-3.11.0.GA.jar
+END
+struts2-core-2.2.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/struts2-core-2.2.3.jar
+END
+org.springframework.expression-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.expression-3.1.0.M1.jar
+END
+httpclient-4.1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/httpclient-4.1.2.jar
+END
+proxool-cglib.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/proxool-cglib.jar
+END
+commons-dbcp-1.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-dbcp-1.4.jar
+END
+commons-io-2.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-io-2.4.jar
+END
+poi-examples-3.14-20160307.jar
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-examples-3.14-20160307.jar
+END
+commons-pool-1.5.6.jar
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-pool-1.5.6.jar
+END
+httpcore-4.1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/httpcore-4.1.2.jar
+END
+struts2-json-plugin-2.2.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/struts2-json-plugin-2.2.3.jar
+END
+jxl.jar
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/jxl.jar
+END
+aspectjrt.jar
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/aspectjrt.jar
+END
+log4j-1.2.17.jar
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/log4j-1.2.17.jar
+END
+commons-codec-1.10.jar
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-codec-1.10.jar
+END
+pinyin4j-2.5.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19700/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/pinyin4j-2.5.0.jar
+END
+org.springframework.beans-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.beans-3.1.0.M1.jar
+END
+poi-ooxml-schemas-3.8-20120326.jar
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-ooxml-schemas-3.8-20120326.jar
+END
+freemarker-2.3.16.jar
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/freemarker-2.3.16.jar
+END
+ooxml-schemas-1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/ooxml-schemas-1.1.jar
+END
+org.springframework.context.support-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.context.support-3.1.0.M1.jar
+END
+commons-digester.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-digester.jar
+END
+curvesapi-1.03.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/curvesapi-1.03.jar
+END
+jstl-api-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/jstl-api-1.2.jar
+END
+poi-ooxml-3.8-20120326.jar
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-ooxml-3.8-20120326.jar
+END
+ezmorph-0.9.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/ezmorph-0.9.1.jar
+END
+fastjson-1.2.4.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/fastjson-1.2.4.jar
+END
+mysql-connector-java-5.1.7-bin.jar
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/mysql-connector-java-5.1.7-bin.jar
+END
+json-lib-2.4-jdk15.jar
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/json-lib-2.4-jdk15.jar
+END
+org.springframework.web-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.web-3.1.0.M1.jar
+END
+org.springframework.aop-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.aop-3.1.0.M1.jar
+END
+org.springframework.transaction-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.transaction-3.1.0.M1.jar
+END
+poi-scratchpad-3.8-20120326.jar
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-scratchpad-3.8-20120326.jar
+END
+json-20090211.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/json-20090211.jar
+END
+org.apache.poi.xwpf.converter.core-1.0.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.apache.poi.xwpf.converter.core-1.0.1.jar
+END
+jstl-impl-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/jstl-impl-1.2.jar
+END
+junit-4.12.jar
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/junit-4.12.jar
+END
+jxls-reader-1.0.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/jxls-reader-1.0.2.jar
+END
+asm-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/asm-3.1.jar
+END
+struts2-spring-plugin-2.2.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/struts2-spring-plugin-2.2.3.jar
+END
+commons-httpclient-3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-httpclient-3.1.jar
+END
+commons-fileupload-1.3.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-fileupload-1.3.1.jar
+END
+ognl-3.0.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/ognl-3.0.1.jar
+END
+commons-logging-1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-logging-1.2.jar
+END
+org.springframework.test-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.test-3.1.0.M1.jar
+END
+org.springframework.asm-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.asm-3.1.0.M1.jar
+END
+standard.jar
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/standard.jar
+END
+jxls-core-1.0.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/jxls-core-1.0.2.jar
+END
+org.springframework.context-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.context-3.1.0.M1.jar
+END
+mybatis-spring-1.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/mybatis-spring-1.1.1.jar
+END
+aspectjweaver-1.7.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/aspectjweaver-1.7.1.jar
+END
+org.springframework.core-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.core-3.1.0.M1.jar
+END
+mybatis-3.1.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/mybatis-3.1.1.jar
+END
+ueditor-1.1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/ueditor-1.1.2.jar
+END
+json.jar
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/json.jar
+END
+org.apache.poi.xwpf.converter.xhtml-1.0.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.apache.poi.xwpf.converter.xhtml-1.0.0.jar
+END
+poi-excelant-3.14-20160307.jar
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-excelant-3.14-20160307.jar
+END
+org.springframework.orm-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.orm-3.1.0.M1.jar
+END
+cglib-2.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/cglib-2.2.jar
+END
+httpclient-cache-4.1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/httpclient-cache-4.1.2.jar
+END
+org.springframework.aspects-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.aspects-3.1.0.M1.jar
+END
+org.springframework.jdbc-3.1.0.M1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.jdbc-3.1.0.M1.jar
+END
+org.springframework.web.servlet-3.1.0.RELEASE.jar
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/org.springframework.web.servlet-3.1.0.RELEASE.jar
+END
+httpmime-4.1.2.jar
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/httpmime-4.1.2.jar
+END
+commons-collections-4.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-collections-4.1.jar
+END
+poi-3.8-20120326.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/poi-3.8-20120326.jar
+END
+slf4j-api-1.6.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar
+END
+commons-lang-2.5.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-lang-2.5.jar
+END
+commons-net-1.4.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-net-1.4.1.jar
+END
+xwork-core-2.2.3.jar
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/xwork-core-2.2.3.jar
+END
+commons-beanutils-1.7.0.jar
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/commons-beanutils-1.7.0.jar
+END
+slf4j-log4j12-1.6.1.jar
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/WebRoot/WEB-INF/lib/slf4j-log4j12-1.6.1.jar
+END

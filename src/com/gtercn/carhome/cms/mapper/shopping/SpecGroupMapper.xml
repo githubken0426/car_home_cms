@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.shopping.SpecGroupMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, name, spec_id
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.SpecGroup" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from inn_spec_group
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+ 
+</mapper>

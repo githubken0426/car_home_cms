@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.FunctionDao">
+
+	<resultMap id="functionMap" type="com.gtercn.carhome.cms.entity.Function">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="func_name" property="funcName" jdbcType="VARCHAR" />
+		<result column="func_description" property="funcDescription"
+			jdbcType="VARCHAR" />
+		<result column="func_code" property="funcCode" jdbcType="INTEGER" />
+		<result column="parent_func_id" property="parentFuncId"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询所有 -->
+	<select id="getAllFunction" resultMap="functionMap"
+		parameterType="com.gtercn.carhome.cms.entity.Function">
+		select * from
+		tc_function order by func_code
+	</select>
+
+</mapper>

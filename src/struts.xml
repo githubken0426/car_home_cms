@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+	 <constant name="struts.i18n.encoding" value="UTF-8"/>
+	 <!-- 指定默认编码集 ，作用于HttpServletRequest的setCharacterEncoding（）
+	 		和freemarker，vilocity的输出 -->
+	<constant name="struts.configuration.xmlreload" value="true"/>
+	<!-- 当struts配置文件修改时是否自动加载 -->
+	<constant name="struts.devMode" value="true"/>
+	<!-- 开发模式下打印详细的错误信息 -->
+	<constant name="struts.ui.theme" value="xhtml"/>
+	<!-- 动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	
+	<constant name="struts.objectFactory.spring.autoWire.alwaysRespect" value="true" />
+	<!-- 上传文件大小限制 50M-->
+	<constant name="struts.multipart.maxSize" value="52428800"/> 
+	
+	<!-- struts-action -->
+	<include file="strutsxml/common/struts-login.xml" />
+	<include file="strutsxml/common/struts-user.xml" />
+	<include file="strutsxml/common/struts-apiuser.xml" />
+	<include file="strutsxml/common/struts-group.xml" />
+	<!-- 店铺表 -->
+	<include file="strutsxml/common/struts-shop.xml" />
+	<include file="strutsxml/common/struts-experttop.xml"/>
+	<include file="strutsxml/common/struts-article.xml"/>
+	<include file="strutsxml/common/struts-question.xml"/>
+	<include file="strutsxml/common/struts-reply.xml"/>
+	<include file="strutsxml/common/struts-information.xml"/>
+	<include file="strutsxml/common/struts-promotion.xml"/>
+	<!-- 经销商表 -->
+	<include file="strutsxml/common/struts-dealerUser.xml" />
+	<!-- 首页轮播表 -->
+	<include file="strutsxml/common/struts-homeCarousel.xml"/>
+	<!-- 软件版本 -->
+	<include file="strutsxml/common/struts-version.xml" />
+	<!-- 意见反馈 -->
+	<include file="strutsxml/common/struts-feedback.xml" />
+	<!-- 城市表 -->
+	<include file="strutsxml/common/struts-city.xml" />
+	<!-- 自驾游 -->
+	<include file="strutsxml/common/struts-selfDrivingTrowelling.xml" />
+	
+	<!-- 电商管理 -->
+	<include file="strutsxml/shopping/struts-advertisement.xml" />
+	<include file="strutsxml/shopping/struts-goods.xml" />
+	<include file="strutsxml/shopping/struts-goodsbrand.xml" />
+	
+	<package name="globalResult" namespace="/"  extends="struts-default"> 
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<interceptor name="authrity" class="com.gtercn.carhome.cms.intercept.AuthrityInterceptor" />
+			<!--  拦截器栈-->
+			<interceptor-stack name="myInterceptor">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="authrity" />
+			</interceptor-stack>
+		</interceptors>
+			<!-- 设置默认拦截器 -->
+		<default-interceptor-ref name="myInterceptor"/>
+		
+        <global-results>  
+            <result name="error">/jsp/common/error.jsp</result>
+            <result name="input">/jsp/center.jsp</result>
+            <result name="invalidRole">/jsp/common/invalidRole.jsp</result> 
+        </global-results>
+        
+        <global-exception-mappings>
+        	<exception-mapping result="invalidRole" exception="com.gtercn.carhome.cms.annotation.PermissionException"></exception-mapping>
+        	<exception-mapping result="error" exception="java.lang.Exception"/>
+        </global-exception-mappings>
+    </package>  
+    
+</struts>    

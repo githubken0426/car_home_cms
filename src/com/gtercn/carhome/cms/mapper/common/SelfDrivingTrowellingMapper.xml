@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.SelfDrivingTrowellingMapper" >
+  <resultMap id="BaseResultMap" type="com.gtercn.carhome.cms.entity.SelfDrivingTrowelling" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
+    <result column="available_flag" property="availableFlag" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, title, content, pic_urls, available_flag, city_code, delete_flag, update_time, 
+    insert_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_self_driving_trowelling
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_self_driving_trowelling
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.SelfDrivingTrowelling" >
+    insert into tb_self_driving_trowelling (id, user_id, title, 
+      content, pic_urls, available_flag, 
+      city_code, delete_flag, update_time, 
+      insert_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{picUrls,jdbcType=VARCHAR}, #{availableFlag,jdbcType=INTEGER}, 
+      #{cityCode,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{insertTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gtercn.carhome.cms.entity.SelfDrivingTrowelling" >
+    insert into tb_self_driving_trowelling
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="picUrls != null" >
+        pic_urls,
+      </if>
+      <if test="availableFlag != null" >
+        available_flag,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="insertTime != null" >
+        insert_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null" >
+        #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="availableFlag != null" >
+        #{availableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gtercn.carhome.cms.entity.SelfDrivingTrowelling" >
+    update tb_self_driving_trowelling
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null" >
+        pic_urls = #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="availableFlag != null" >
+        available_flag = #{availableFlag,jdbcType=INTEGER},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTime != null" >
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.SelfDrivingTrowelling" >
+    update tb_self_driving_trowelling
+    set user_id = #{userId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      pic_urls = #{picUrls,jdbcType=VARCHAR},
+      available_flag = #{availableFlag,jdbcType=INTEGER},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询所有信息 -->
+	<select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select a.id, a.user_id, a.title, a.content, b.real_name, a.delete_flag
+		from tb_self_driving_trowelling a, tc_user b
+		<where>
+		    a.city_code = #{cityCode}
+		    and a.user_id = b.user_id
+		    <if test="realName !=null and realName !=''">
+				and b.real_name = #{realName}
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				and a.delete_flag = #{deleteFlag}
+			</if>
+			<if test="title !=null and title !=''">
+				and a.title like '%${title}%'
+			</if>
+			<if test="content !=null and content !=''">
+				and a.content like '%${content}%'
+			</if>
+		</where> 
+		order by a.delete_flag asc, a.update_time desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1)
+		from tb_self_driving_trowelling a, tc_user b
+		<where>
+		    a.city_code = #{cityCode}
+		    and a.user_id = b.user_id
+		    <if test="realName !=null and realName !=''">
+				and b.real_name = #{realName}
+			</if>
+			<if test="deleteFlag !=null and deleteFlag !=''">
+				and a.delete_flag = #{deleteFlag}
+			</if>
+			<if test="title !=null and title !=''">
+				and a.title like '%${title}%'
+			</if>
+			<if test="content !=null and content !=''">
+				and a.content like '%${content}%'
+			</if>
+		</where> 
+	</select>
+	
+	<select id="selectByTrowellingId" resultType="com.gtercn.carhome.cms.entity.SelfDrivingExtend" parameterType="java.lang.String" >
+    select id, self_driving_id, user_id, sign_flag, delete_flag, update_time, insert_time
+    from tb_self_driving_extend
+    where self_driving_id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="update" parameterType="com.gtercn.carhome.cms.entity.SelfDrivingExtend" >
+    update tb_self_driving_extend
+    <set >
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

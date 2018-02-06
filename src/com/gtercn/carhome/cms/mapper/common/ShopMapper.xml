@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.gtercn.carhome.cms.entity.Shop" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="rescue_service" property="rescueService" jdbcType="INTEGER" />
+    <result column="repair_service" property="repairService" jdbcType="INTEGER" />
+    <result column="clean_service" property="cleanService" jdbcType="INTEGER" />
+    <result column="maintain_service" property="maintainService" jdbcType="INTEGER" />
+    <result column="tyre_service" property="tyreService" jdbcType="INTEGER" />
+    <result column="shop_pic_url" property="shopPicUrl" jdbcType="VARCHAR" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_score" property="shopScore" jdbcType="VARCHAR" />
+    <result column="shop_description" property="shopDescription" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+    <result column="tel_number_list" property="telNumberList" jdbcType="VARCHAR" />
+    <result column="display_pic_url_list" property="displayPicUrlList" jdbcType="VARCHAR" />
+    <result column="is_top" property="isTop" jdbcType="INTEGER" />
+    <result column="display_priority" property="displayPriority" jdbcType="INTEGER" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
+    <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, rescue_service, repair_service, clean_service, maintain_service, tyre_service, 
+    shop_pic_url, shop_name, shop_score, shop_description, longitude, latitude, province, 
+    city, district, detail_address, tel_number_list, display_pic_url_list, is_top, display_priority, city_code,
+    delete_flag, insert_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tc_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tc_shop
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.Shop" >
+    insert into tc_shop (id, rescue_service, repair_service, 
+      clean_service, maintain_service, tyre_service, 
+      shop_pic_url, shop_name, shop_score, 
+      shop_description, longitude, latitude, 
+      province, city, district, 
+      detail_address, tel_number_list, display_pic_url_list, 
+      is_top, display_priority, city_code, delete_flag, 
+      insert_time, update_time, product_description)
+    values (#{id,jdbcType=VARCHAR}, #{rescueService,jdbcType=INTEGER}, #{repairService,jdbcType=INTEGER}, 
+      #{cleanService,jdbcType=INTEGER}, #{maintainService,jdbcType=INTEGER}, #{tyreService,jdbcType=INTEGER}, 
+      #{shopPicUrl,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{shopScore,jdbcType=VARCHAR}, 
+      #{shopDescription,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, 
+      #{detailAddress,jdbcType=VARCHAR}, #{telNumberList,jdbcType=VARCHAR}, #{displayPicUrlList,jdbcType=VARCHAR}, 
+      #{isTop,jdbcType=INTEGER}, #{displayPriority,jdbcType=INTEGER}, #{cityCode,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=INTEGER}, #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{productDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gtercn.carhome.cms.entity.Shop" >
+    insert into tc_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rescueService != null" >
+        rescue_service,
+      </if>
+      <if test="repairService != null" >
+        repair_service,
+      </if>
+      <if test="cleanService != null" >
+        clean_service,
+      </if>
+      <if test="maintainService != null" >
+        maintain_service,
+      </if>
+      <if test="tyreService != null" >
+        tyre_service,
+      </if>
+      <if test="shopPicUrl != null" >
+        shop_pic_url,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopScore != null" >
+        shop_score,
+      </if>
+      <if test="shopDescription != null" >
+        shop_description,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="detailAddress != null" >
+        detail_address,
+      </if>
+      <if test="telNumberList != null" >
+        tel_number_list,
+      </if>
+      <if test="displayPicUrlList != null" >
+        display_pic_url_list,
+      </if>
+      <if test="isTop != null" >
+        is_top,
+      </if>
+      <if test="displayPriority != null" >
+        display_priority,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="insertTime != null" >
+        insert_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueService != null" >
+        #{rescueService,jdbcType=INTEGER},
+      </if>
+      <if test="repairService != null" >
+        #{repairService,jdbcType=INTEGER},
+      </if>
+      <if test="cleanService != null" >
+        #{cleanService,jdbcType=INTEGER},
+      </if>
+      <if test="maintainService != null" >
+        #{maintainService,jdbcType=INTEGER},
+      </if>
+      <if test="tyreService != null" >
+        #{tyreService,jdbcType=INTEGER},
+      </if>
+      <if test="shopPicUrl != null" >
+        #{shopPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopScore != null" >
+        #{shopScore,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDescription != null" >
+        #{shopDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null" >
+        #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="telNumberList != null" >
+        #{telNumberList,jdbcType=VARCHAR},
+      </if>
+      <if test="displayPicUrlList != null" >
+        #{displayPicUrlList,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null" >
+        #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="displayPriority != null" >
+        #{displayPriority,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gtercn.carhome.cms.entity.Shop" >
+    update tc_shop
+    <set >
+      <if test="rescueService != null" >
+        rescue_service = #{rescueService,jdbcType=INTEGER},
+      </if>
+      <if test="repairService != null" >
+        repair_service = #{repairService,jdbcType=INTEGER},
+      </if>
+      <if test="cleanService != null" >
+        clean_service = #{cleanService,jdbcType=INTEGER},
+      </if>
+      <if test="maintainService != null" >
+        maintain_service = #{maintainService,jdbcType=INTEGER},
+      </if>
+      <if test="tyreService != null" >
+        tyre_service = #{tyreService,jdbcType=INTEGER},
+      </if>
+      <if test="shopPicUrl != null" >
+        shop_pic_url = #{shopPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopScore != null" >
+        shop_score = #{shopScore,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDescription != null" >
+        shop_description = #{shopDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="detailAddress != null" >
+        detail_address = #{detailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="telNumberList != null" >
+        tel_number_list = #{telNumberList,jdbcType=VARCHAR},
+      </if>
+      <if test="displayPicUrlList != null" >
+        display_pic_url_list = #{displayPicUrlList,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null" >
+        is_top = #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="displayPriority != null" >
+        display_priority = #{displayPriority,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      </if>
+      <if test="insertTime != null" >
+        insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productDescription != null" >
+        product_description = #{productDescription,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.Shop" >
+    update tc_shop
+    set rescue_service = #{rescueService,jdbcType=INTEGER},
+      repair_service = #{repairService,jdbcType=INTEGER},
+      clean_service = #{cleanService,jdbcType=INTEGER},
+      maintain_service = #{maintainService,jdbcType=INTEGER},
+      tyre_service = #{tyreService,jdbcType=INTEGER},
+      shop_pic_url = #{shopPicUrl,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_score = #{shopScore,jdbcType=VARCHAR},
+      shop_description = #{shopDescription,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      detail_address = #{detailAddress,jdbcType=VARCHAR},
+      tel_number_list = #{telNumberList,jdbcType=VARCHAR},
+      display_pic_url_list = #{displayPicUrlList,jdbcType=VARCHAR},
+      is_top = #{isTop,jdbcType=INTEGER},
+      display_priority = #{displayPriority,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询所有信息 -->
+	<select id="queryAllData" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select 
+		<include refid="Base_Column_List" />
+		from tc_shop
+		<where>
+		    city_code = #{cityCode}
+		    <if test="deleteFlag !=null and deleteFlag !=''">
+				and delete_flag = #{deleteFlag}
+			</if>
+			<if test="shopName !=null and shopName !=''">
+				and shop_name like '%${shopName}%'
+			</if>
+			<if test="rescueService !=null and rescueService !=''">
+				and rescue_service = #{rescueService}
+			</if>
+			<if test="repairService !=null and repairService !=''">
+				and repair_service = #{repairService}
+			</if>
+			<if test="cleanService !=null and cleanService !=''">
+				and clean_service = #{cleanService}
+			</if>
+			<if test="maintainService !=null and maintainService !=''">
+				and maintain_service = #{maintainService}
+			</if>
+			<if test="tyreService !=null and tyreService !=''">
+				and tyre_service = #{tyreService}
+			</if>
+			<if test="province !=null and province !=''">
+				and province = #{province}
+			</if>
+			<if test="city !=null and city !=''">
+				and city like '%${city}%'
+			</if>
+			<if test="district !=null and district !=''">
+				and district = #{district}
+			</if>
+			<if test="detailAddress !=null and detailAddress !=''">
+				and detail_address LIKE '%${detailAddress}%'
+			</if>
+			<if test="telNumber !=null and telNumber !=''">
+				and tel_number_list LIKE '%${telNumber}%'
+			</if>
+		</where> 
+		order by delete_flag asc, update_time desc limit #{beginResult},#{pageSize}
+	</select>
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1)
+		from tc_shop
+		<where>
+		    city_code = #{cityCode}
+		    <if test="deleteFlag !=null and deleteFlag !=''">
+				and delete_flag = #{deleteFlag}
+			</if>
+			<if test="shopName !=null and shopName !=''">
+				and shop_name like '%${shopName}%'
+			</if>
+			<if test="rescueService !=null and rescueService !=''">
+				and rescue_service = #{rescueService}
+			</if>
+			<if test="repairService !=null and repairService !=''">
+				and repair_service = #{repairService}
+			</if>
+			<if test="cleanService !=null and cleanService !=''">
+				and clean_service = #{cleanService}
+			</if>
+			<if test="maintainService !=null and maintainService !=''">
+				and maintain_service = #{maintainService}
+			</if>
+			<if test="tyreService !=null and tyreService !=''">
+				and tyre_service = #{tyreService}
+			</if>
+			<if test="province !=null and province !=''">
+				and province = #{province}
+			</if>
+			<if test="city !=null and city !=''">
+				and city like '%${city}%'
+			</if>
+			<if test="district !=null and district !=''">
+				and district = #{district}
+			</if>
+			<if test="detailAddress !=null and detailAddress !=''">
+				and detail_address LIKE '%${detailAddress}%'
+			</if>
+			<if test="telNumber !=null and telNumber !=''">
+				and tel_number_list LIKE '%${telNumber}%'
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 删除所有信息 -->
+	<select id="deleteAllInfo" parameterType="java.util.Map">
+		delete from tc_shop
+	</select>
+	
+	<select id="selectAllInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from tc_shop
+  	</select>
+  	
+  <!-- 根据店铺名查询 -->
+  <select id="queryShopByName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select  <include refid="Base_Column_List" />
+     from tc_shop
+     <where>
+     	 delete_flag=0 and city_code=#{cityCode,jdbcType=VARCHAR}
+     	<if test="shopName!=null and shopName!=''">
+     		and shop_name = #{shopName,jdbcType=VARCHAR}
+     	</if>
+     </where>
+     limit 0,1
+  </select>
+</mapper>

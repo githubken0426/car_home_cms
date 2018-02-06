@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/repos/!svn/ver/19757/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity
+END
+APIUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/19461/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/APIUser.java
+END
+City.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19700/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/City.java
+END
+ExpertType.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/repos/!svn/ver/19299/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/ExpertType.java
+END
+Shop.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19491/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Shop.java
+END
+QuestionArticle.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/repos/!svn/ver/19539/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/QuestionArticle.java
+END
+Favor.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/19299/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Favor.java
+END
+User.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/repos/!svn/ver/19491/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/User.java
+END
+ServiceEn.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/repos/!svn/ver/19338/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/ServiceEn.java
+END
+SelfDrivingTrowelling.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/repos/!svn/ver/19757/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/SelfDrivingTrowelling.java
+END
+Feedback.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/19644/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Feedback.java
+END
+SelfDrivingExtend.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/repos/!svn/ver/19757/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/SelfDrivingExtend.java
+END
+Version.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/repos/!svn/ver/19703/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Version.java
+END
+Function.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Function.java
+END
+Information.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/repos/!svn/ver/19539/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Information.java
+END
+Promotion.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/repos/!svn/ver/19652/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Promotion.java
+END
+Rescue.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/repos/!svn/ver/19338/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Rescue.java
+END
+HomeCarousel.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/repos/!svn/ver/19526/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/HomeCarousel.java
+END
+ExpertTop.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/repos/!svn/ver/19340/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/ExpertTop.java
+END
+DealerUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/repos/!svn/ver/19507/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/DealerUser.java
+END
+Reply.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/19499/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Reply.java
+END
+Group.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/repos/!svn/ver/19276/RDC2016/Carhome/src/development/cms/car_home_cms/src/com/gtercn/carhome/cms/entity/Group.java
+END

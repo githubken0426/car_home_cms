@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtercn.carhome.cms.dao.common.UserDao">
+	<resultMap type="com.gtercn.carhome.cms.entity.User" id="userResult">
+		<result property="id" column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="userName" column="username" javaType="java.lang.String"/>
+		<result property="password" column="password" javaType="java.lang.String"/>
+		<result property="realName" column="realname" javaType="java.lang.String"/>
+		<result property="groupId" column="group_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+		<result property="status" column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+		<result property="loginTime" column="login_time" jdbcType="TIMESTAMP" />
+		<result property="loginIp" column="login_ip" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="cityCode" column="city_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result property="loginNum" column="login_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+		<result property="groupName" column="group_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+	</resultMap>
+	
+	<!-- 登陆 -->
+	<select id="userLogin"  parameterType="com.gtercn.carhome.cms.entity.User" resultType="com.gtercn.carhome.cms.entity.User">
+		select * from tc_back_user where username=#{userName} and password=#{password}
+	</select>
+
+	<!-- 查询所有信息 -->
+	<select id="queryAllUser" resultMap="userResult" parameterType="java.util.Map">
+		select u.*,
+			(select group_name from tc_group g where g.id=u.group_id) as groupName
+		from tc_back_user u 
+		<where>
+			<if test="groupId!=null and groupId!=''">
+				group_id= #{groupId}
+			</if>
+		</where> 
+		order by u.id desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from tc_back_user
+		<where>
+			<if test="groupId!=null and groupId!=''">
+				group_id= #{groupId}
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 根据id查询 -->
+	<select id="getUserById" parameterType="java.lang.String" resultMap="userResult" >
+		select * from tc_back_user where id =#{id}
+	</select>
+	
+	<!-- 查询用户名是否存在 -->
+	<select id="getUserByName" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) from tc_back_user 
+		<where>
+			<if test="userName!=null and userName!=''">
+				username=#{userName} 
+			</if>
+			<if test="id!=null and id!=''">
+				and id !=#{id}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 增加用户 -->
+	<insert id="addUser" parameterType="com.gtercn.carhome.cms.entity.User" useGeneratedKeys="true">
+		insert into tc_back_user 
+			(id,username,password,realname,group_id,status,city_code)
+		values(
+			#{id},#{userName},#{password},#{realName},#{groupId},#{status},#{cityCode}
+		)
+	</insert>
+	
+	<!-- 修改用户 -->
+	<update id="updateUser" parameterType="com.gtercn.carhome.cms.entity.User">
+		update tc_back_user 
+			set username=#{userName},password = #{password},realname = #{realName},
+			group_id=#{groupId},status=#{status}
+	    where 
+	    	id=#{id}
+	</update>
+	
+	<!-- 更新状态 -->
+	  <update id="updateUserStatus" parameterType="java.util.Map">
+	  		update tc_back_user set status=#{status} where id=#{id}
+	  </update>
+  
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="java.lang.String">
+		delete from tc_back_user where id=#{id}
+	</delete>
+	
+	<!-- 查询用户登陆次数 -->
+	<select id="getLoginNum" parameterType="com.gtercn.carhome.cms.entity.User" resultType="java.lang.Integer">
+		select login_num from tc_back_user where id=#{id}
+	</select>
+	
+	<!-- 保存用户登陆信息 -->
+	<update id="saveLoginInfo" parameterType="com.gtercn.carhome.cms.entity.User">
+		update tc_back_user 
+			set login_time = #{loginTime},login_ip= #{loginIp},login_num=#{loginNum}
+	    where 
+	    	id=#{id}
+	</update>
+	
+	<select id="getAllUser" resultMap="userResult">
+		select u.* from tc_back_user u order by u.id 
+	</select>
+	
+</mapper>

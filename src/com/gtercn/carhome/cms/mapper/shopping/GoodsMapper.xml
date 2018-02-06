@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.shopping.GoodsMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, product_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
+    goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
+    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,create_time,
+    (select category_id from inn_product where id=product_id) as categoryId,
+    (select count(1) from inn_comment where goods_id=G.id) as commentCount,
+    round((select count(1) as total from inn_comment  where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
+    as percentage 
+  </sql>
+  
+  <!-- 查询所有 -->
+	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map">
+		select * from inn_goods
+		<where>
+			city_code=#{cityCode}
+			<if test="goodsTitle!=null and goodsTitle!=''">
+				and goods_title like '%${goodsTitle}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(up_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(up_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+		order by up_time desc limit #{beginResult},#{pageSize}
+	</select>
+	
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from inn_goods
+		<where>
+			city_code=#{cityCode}
+			<if test="title!=null and title!=''">
+				and q.title like '%${title}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(up_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(up_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+	</select>
+  <!-- 主键查询 -->
+  <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map" >
+    select <include refid="Base_Column_List" /> 
+    from inn_goods G
+    <where>
+    	status =0 and id = #{id,jdbcType=VARCHAR}
+    </where>
+  </select>
+  
+  <!-- 根据品牌查找商品 -->
+  <select id="selectGoodsByBrand" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map">
+  	select <include refid="Base_Column_List" /> from inn_goods  G
+  	 <where>
+    	status=0 and 
+    	product_id in( select id from inn_product where brand_id=#{brandId,jdbcType=VARCHAR})
+    	<if test="cityCode!=null and cityCode!=''">
+    		and city_code=#{cityCode,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
+  <!-- 商品筛选 * 价格、属性、规格、品牌 -->
+  <select id="goodsSearch" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="com.gtercn.carhome.cms.entity.shopping.Goods">
+  	select <include refid="Base_Column_List" /> from inn_goods  G
+  	 <where>
+    	status=0
+    	<if test="search.cityCode!=null and search.cityCode!=''">
+    		and city_code=#{search.cityCode,jdbcType=VARCHAR}
+    	</if>
+    	<if test="search.fromPrice!=null and search.fromPrice!=''">
+    		and promotion_price &gt;= #{search.fromPrice,jdbcType=VARCHAR} 
+    	</if>
+    	<if test="search.toPrice!=null and search.toPrice!=''">
+    		and promotion_price &lt;= #{search.toPrice,jdbcType=VARCHAR}
+    	</if>
+    	<if test="search.brandList!=null and search.brandList.size()>0">
+    		and product_id in( select id from inn_product where brand_id in
+    		<foreach collection="search.brandList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    	<if test="search.specList!=null and search.specList.size()>0">
+    		and id in( select goods_id from inn_spec_item_goods_relation where spec_item_id in
+    		<foreach collection="search.specList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    </where>
+  </select>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="city" extends="json-default">
+		<!-- city : 城市表-->
+		<action name="city_*" class="com.gtercn.carhome.cms.action.CityAction" method="{1}">
+			<result name="list"  >/jsp/city/list.jsp</result>
+			<result name="add"   >/jsp/city/add.jsp</result>
+			<result name="update">/jsp/city/update.jsp</result>
+		</action>
+	</package>
+</struts>    

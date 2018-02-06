@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="version" extends="globalResult">
+		<!-- version : 软件版本-->
+		<action name="version_*" class="com.gtercn.carhome.cms.action.VersionAction" method="{1}">
+			<result name="list">/jsp/version/list.jsp</result>
+			<result name="add">/jsp/version/add.jsp</result>
+			<result name="update">/jsp/version/update.jsp</result>
+		</action>
+	</package>
+</struts>    

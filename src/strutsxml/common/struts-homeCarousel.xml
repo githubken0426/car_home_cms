@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="homeCarousel" extends="globalResult">
+		<!-- question_and_article : 问题与文章-->
+		<action name="homeCarousel_*" class="com.gtercn.carhome.cms.action.HomeCarouselAction" method="{1}">
+			<result name="list">/jsp/homeCarousel/list.jsp</result>
+			<result name="add">/jsp/homeCarousel/add.jsp</result>
+			<result name="update">/jsp/homeCarousel/update.jsp</result>
+		</action>
+	</package>
+</struts>    

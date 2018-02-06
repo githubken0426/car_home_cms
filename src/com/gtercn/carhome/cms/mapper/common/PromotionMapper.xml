@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.PromotionMapper" >
+  
+  <sql id="Base_Column_List" >
+    id, shop_id, 
+    	date_format(start_date,'%Y-%m-%d') as start_date,
+		date_format(end_date,'%Y-%m-%d') as end_date,
+	city_code, title, introduction,content,background_image,
+    picture_list,html_url,city_code,delete_flag, insert_time, update_time
+  </sql>
+  
+  <!-- 查询所有数据 -->
+  <select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.Promotion" parameterType="java.util.Map">
+    select id, shop_id,introduction,background_image,
+		(select shop_name from tc_shop where id=p.shop_id) as shop_name,
+		start_date, end_date,title,content, picture_list,html_url,delete_flag,city_code,
+		insert_time,update_time
+		from tb_promotion p
+	<where>
+		city_code=#{cityCode,jdbcType=VARCHAR}
+		<if test="shopName!=null and shopName!=''">
+			(select shop_name from tc_shop where id=p.shop_id) like '%${shopName}%'
+		</if>
+		<if test="beginTime!=null and beginTime!=''">
+			and DATE_FORMAT(p.start_date,'%Y-%m-%d')&gt;=#{beginTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			and DATE_FORMAT(p.end_date,'%Y-%m-%d')&lt;=#{endTime}
+		</if>
+		<if test="deleteFlag!=null and deleteFlag!=''">
+			and p.delete_flag=#{deleteFlag,jdbcType=VARCHAR}
+		</if>
+	</where>
+	 order by p.insert_time desc
+  </select>
+  
+  <select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+	select count(1) from tb_promotion p
+	<where>
+		<if test="shopName!=null and shopName!=''">
+			(select shop_name from tc_shop where id=p.shop_id) like '%${shopName}%'
+		</if>
+		<if test="beginTime!=null and beginTime!=''">
+			and DATE_FORMAT(p.start_date,'%Y-%m-%d')&gt;=#{beginTime}
+		</if>
+		<if test="endTime!=null and endTime!=''">
+			and DATE_FORMAT(p.end_date,'%Y-%m-%d')&lt;=#{endTime}
+		</if>
+		<if test="deleteFlag!=null and deleteFlag!=''">
+			and p.delete_flag=#{deleteFlag,jdbcType=VARCHAR}
+		</if>
+	</where>
+ </select>
+ 
+  <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.Promotion" parameterType="java.lang.String" >
+    select id, shop_id, city_code, title, introduction,content,background_image,
+    	date_format(start_date,'%Y-%m-%d') as start_date,
+		date_format(end_date,'%Y-%m-%d') as end_date,
+    	(select shop_name from tc_shop where id=p.shop_id) as shop_name,
+    	picture_list,html_url,city_code,delete_flag, insert_time, update_time
+    from tb_promotion p
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    update tb_promotion set delete_flag=1
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.Promotion" >
+    insert into tb_promotion (id, shop_id,city_code,start_date, end_date,
+      title,introduction, content, picture_list,background_image,html_url,
+      delete_flag, insert_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR},#{cityCode,jdbcType=VARCHAR},
+       #{startDate,jdbcType=DATE},#{endDate,jdbcType=DATE},#{title,jdbcType=VARCHAR},
+       #{introduction,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{pictureList,jdbcType=VARCHAR}, 
+       #{backgroundImage,jdbcType=VARCHAR},#{htmlUrl,jdbcType=VARCHAR},
+       #{deleteFlag,jdbcType=INTEGER}, now(), now())
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.Promotion" >
+    update tb_promotion
+    set shop_id = #{shopId,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      title = #{title,jdbcType=VARCHAR},
+      introduction=#{introduction,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      picture_list = #{pictureList,jdbcType=VARCHAR},
+      background_image = #{backgroundImage,jdbcType=VARCHAR},
+      html_url = #{htmlUrl,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=INTEGER},
+      update_time = now()
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

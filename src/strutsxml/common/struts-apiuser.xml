@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+	<package name="apiUser" extends="globalResult">
+		<!-- 用户 -->
+		<action name="apiUser_*" class="com.gtercn.carhome.cms.action.APIUserAction" method="{1}">
+			<result name="list">/jsp/apiUser/userList.jsp</result>
+			<result name="add">/jsp/apiUser/userAdd.jsp</result>
+			<result name="update">/jsp/apiUser/userUpdate.jsp</result>
+			<interceptor-ref name="authrity"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+	</package>
+</struts>    

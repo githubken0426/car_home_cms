@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.common.FavorMapper">
+	<sql id="Base_Column_List">
+		id, user_id, favor_id, favor_type, delete_flag, update_time, insert_time
+	</sql>
+	
+	<delete id="deleteByCondition" parameterType="java.lang.String">
+		update tb_favor set delete_flag=1
+		where favor_id = #{favorId,jdbcType=VARCHAR} 
+		and favor_type = #{favorType,jdbcType=VARCHAR}
+  </delete>
+	
+</mapper>
