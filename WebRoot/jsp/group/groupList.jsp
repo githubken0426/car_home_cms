@@ -20,7 +20,6 @@ response.flushBuffer();%>
 	<link rel="stylesheet" href="<%=path%>/js/cms/kkpager/kkpager_blue.css"/>
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/cms/kkpager/kkpager.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/wonderful.cms.js"></script>
    	
   <script type="text/javascript">
   //删除用户
