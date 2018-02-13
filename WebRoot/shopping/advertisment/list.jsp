@@ -109,7 +109,7 @@ response.flushBuffer();
   	}
   	//添加
   	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_listData.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_addDataPage.action");
 	  	$("#totalForm").submit();
   	}
   	//修改
@@ -131,7 +131,7 @@ response.flushBuffer();
   			return;
   		} else if (ret == 1) {
 			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_listData.action");
+			$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_updateDataPage.action");
 			$("#totalForm").submit();	
   		}
   	}
@@ -140,8 +140,10 @@ response.flushBuffer();
   	function deleteData(){
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
-	  		$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_listData.action");
-	  		$("#totalForm").submit();
+  			if(confirm("确定要删除选中的数据吗?")){
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_deleteData.action");
+  		  		$("#totalForm").submit();
+  			}
   		}else{
   			alert("请选择修改项！");
   		}
@@ -198,7 +200,11 @@ response.flushBuffer();
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
 						<td>${o.title }</td>
-						<td>${o.picturePath }</td>
+						<td>
+							<c:if test="${ not empty o.picturePath }">
+								<img src="${ o.picturePath }"  style="width:40px;height:40px;"/>
+							</c:if>
+						</td>
 						<td>${o.url }</td>
 						<td>${o.cityCode }</td>
 						<td><fmt:formatDate value="${o.insertTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>

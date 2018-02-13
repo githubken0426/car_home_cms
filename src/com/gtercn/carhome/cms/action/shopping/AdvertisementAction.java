@@ -136,7 +136,7 @@ public class AdvertisementAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void addData() throws Exception {
+	public void add() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		Map<String, Object> session = ActionContext.getContext().getSession();
@@ -157,15 +157,18 @@ public class AdvertisementAction extends ActionSupport {
 			// 上传展示图片
 			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
 			File[] resUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : resUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
-							+ File.separator + ApplicationConfig.FTP_ADVER_PATH
-							+ File.separator + portraitFileName;
-					entity.setPicturePath(picturePath);
+			if(resUrlList!=null) {
+				for (File file : resUrlList) {
+					input = new FileInputStream(file);
+					String portraitFileName = System.currentTimeMillis() + ".jpg";
+					boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
+					if (bool) {
+						String picturePath =ApplicationConfig.HTTP_PROTOCOL_IP+ File.separator 
+								+ ApplicationConfig.FTP_SHOPPING_PATH
+								+ File.separator + ApplicationConfig.FTP_ADVER_PATH
+								+ File.separator + portraitFileName;
+						entity.setPicturePath(picturePath);
+					}
 				}
 			}
 			advertisementService.insert(entity);
@@ -219,7 +222,7 @@ public class AdvertisementAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void updateData() throws Exception {
+	public void update() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");
@@ -231,14 +234,18 @@ public class AdvertisementAction extends ActionSupport {
 			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
 			// 上传展示图片
 			File[] viewResUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : viewResUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths, portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH + File.separator
-							+ ApplicationConfig.FTP_ADVER_PATH + File.separator + portraitFileName;
-					entity.setPicturePath(picturePath);
+			if(viewResUrlList!=null) {
+				for (File file : viewResUrlList) {
+					input = new FileInputStream(file);
+					String portraitFileName = System.currentTimeMillis() + ".jpg";
+					boolean bool = UploadFtpFileTools.uploadFile(ftpPaths, portraitFileName, input);
+					if (bool) {
+						String picturePath = ApplicationConfig.HTTP_PROTOCOL_IP + File.separator
+								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator 
+								+ ApplicationConfig.FTP_ADVER_PATH
+								+ File.separator + portraitFileName;
+						entity.setPicturePath(picturePath);
+					}
 				}
 			}
 			advertisementService.update(entity);

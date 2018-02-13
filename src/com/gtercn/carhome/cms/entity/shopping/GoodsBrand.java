@@ -12,7 +12,17 @@ public class GoodsBrand {
     private String logo;
     private String descrption;
     private String picture;
+    
+    private String categoryName;
     private List<Map<String,String>> pictureList;
+    
+    public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
     public List<Map<String, String>> getPictureList() {
 		return pictureList;

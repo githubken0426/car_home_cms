@@ -46,8 +46,7 @@
 	</select>
 
 	<!-- 插入数据 -->
-	<insert id="insert"
-		parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
+	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
 		insert into inn_advertisement
 		(id, title, picture_path,url,city_code,delete_flag,
 		insert_time,update_time)

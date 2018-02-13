@@ -2,13 +2,9 @@ package com.gtercn.carhome.cms.entity.shopping;
 
 public class GoodsCategory {
     private String id;
-
     private String title;
-
     private String parentCode;
-
     private Integer deleteFlag;
-
     private String descriptiion;
 
     public String getId() {

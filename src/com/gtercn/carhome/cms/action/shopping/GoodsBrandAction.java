@@ -13,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
+import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
+import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -35,6 +38,8 @@ public class GoodsBrandAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private GoodsBrandService goodsBrandService;
+	@Autowired
+	private GoodsCategoryService categoryBrandService;
 	
 	private GoodsBrand entity;
 	public GoodsBrand getEntity() {
@@ -52,25 +57,16 @@ public class GoodsBrandAction extends ActionSupport {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Map<String, Object> session = context.getSession();
 		try {
-			DealerUser user = (DealerUser) session.get("dealer_user");
-			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
-			if(null!=user) 
-				cityCode = user.getCityCode();
-			map.put("cityCode", cityCode);
-			String title = request.getParameter("title");
-			if (title != null && !title.equals("")) {
-				title = URLDecoder.decode(title, "UTF-8");
-				map.put("title", title);
-			}
-			String beginTime = request.getParameter("beginTime");
-			if (beginTime != null && !beginTime.equals(""))
-				map.put("beginTime", beginTime);
-			String endTime = request.getParameter("endTime");
-			if (endTime != null && !endTime.equals(""))
-				map.put("endTime", endTime);
+			String categoryId = request.getParameter("categoryId");
+			if (StringUtils.isNotBlank(categoryId))
+				map.put("categoryId", categoryId);
 			
+			String cnName = request.getParameter("cnName");
+			if (StringUtils.isNotBlank(cnName)) {
+				cnName = URLDecoder.decode(cnName, "UTF-8");
+				map.put("cnName", cnName);
+			}
 			int pageSize = ApplicationConfig.PAGE_SIZE;// 每页显示数据
 			int totalCount = goodsBrandService.getTotalCount(map);
 			int currentIndex = 0;// 当前页
@@ -85,15 +81,16 @@ public class GoodsBrandAction extends ActionSupport {
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
 			List<GoodsBrand> list = goodsBrandService.queryAllData(map);
-
+			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
+			
+			context.put("categoryList", categoryList);
 			context.put("list", list);
 			context.put("totalPages", totalPages);
 			context.put("totalCount", totalCount);
 			context.put("currentIndex", currentIndex);
 			// 设置查询参数
-			context.put("title", title);
-			context.put("beginTime", beginTime);
-			context.put("endTime", endTime);
+			context.put("cnName", cnName);
+			context.put("categoryId", categoryId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;
@@ -117,13 +114,14 @@ public class GoodsBrandAction extends ActionSupport {
 			} else {
 				currentIndex = 1;
 			}
-			String title = request.getParameter("title");
-			String beginTime = request.getParameter("beginTime");
-			String endTime = request.getParameter("endTime");
+			String categoryId = request.getParameter("categoryId");
+			String cnName = request.getParameter("cnName");
+			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
+			
+			context.put("categoryList", categoryList);
 			context.put("currentIndex", currentIndex);
-			context.put("title", title);
-			context.put("beginTime", beginTime);
-			context.put("endTime", endTime);
+			context.put("categoryId", categoryId);
+			context.put("cnName", cnName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;
@@ -139,7 +137,6 @@ public class GoodsBrandAction extends ActionSupport {
 	public void addData() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Map<String, Object> session = ActionContext.getContext().getSession();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		InputStream input=null;
@@ -250,7 +247,7 @@ public class GoodsBrandAction extends ActionSupport {
 	 * 删除
 	 * @return
 	 */
-	public void deleteData() {
+	public void deleteBatch() {
 		ServletRequest request = ServletActionContext.getRequest();
 		ServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("utf-8");

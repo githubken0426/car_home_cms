@@ -58,19 +58,20 @@ response.flushBuffer();
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
 							<td colspan="3">
-								<input type="text" id="title" name="entity.title" tabindex="3" style="width:600px;margin-left:30px;"/>
+								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
-								<input type="text" id="url" name="entity.url" tabindex="3" style="width:600px;margin-left:30px;"/>
+								<input type="text" id="url" name="entity.url" tabindex="2" style="padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td width="15%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
 							<td colspan="3">
-								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
+								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
+									id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="padding:4px;width:405px;margin-left:30px;"/>
 								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
 							</td>
 						</tr>

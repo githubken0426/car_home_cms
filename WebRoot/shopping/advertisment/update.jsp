@@ -72,10 +72,8 @@ response.flushBuffer();
 							<td colspan="3">
 								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" 
 									tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
-								<input type="hidden" name="picturePath" id="picturePath" value="${entity.picturePath}" />
-								 <c:if test="${not empty entity.picturePath}"> 
-									<img src="${entity.picturePath}" style="width:50px;height:50px;" id="viewResUrlList"/>
-								 </c:if>
+								<input type="hidden" name="entity.picturePath" id="picturePath" value="${entity.picturePath}" />
+								<img src="${entity.picturePath}" style="width:50px;height:50px;" id="viewResUrlList"/>
 							</td>
 						</tr>
 	            	</table>

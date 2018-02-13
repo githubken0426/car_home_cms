@@ -1,15 +1,11 @@
-package com.gtercn.carhome.cms.dao.shopping;
+package com.gtercn.carhome.cms.service.shopping.goodscategory;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 
-@Repository
-public interface GoodsCategoryMapper {
-    
-    GoodsCategory selectByPrimaryKey(String id);
+public interface GoodsCategoryService {
+	GoodsCategory selectByPrimaryKey(String id);
     
     /**
      * 查询所有商品

@@ -8,88 +8,17 @@
     <result column="delete_flag" property="deleteFlag" jdbcType="INTEGER" />
     <result column="descriptiion" property="descriptiion" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     id, title, parent_code, delete_flag, descriptiion
   </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from inn_goods_category
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from inn_goods_category
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory" >
-    insert into inn_goods_category (id, title, parent_code, 
-      delete_flag, descriptiion)
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=INTEGER}, #{descriptiion,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory" >
-    insert into inn_goods_category
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="parentCode != null" >
-        parent_code,
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag,
-      </if>
-      <if test="descriptiion != null" >
-        descriptiion,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="parentCode != null" >
-        #{parentCode,jdbcType=VARCHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="descriptiion != null" >
-        #{descriptiion,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory" >
-    update inn_goods_category
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="parentCode != null" >
-        parent_code = #{parentCode,jdbcType=VARCHAR},
-      </if>
-      <if test="deleteFlag != null" >
-        delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      </if>
-      <if test="descriptiion != null" >
-        descriptiion = #{descriptiion,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory" >
-    update inn_goods_category
-    set title = #{title,jdbcType=VARCHAR},
-      parent_code = #{parentCode,jdbcType=VARCHAR},
-      delete_flag = #{deleteFlag,jdbcType=INTEGER},
-      descriptiion = #{descriptiion,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
   
   <!-- mine -->
   <select id="selectAllCategory" resultType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory" parameterType="java.lang.String" >

@@ -21,6 +21,11 @@ response.flushBuffer();
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
+    <link href="<%=path %>/js/webuploader/webuploader.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/preview.js"></script>
+    
 <script type="text/javascript">
    	//添加
 	function addSubmit(){
@@ -41,6 +46,9 @@ response.flushBuffer();
   		$("#backForm").submit();
   	}
   </script>
+<style type="text/css">
+  	input{padding:8px;}
+</style>
 </head>
 <body>
 
@@ -56,35 +64,64 @@ response.flushBuffer();
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
-							<td colspan="3">
-								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:600px;margin-left:30px;"/>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td width="25%">
+								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
+							<td width="25%">
+								<input type="text" id="enName" name="entity.enName" tabindex="3" style="width:220px;margin-left:30px;"/>
+							</td>
+							<td width="30%"></td>
 						</tr>
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
-							<td colspan="3">
-								<input type="text" id="enName" name="entity.enName" tabindex="3" style="width:600px;margin-left:30px;"/>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
+							<td>
+								<select id="categoryId" name="categoryId" style="height:25px;width:220px;margin-left:30px;">
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.id }">
+											${category.title}
+										</option>
+									</c:forEach>
+								</select>
 							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌LOGO：</td>
+							<td>
+								<input onchange="viewUploadImg(this,'brandLogo')" type="file" id="logo" name="logo" tabindex="4" style="width:220px;margin-left:30px;"/>
+								<img style="width:50px;height:50px;display:none;" id="brandLogo"/>
+							</td>
+							<td></td>
 						</tr>
 						<tr>
-							<td width="15%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌LOGO：</td>
-							<td colspan="3">
-								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
-								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌介绍：</td>
+							<td colspan="3" height="125px;">
+								<textarea id="descrption" name="entity.descrption" style="height:105px;width:90%;margin-left:30px;padding:10px;"></textarea>
 							</td>
+							<td></td>
 						</tr>
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌介绍：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌产品图片：</td>
 							<td colspan="3">
-								<textarea id="descrption" name="entity.descrption" style="width:600px;margin-left:30px;"></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌产品图片：</td>
-							<td colspan="3">
-								
-							</td>
+								<div id="container">
+						            <div id="uploader">
+						                <div class="queueList">
+						                    <div id="dndArea" class="placeholder">
+						                        <div id="filePicker"></div>
+						                    </div>
+						                </div>
+						                <div class="statusBar" style="display:none;">
+						                    <div class="progress">
+						                        <span class="text">0%</span>
+						                        <span class="percentage"></span>
+						                    </div><div class="info"></div>
+						                    <div class="btns">
+						                        <div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+								</td>
+							<td></td>
 						</tr>
 	            	</table>
 	            	 <table  class="margin-bottom-20 table  no-border" style="margin-top:20px;">
