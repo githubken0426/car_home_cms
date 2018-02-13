@@ -47,6 +47,7 @@
 	<include file="strutsxml/shopping/struts-advertisement.xml" />
 	<include file="strutsxml/shopping/struts-goods.xml" />
 	<include file="strutsxml/shopping/struts-goodsbrand.xml" />
+	<include file="strutsxml/shopping/struts-product.xml" />
 	
 	<package name="globalResult" namespace="/"  extends="struts-default"> 
 		<!-- 配置拦截器 -->

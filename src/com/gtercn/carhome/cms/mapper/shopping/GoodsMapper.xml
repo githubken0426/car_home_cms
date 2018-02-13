@@ -17,6 +17,9 @@
 		select * from inn_goods
 		<where>
 			city_code=#{cityCode}
+			<if test="productId!=null and productId!=''">
+				and product_id =#{productId}
+			</if>
 			<if test="goodsTitle!=null and goodsTitle!=''">
 				and goods_title like '%${goodsTitle}%'
 			</if>
@@ -35,6 +38,9 @@
 		select count(1) from inn_goods
 		<where>
 			city_code=#{cityCode}
+			<if test="productId!=null and productId!=''">
+				and product_id =#{productId}
+			</if>
 			<if test="title!=null and title!=''">
 				and q.title like '%${title}%'
 			</if>

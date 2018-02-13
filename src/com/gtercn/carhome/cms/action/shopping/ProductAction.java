@@ -13,37 +13,33 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
-import com.gtercn.carhome.cms.entity.shopping.Advertisement;
-import com.gtercn.carhome.cms.entity.shopping.Goods;
-import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
-import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
-import com.gtercn.carhome.cms.util.CommonUtil;
+import com.gtercn.carhome.cms.entity.shopping.Product;
+import com.gtercn.carhome.cms.service.shopping.product.ProductService;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * 商品
+ * 产品
  * @author ken 2017-2-23 下午03:39:05
  */
-public class GoodsAction extends ActionSupport {
+public class ProductAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private GoodsService goodsService;
+	private ProductService productService;
 	
-	private Goods entity;
-	public Goods getEntity() {
+	private Product entity;
+	public Product getEntity() {
 		return entity;
 	}
-	public void setEntity(Goods entity) {
+	public void setEntity(Product entity) {
 		this.entity = entity;
 	}
 
@@ -67,9 +63,6 @@ public class GoodsAction extends ActionSupport {
 				title = URLDecoder.decode(title, "UTF-8");
 				map.put("title", title);
 			}
-			String productId = request.getParameter("productId");
-			if(StringUtils.isNotBlank(productId))
-				map.put("productId", productId);
 			String beginTime = request.getParameter("beginTime");
 			if (beginTime != null && !beginTime.equals(""))
 				map.put("beginTime", beginTime);
@@ -78,7 +71,7 @@ public class GoodsAction extends ActionSupport {
 				map.put("endTime", endTime);
 			
 			int pageSize = ApplicationConfig.PAGE_SIZE;// 每页显示数据
-			int totalCount = goodsService.getTotalCount(map);
+			int totalCount = productService.getTotalCount(map);
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("pno");
 			if (index != null && index != "") {
@@ -90,7 +83,7 @@ public class GoodsAction extends ActionSupport {
 					: (totalCount / pageSize + 1);
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
-			List<Goods> list = goodsService.queryAllData(map);
+			List<Product> list = productService.queryAllData(map);
 
 			context.put("list", list);
 			context.put("totalPages", totalPages);
@@ -151,29 +144,6 @@ public class GoodsAction extends ActionSupport {
 		InputStream input=null;
 		PrintWriter writer  = response.getWriter();
 		try {
-			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
-			String uuid = CommonUtil.getUID();
-			entity.setId(uuid);
-			DealerUser user = (DealerUser) session.get("dealer_user");
-			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
-			if(null!=user) 
-				cityCode = user.getCityCode();
-			entity.setCityCode(cityCode);
-			
-			// 上传展示图片
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
-			File[] resUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : resUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
-							+ File.separator + ApplicationConfig.FTP_ADVER_PATH
-							+ File.separator + portraitFileName;
-					//entity.setPicturePath(picturePath);
-				}
-			}
 			
 			writer.print("<script>alert('添加成功!');window.location.href='goods_list.action';</script>");
 		} catch (Exception e) {
@@ -205,7 +175,7 @@ public class GoodsAction extends ActionSupport {
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
 			String id = request.getParameter("id");
-			entity=goodsService.selectByPrimaryKey(id);
+			entity=productService.selectByPrimaryKey(id);
 			
 			context.put("entity", entity);
 			context.put("currentIndex", currentIndex);
@@ -271,7 +241,7 @@ public class GoodsAction extends ActionSupport {
 		try {
 			writer = response.getWriter();
 			String ids[] = request.getParameterValues("id");
-			goodsService.deleteBatch(ids);
+			productService.deleteBatch(ids);
 			writer.print("<script>alert('商品下架成功!');window.location.href='goods_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();

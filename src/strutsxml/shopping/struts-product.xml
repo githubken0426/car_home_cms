@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="product" extends="globalResult">
+		<action name="product_*" class="com.gtercn.carhome.cms.action.shopping.ProductAction" method="{1}">
+			<result name="list">/shopping/product/list.jsp</result>
+			<result name="add">/shopping/product/add.jsp</result>
+			<result name="update">/shopping/product/update.jsp</result>
+		</action>
+	</package>
+</struts>    

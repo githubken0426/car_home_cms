@@ -15,7 +15,7 @@ response.flushBuffer();
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>商品列表</title>
+	<title>产品列表</title>
 	<link rel="stylesheet" href="<%=path%>/css/pubmain.css" />
 	<link href="<%=request.getContextPath() %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=request.getContextPath() %>/css/global.css" rel="stylesheet" type="text/css"/>
@@ -55,7 +55,7 @@ response.flushBuffer();
   			pno : pageNo,
   			total : totalPage,			 //总页码
   			totalRecords : totalRecords, //总数据条数
-  			hrefFormer : '${pageContext.request.contextPath}/goods_list',//链接前部
+  			hrefFormer : '${pageContext.request.contextPath}/product_list',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
   				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title+"&beginTime="+beginTime +"&endTime="+endTime;
@@ -98,7 +98,7 @@ response.flushBuffer();
 
 	//按条件查询
   	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/product_list.action");
 	  	$("#totalForm").submit();
   	}
   	//重置
@@ -109,7 +109,7 @@ response.flushBuffer();
   	}
   	//添加
   	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/product_addDataPage.action");
 	  	$("#totalForm").submit();
   	}
   	//修改
@@ -131,7 +131,7 @@ response.flushBuffer();
   			return;
   		} else if (ret == 1) {
 			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
+			$("#totalForm").attr("action","${pageContext.request.contextPath}/product_updateDataPage.action");
 			$("#totalForm").submit();	
   		}
   	}
@@ -140,8 +140,10 @@ response.flushBuffer();
   	function deleteData(){
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
-	  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
-	  		$("#totalForm").submit();
+  			if(confirm("确定要删除选中的数据吗?")){
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/product_deleteData.action");
+  		  		$("#totalForm").submit();
+  			}
   		}else{
   			alert("请选择修改项！");
   		}
@@ -159,7 +161,7 @@ response.flushBuffer();
 			<!-- 查询条件区域 -->
 			<div class="content-box">
 			    <div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>[商品]
+			    	<span class="now_location">当前位置:</span>[产品]
 			        <div class="clear"></div>
 			    </div>
 			    <div class=" margin-bottom-5 mt10">
@@ -185,59 +187,27 @@ response.flushBuffer();
 			    <table class="table table-bordered table-striped table-hover">
 		      	<tbody>
 			        <tr align="center">
-			       	 	<td nowrap="nowrap" width="3%"><input type="checkbox" id="isSelectAll"/></td>
+			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="10%"><strong>商品编号</strong></td>
-						<td nowrap="nowrap" width="15%"><strong>商品标题</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品图片</strong></td>
-						<td nowrap="nowrap" width="8%"><strong>商品促销价</strong></td>
-						<td nowrap="nowrap" width="6%"><strong>可用积分</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品库存</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>已售数量</strong></td>
-						<td nowrap="nowrap" width="5%"><strong>热销</strong></td>
-						<td nowrap="nowrap" width="5%""><strong>新品</strong></td>
-						<td nowrap="nowrap" width="10%""><strong>上架时间</strong></td>
-						<td nowrap="nowrap" width="10%"><strong>下架时间</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品状态</strong></td>
+						<td nowrap="nowrap" width="12%"><strong>产品编码</strong></td>
+						<td nowrap="nowrap" width="8%"><strong>所属分类</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>品牌</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>产品名称</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>产品简介</strong></td>
+						<td nowrap="nowrap" width="20%"><strong>产品详情</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>创建时间</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${list}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td title="商品详情">
-							<a href="">${o.skuCode }</a>
-						</td>
-						<td title="${o.goodsTitle }">${o.goodsTitle }</td>
-						<td>
-							<c:if test="${not empty o.smallPictureList[0]}">
-								<img src="${o.smallPictureList[0]}" style="width:40px;height:40px;"/>
-							</c:if>
-						</td>
-						<td>${o.promotionPrice }</td>
-						<td>${o.score }</td>
-						<td>${o.stock }</td>
-						<td>${o.soldNumber }</td>
-						<td>
-							<c:choose>
-								<c:when test="${o.isHot=='Y' }">是</c:when>
-								<c:otherwise>否</c:otherwise>
-							</c:choose>
-						</td>
-						<td>
-							<c:choose>
-								<c:when test="${o.isNew=='Y' }">是</c:when>
-								<c:otherwise>否</c:otherwise>
-							</c:choose>
-						</td>
-						<td><fmt:formatDate value="${o.upTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
-						<td><fmt:formatDate value="${o.downTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
-						<td>
-							<c:choose>
-								<c:when test="${o.status==0 }">在售</c:when>
-								<c:when test="${o.status==1 }">下架</c:when>
-								<c:otherwise>预售</c:otherwise>
-							</c:choose>
-						</td>
+						<td><a href="goods_list.action?productId=${o.id}">${o.spuCode }</a></td>
+						<td>${o.categoryName }</td>
+						<td>${o.brandName }</td>
+						<td>${o.productName }</td>
+						<td title="${o.synopsis }">${o.synopsis }</td>
+						<td title="${o.detail }">${o.detail }</td>
+						<td><fmt:formatDate value="${o.createTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
