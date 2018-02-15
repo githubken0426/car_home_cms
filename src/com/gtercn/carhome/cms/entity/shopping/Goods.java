@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 public class Goods {
     private String id;
-    private String productId;
+    private String brandId;
     private Integer score;
     private String skuCode;
     private BigDecimal primePrice;
@@ -49,15 +49,15 @@ public class Goods {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getProductId() {
-        return productId;
-    }
+    public String getBrandId() {
+		return brandId;
+	}
 
-    public void setProductId(String productId) {
-        this.productId = productId == null ? null : productId.trim();
-    }
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
+	}
 
-    public Integer getScore() {
+	public Integer getScore() {
 		return score;
 	}
 

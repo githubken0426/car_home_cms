@@ -1001,7 +1001,7 @@ input[type="file"] {
 }
 
 select {
-  width: 170px;
+  width: 100px;
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }

@@ -27,4 +27,12 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="queryDataByCategory" resultType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand" parameterType="java.lang.String">
+		select * 
+		from inn_goods_brand 
+		<where>
+			category_id = #{categoryId}
+		</where>
+	</select>
 </mapper>

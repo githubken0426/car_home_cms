@@ -19,7 +19,6 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
-import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
@@ -29,6 +28,8 @@ import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import net.sf.json.JSONArray;
 
 /**
  * 商品
@@ -262,5 +263,31 @@ public class GoodsBrandAction extends ActionSupport {
 			e.printStackTrace();
 			writer.print("<script>alert('删除失败!');window.location.href='brand_list.action';</script>");
 		}
+	}
+	
+	/**
+	 * 获取某分类品牌列表
+	 * @return
+	 */
+	public String getBrandByCtegory() {
+		ServletResponse response = ServletActionContext.getResponse();
+		ServletRequest request = ServletActionContext.getRequest();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+			String categoryId = request.getParameter("categoryId");
+			List<GoodsBrand> brandList= goodsBrandService.queryDataByCategory(categoryId);
+			JSONArray array=JSONArray.fromObject(brandList);
+			writer.print(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Action.ERROR;
+		} finally {
+			writer.flush();
+			writer.close();
+		}
+		return null;
 	}
 }

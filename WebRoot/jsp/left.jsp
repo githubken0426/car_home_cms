@@ -107,20 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</c:if>
 					<c:if test="${menu0001}">
 						<li><a href="javascript:void(0);"
-							onclick="setMainContent('product_list.action');">
-							<i class="fa fa-angle-double-right"></i>产品列表</a>
-						</li>
-					</c:if>
-					<c:if test="${menu0001}">
-						<li><a href="javascript:void(0);"
-							onclick="setMainContent('group_queryAllGroup.action');">
-							<i class="fa fa-angle-double-right"></i>新增产品</a>
-						</li>
-					</c:if>
-					<c:if test="${menu0001}">
-						<li><a href="javascript:void(0);"
-							onclick="setMainContent('group_queryAllGroup.action');">
-							<i class="fa fa-angle-double-right"></i>新增商品</a>
+							onclick="setMainContent('goods_list.action');">
+							<i class="fa fa-angle-double-right"></i>商品管理</a>
 						</li>
 					</c:if>
 					<c:if test="${menu0001}">

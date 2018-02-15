@@ -56,4 +56,6 @@ public interface GoodsBrandMapper {
 	 * @date 2018年2月6日 下午1:52:42
 	 */
 	int deleteBatch(@Param("ids")String []ids);
+	
+	List<GoodsBrand> queryDataByCategory(String categoryId);
 }

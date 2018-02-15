@@ -22,8 +22,12 @@ import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Advertisement;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
+import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
+import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
+import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
+import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -38,6 +42,11 @@ public class GoodsAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private GoodsCategoryService categoryService;
+	@Autowired
+	private GoodsBrandService goodsBrandService;
+	
 	
 	private Goods entity;
 	public Goods getEntity() {
@@ -65,11 +74,14 @@ public class GoodsAction extends ActionSupport {
 			String title = request.getParameter("title");
 			if (title != null && !title.equals("")) {
 				title = URLDecoder.decode(title, "UTF-8");
-				map.put("title", title);
+				map.put("goodsTitle", title);
 			}
-			String productId = request.getParameter("productId");
-			if(StringUtils.isNotBlank(productId))
-				map.put("productId", productId);
+			String categoryId = request.getParameter("categoryId");
+			if(StringUtils.isNotBlank(categoryId) && (!"-1".equals(categoryId)))
+				map.put("categoryId", categoryId);
+			String brandId = request.getParameter("brandId");
+			if(StringUtils.isNotBlank(brandId) && (!"-1".equals(brandId)))
+				map.put("brandId", brandId);
 			String beginTime = request.getParameter("beginTime");
 			if (beginTime != null && !beginTime.equals(""))
 				map.put("beginTime", beginTime);
@@ -91,12 +103,18 @@ public class GoodsAction extends ActionSupport {
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
 			List<Goods> list = goodsService.queryAllData(map);
-
+			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
+			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
+			
+			context.put("brandList", brandList);
+			context.put("categoryList", categoryList);
 			context.put("list", list);
 			context.put("totalPages", totalPages);
 			context.put("totalCount", totalCount);
 			context.put("currentIndex", currentIndex);
 			// 设置查询参数
+			context.put("categoryId", categoryId);
+			context.put("brandId", brandId);
 			context.put("title", title);
 			context.put("beginTime", beginTime);
 			context.put("endTime", endTime);

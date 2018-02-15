@@ -43,4 +43,9 @@ public class GoodsBrandServiceImpl implements GoodsBrandService {
 	public int deleteBatch(String[] ids) {
 		return dao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<GoodsBrand> queryDataByCategory(String categoryId) {
+		return dao.queryDataByCategory(categoryId);
+	}
 }

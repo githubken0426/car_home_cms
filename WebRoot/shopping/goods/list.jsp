@@ -103,6 +103,8 @@ response.flushBuffer();
   	}
   	//重置
   	function clean(){
+  		$("#categoryId").attr("value","-1");
+		$("#brandId").attr("value","-1");
 		$("#title").attr("value","");
 		$("#beginTime").attr("value","");
 		$("#endTime").attr("value","");
@@ -146,7 +148,34 @@ response.flushBuffer();
   			alert("请选择修改项！");
   		}
   	}
-  </script>
+ 
+	function getBrandByCtegory(ele) {
+		if (ele.value!=-1) {
+			$.ajax({
+				type : "POST",
+				dataType : "json",
+				data : {
+					categoryId : ele.value
+				},
+				async : true,
+				url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
+				success : function(data) {
+					$("#brandId").empty();
+					var optA="<option value='-1'>请选择品牌</option>";
+					 $("#brandId").append(optA);
+					 var json = eval(data); //数组       
+		             $.each(json, function (index, item) {
+		                 //循环获取数据  
+		                 var name = json[index].cnName;
+		                 var id = json[index].id;
+		                 var opt="<option value="+id+">"+name+"</option>";
+		                 $("#brandId").append(opt);
+		             });
+				}		
+			});
+		}
+	}
+</script>
   <style type="">
   	.footer{margin-top:0px;}
   </style>
@@ -163,12 +192,31 @@ response.flushBuffer();
 			        <div class="clear"></div>
 			    </div>
 			    <div class=" margin-bottom-5 mt10">
+			    	<span  style="font-size: 15px;margin-left:25px;">
+						所属分类
+						<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" style="height:25px;">
+							<option value="-1">请选择分类</option>
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.id }" <c:if test='${categoryId ==category.id}'>selected='selected'</c:if>>
+									${category.title}
+								</option>
+							</c:forEach>
+						</select> -
+						<select id="brandId" name="brandId" style="height:25px;">
+							<option value="-1">请选择品牌</option>
+							<c:forEach var="brand" items="${brandList}">
+								<option value="${brand.id }" <c:if test='${brandId ==brand.id}'>selected='selected'</c:if>>
+									${brand.cnName}
+								</option>
+							</c:forEach>
+						</select>
+					</span>
 					<!--  条件检索区 -->
 					<span  style="font-size: 15px;margin-left:25px;">
-					标题
-					<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
+						商品标题
+						<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
 					</span>
-					<span class="margin-left-10" style="font-size: 15px;">发表时间</span>
+					<span class="margin-left-10" style="font-size: 15px;">上架时间</span>
 						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"class="laydate-icon" style="width:163px;padding:3px;" />
 						 至
 						<input type="text" id="endTime" name="endTime" placeholder="结束日期" value="${endTime}"class="laydate-icon" style="width:164px;margin:0px 10px 0px 2px;padding:3px;" />

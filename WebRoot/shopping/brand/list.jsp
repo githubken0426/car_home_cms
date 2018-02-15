@@ -165,7 +165,7 @@ response.flushBuffer();
 					<span class="margin-left-10" style="font-size: 15px;">
 						所属分类
 						<select id="categoryId" name="categoryId" style="height:25px;">
-							<option value="-1">全部</option>
+							<option value="-1">请选择分类</option>
 							<c:forEach var="category" items="${categoryList}">
 								<option value="${category.id }" <c:if test='${categoryId ==category.id}'>selected='selected'</c:if>>
 									${category.title}
