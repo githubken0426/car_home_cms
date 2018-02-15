@@ -111,7 +111,7 @@ response.flushBuffer();
   	}
   	//添加
   	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_addPage.action");
 	  	$("#totalForm").submit();
   	}
   	//修改
@@ -150,6 +150,9 @@ response.flushBuffer();
   	}
  
 	function getBrandByCtegory(ele) {
+		$("#brandId").empty();
+		var optA="<option value='-1'>请选择品牌</option>";
+		 $("#brandId").append(optA);
 		if (ele.value!=-1) {
 			$.ajax({
 				type : "POST",
@@ -160,9 +163,6 @@ response.flushBuffer();
 				async : true,
 				url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
 				success : function(data) {
-					$("#brandId").empty();
-					var optA="<option value='-1'>请选择品牌</option>";
-					 $("#brandId").append(optA);
 					 var json = eval(data); //数组       
 		             $.each(json, function (index, item) {
 		                 //循环获取数据  

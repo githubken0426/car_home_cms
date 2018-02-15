@@ -130,7 +130,7 @@ public class GoodsAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	public String addDataPage() {
+	public String addPage() {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
@@ -142,12 +142,19 @@ public class GoodsAction extends ActionSupport {
 				currentIndex = 1;
 			}
 			String title = request.getParameter("title");
+			String categoryId = request.getParameter("categoryId");
+			String brandId = request.getParameter("brandId");
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
+			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
+			
+			context.put("categoryList", categoryList);
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
 			context.put("beginTime", beginTime);
 			context.put("endTime", endTime);
+			context.put("categoryId", categoryId);
+			context.put("brandId", brandId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;

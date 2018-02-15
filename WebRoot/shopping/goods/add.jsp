@@ -21,7 +21,39 @@ response.flushBuffer();
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
+    <link href="<%=path %>/js/webuploader/webuploader.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
+     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
 <script type="text/javascript">
+function getBrandByCtegory(ele) {
+	$("#brandId").empty();
+	var optA="<option value='-1'>请选择品牌</option>";
+	$("#brandId").append(optA);
+	if (ele.value!=-1) {
+		$.ajax({
+			type : "POST",
+			dataType : "json",
+			data : {
+				categoryId : ele.value
+			},
+			async : true,
+			url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
+			success : function(data) {
+				 var json = eval(data); //数组       
+	             $.each(json, function (index, item) {
+	                 //循环获取数据  
+	                 var name = json[index].cnName;
+	                 var id = json[index].id;
+	                 var opt="<option value="+id+">"+name+"</option>";
+	                 $("#brandId").append(opt);
+	             });
+			}		
+		});
+	}
+}
    	//添加
 	function addSubmit(){
    		var title=$.trim($("#title").val());
@@ -46,7 +78,7 @@ response.flushBuffer();
 
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/adver_add.action" method="post" id="addForm">
+		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/goods_add.action" method="post" id="addForm">
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>添加
@@ -56,22 +88,183 @@ response.flushBuffer();
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
-							<td colspan="3">
-								<input type="text" id="title" name="entity.title" tabindex="3" style="width:600px;margin-left:30px;"/>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
+							<td width="40%">
+								<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" style="margin-left:30px;height:25px;">
+									<option value="-1">请选择分类</option>
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.id }" >
+											${category.title}
+										</option>
+									</c:forEach>
+								</select> -
+								<select id="brandId" name="entity.brandId" style="height:25px;">
+									<option value="-1">请选择品牌</option>
+									<c:forEach var="brand" items="${brandList}">
+										<option value="${brand.id }">
+											${brand.cnName}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌默认商品：</td>
+							<td width="40%" >
+								<label style="margin-left: 35px; display: inline;">
+			                		<input type="radio" name="isBrandGoods" checked="checked" value="0" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">是</span>
+			                	</label>
+			                	<label style="margin-left: 25px;display: inline;">
+			                		<input type="radio" name="isBrandGoods" value="1" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">否</span>
+			                	</label>
 							</td>
 						</tr>
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">
-								<input type="text" id="url" name="entity.url" tabindex="3" style="width:600px;margin-left:30px;"/>
+								<input name="entity.goodsTitle" type="text" style="margin-left: 30px;width:60%;" />
 							</td>
 						</tr>
 						<tr>
-							<td width="15%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">进货价：</td>
+							<td>
+								<input name="entity.costPrice" type="text" style="margin-left: 30px;width:200px;" />元
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">促销价：</td>
+							<td>
+								<input name="entity.promotionPrice" type="text" style="margin-left: 30px;width:200px;" />元
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品重量：</td>
+							<td>
+								<input name="entity.weight" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品产地：</td>
+							<td>
+								<input name="entity.productArea" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">库存：</td>
+							<td>
+								<input name="entity.stock" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">已售数量：</td>
+							<td>
+								<input name="entity.soldNumber" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">热门产品：</td>
+							<td>
+								<label style="margin-left: 35px; display: inline;">
+			                		<input type="radio" name="entity.isHot" checked="checked" value="Y" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">是</span>
+			                	</label>
+			                	<label style="margin-left: 25px;display: inline;">
+			                		<input type="radio" name="entity.isHot" value="N" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">否</span>
+			                	</label>
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">新品：</td>
+							<td>
+								<label style="margin-left: 35px; display: inline;">
+			                		<input type="radio" name="entity.isNew" checked="checked" value="Y" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">是</span>
+			                	</label>
+			                	<label style="margin-left: 25px;display: inline;">
+			                		<input type="radio" name="entity.isNew" value="N" style="margin:0px"/>
+			                		<span style="margin-left: 10px;">否</span>
+			                	</label>
+							</td>
+						</tr>
+						
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品简介：</td>
 							<td colspan="3">
-								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
-								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
+								<textarea name="entity.goodsSynopsis" style="height:50px;margin-left: 30px;width:60%;"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品描述：</td>
+							<td colspan="3">
+								<textarea name="entity.goodsDescription" style="height:70px;margin-left: 30px;width:60%;"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品小图：</td>
+							<td colspan="3">
+								<div class="container"  style="margin-left: 30px">
+						            <div id="uploaderSmall" class="uploader">
+						                <div class="queueList">
+						                    <div id="dndAreaSmall" class="placeholder">
+						                        <div id="filePickerSmall"></div>
+						                    </div>
+						                </div>
+						                <div class="statusBar" style="display:none;">
+						                    <div class="progress">
+						                        <span class="text">0%</span>
+						                        <span class="percentage"></span>
+						                    </div>
+						                    <div class="info"></div>
+						                    <div class="btns">
+						                        <div id="filePickerSmall2" class="filePicker2"></div>
+						                        <div class="uploadBtn">开始上传</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品大图：</td>
+							<td colspan="3">
+								<div class="container"  style="margin-left: 30px">
+						            <div id="uploaderBig" class="uploader">
+						                <div class="queueList">
+						                    <div id="dndAreaBig" class="placeholder">
+						                        <div id="filePickerBig"></div>
+						                    </div>
+						                </div>
+						                <div class="statusBar" style="display:none;">
+						                    <div class="progress">
+						                        <span class="text">0%</span>
+						                        <span class="percentage"></span>
+						                    </div>
+						                    <div class="info"></div>
+						                    <div class="btns">
+						                        <div id="filePickerBig2" class="filePicker2"></div>
+						                        <div class="uploadBtn">开始上传</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品详情图：</td>
+							<td colspan="3">
+								<div class="container"  style="margin-left: 30px">
+						            <div id="uploaderDetail" class="uploader">
+						                <div class="queueList">
+						                    <div id="dndAreaDetail" class="placeholder">
+						                        <div id="filePickerDetail"></div>
+						                    </div>
+						                </div>
+						                <div class="statusBar" style="display:none;">
+						                    <div class="progress">
+						                        <span class="text">0%</span>
+						                        <span class="percentage"></span>
+						                    </div>
+						                    <div class="info"></div>
+						                    <div class="btns">
+						                        <div id="filePickerDetail2" class="filePicker2"></div>
+						                        <div class="uploadBtn">开始上传</div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
 							</td>
 						</tr>
 	            	</table>
@@ -91,9 +284,10 @@ response.flushBuffer();
 		</form>
 			
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/article_listData.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/goods_list.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
-			<input type="hidden" name="expertName" value="${expertName}" />
+			<input type="hidden" name="categoryId" value="${categoryId}" />
+			<input type="hidden" name="brandId" value="${brandId}" />
 			<input type="hidden" name="title" value="${title}" />
 			<input type="hidden" name="beginTime" value="${beginTime}" />
 			<input type="hidden" name="endTime" value="${endTime}" />
