@@ -20,14 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
-import com.gtercn.carhome.cms.entity.shopping.Advertisement;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
-import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
+import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
+import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -46,6 +46,8 @@ public class GoodsAction extends ActionSupport {
 	private GoodsCategoryService categoryService;
 	@Autowired
 	private GoodsBrandService goodsBrandService;
+	@Autowired
+	private SpecService specService;
 	
 	
 	private Goods entity;
@@ -133,6 +135,7 @@ public class GoodsAction extends ActionSupport {
 	public String addPage() {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		Map<String,Object> map=new HashMap<String,Object>();
 		try {
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
@@ -146,9 +149,14 @@ public class GoodsAction extends ActionSupport {
 			String brandId = request.getParameter("brandId");
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
-			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
+			String addCategoryId=request.getParameter("addCategoryId");
 			
-			context.put("categoryList", categoryList);
+			map.put("categoryId", addCategoryId);
+			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			context.put("specList", specList);
+			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(addCategoryId);
+			context.put("brandList", brandList);
+			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
 			context.put("beginTime", beginTime);

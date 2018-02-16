@@ -88,17 +88,9 @@ function getBrandByCtegory(ele) {
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
-								<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" style="margin-left:30px;height:25px;">
-									<option value="-1">请选择分类</option>
-									<c:forEach var="category" items="${categoryList}">
-										<option value="${category.id }" >
-											${category.title}
-										</option>
-									</c:forEach>
-								</select> -
-								<select id="brandId" name="entity.brandId" style="height:25px;">
+								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<option value="-1">请选择品牌</option>
 									<c:forEach var="brand" items="${brandList}">
 										<option value="${brand.id }">
@@ -119,6 +111,21 @@ function getBrandByCtegory(ele) {
 			                	</label>
 							</td>
 						</tr>
+						
+						<c:forEach var="spec" items="${specList}">
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">${spec.name}：</td>
+							<td colspan="3">
+								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
+									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
+			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" style="margin:0px;" 
+			                				<c:if test="${index.index==0}">checked='checked'</c:if> />
+			                			<span> ${specItem.item}</span>
+			                		</label>
+								</c:forEach>
+							</td>
+						</tr>
+						</c:forEach>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">

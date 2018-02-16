@@ -23,6 +23,7 @@ response.flushBuffer();
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/cms/kkpager/kkpager.js"></script>
    	<script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
+   	<script type="text/javascript" src="<%=path %>/js/layer/layer.js"></script>
     		
 <script type="text/javascript">
 	function getParameter(name) { 
@@ -109,11 +110,6 @@ response.flushBuffer();
 		$("#beginTime").attr("value","");
 		$("#endTime").attr("value","");
   	}
-  	//添加
-  	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_addPage.action");
-	  	$("#totalForm").submit();
-  	}
   	//修改
   	function updateDataPage(){
   		var checkboxs=$("input:checkbox[name=id]");
@@ -182,132 +178,149 @@ response.flushBuffer();
   </head>
   
 <body>
-<div id="middle">
-	<div class="right"  id="mainFrame">    	
-		<form action="" method="post" id="totalForm" >
-			<!-- 查询条件区域 -->
-			<div class="content-box">
-			    <div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>[商品]
-			        <div class="clear"></div>
-			    </div>
-			    <div class=" margin-bottom-5 mt10">
-			    	<span  style="font-size: 15px;margin-left:25px;">
-						所属分类
-						<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" style="height:25px;">
-							<option value="-1">请选择分类</option>
-							<c:forEach var="category" items="${categoryList}">
-								<option value="${category.id }" <c:if test='${categoryId ==category.id}'>selected='selected'</c:if>>
-									${category.title}
-								</option>
-							</c:forEach>
-						</select> -
-						<select id="brandId" name="brandId" style="height:25px;">
-							<option value="-1">请选择品牌</option>
-							<c:forEach var="brand" items="${brandList}">
-								<option value="${brand.id }" <c:if test='${brandId ==brand.id}'>selected='selected'</c:if>>
-									${brand.cnName}
-								</option>
-							</c:forEach>
+	<div id="middle">
+		<div class="right" id="mainFrame">
+			<form action="" method="post" id="totalForm">
+				<!-- 查询条件区域 -->
+				<div class="content-box">
+					<div class="content-box-header">
+						<span class="now_location">当前位置:</span>[商品]
+						<div class="clear"></div>
+					</div>
+					<div class=" margin-bottom-5 mt10">
+						<span style="font-size: 15px; margin-left: 25px;"> 所属分类 
+						<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" style="height: 25px;">
+								<option value="-1">请选择分类</option>
+								<c:forEach var="category" items="${categoryList}">
+									<option value="${category.id }"
+										<c:if test='${categoryId ==category.id}'>selected='selected'</c:if>>
+										${category.title}</option>
+								</c:forEach>
+						</select> - <select id="brandId" name="brandId" style="height: 25px;">
+								<option value="-1">请选择品牌</option>
+								<c:forEach var="brand" items="${brandList}">
+									<option value="${brand.id }"
+										<c:if test='${brandId ==brand.id}'>selected='selected'</c:if>>
+										${brand.cnName}</option>
+								</c:forEach>
 						</select>
-					</span>
-					<!--  条件检索区 -->
-					<span  style="font-size: 15px;margin-left:25px;">
-						商品标题
-						<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
-					</span>
-					<span class="margin-left-10" style="font-size: 15px;">上架时间</span>
-						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"class="laydate-icon" style="width:163px;padding:3px;" />
-						 至
-						<input type="text" id="endTime" name="endTime" placeholder="结束日期" value="${endTime}"class="laydate-icon" style="width:164px;margin:0px 10px 0px 2px;padding:3px;" />
-			   		<span style="float:right;">
-			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
-			   			<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width:100px;margin-right:8px;" />
-			   	 	</span>
-			   	 	<div style="clear:both"></div>			   		
-			   </div>
+						</span>
+						<!--  条件检索区 -->
+						<span style="font-size: 15px; margin-left: 25px;"> 
+						商品标题 
+						<input type="text" id="title" name="title" value="${title}"
+							style="width: 150px; padding: 5px;" />
+						</span> 
+						<span class="margin-left-10" style="font-size: 15px;">上架时间</span>
+						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"
+							class="laydate-icon" style="width: 163px; padding: 3px;" /> 至 
+						<input type="text" id="endTime" name="endTime" placeholder="结束日期"
+							value="${endTime}" class="laydate-icon" style="width: 164px; margin: 0px 10px 0px 2px; padding: 3px;" />
+						<input type="hidden" id="addCategoryId" name="addCategoryId" />
+						<span style="float: right;"> 
+							<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width: 100px; margin-right: 8px;" /> 
+							<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width: 100px; margin-right: 8px;" />
+						</span>
+						<div style="clear: both"></div>
+					</div>
+				</div>
+				<!-- 检索结果区域 -->
+				<div class="content-box" style="overflow: scroll;">
+					<div class="content-box-header"></div>
+					<table class="table table-bordered table-striped table-hover">
+						<tbody>
+							<tr align="center">
+								<td nowrap="nowrap" width="3%"><input type="checkbox"
+									id="isSelectAll" /></td>
+								<!--  检索结果表格题头 -->
+								<td nowrap="nowrap" width="10%"><strong>商品编号</strong></td>
+								<td nowrap="nowrap" width="15%"><strong>商品标题</strong></td>
+								<td nowrap="nowrap" width="7%"><strong>商品图片</strong></td>
+								<td nowrap="nowrap" width="8%"><strong>商品促销价</strong></td>
+								<td nowrap="nowrap" width="6%"><strong>可用积分</strong></td>
+								<td nowrap="nowrap" width="7%"><strong>商品库存</strong></td>
+								<td nowrap="nowrap" width="7%"><strong>已售数量</strong></td>
+								<td nowrap="nowrap" width="5%"><strong>热销</strong></td>
+								<td nowrap="nowrap" width="5%""><strong>新品</strong></td>
+								<td nowrap="nowrap" width="10%""><strong>上架时间</strong></td>
+								<td nowrap="nowrap" width="10%"><strong>下架时间</strong></td>
+								<td nowrap="nowrap" width="7%"><strong>商品状态</strong></td>
+							</tr>
+							<c:forEach var="o" items="${list}" varStatus="s">
+								<tr align="center">
+									<td><input type="checkbox" name="id" value="${o.id}" /></td>
+									<!--  检索结果表格内容 -->
+									<td title="商品详情"><a href="">${o.skuCode }</a></td>
+									<td title="${o.goodsTitle }">${o.goodsTitle }</td>
+									<td>
+										<c:if test="${not empty o.smallPictureList[0]}">
+											<img src="${o.smallPictureList[0]}" style="width: 40px; height: 40px;" />
+										</c:if>
+									</td>
+									<td>${o.promotionPrice }</td>
+									<td>${o.score }</td>
+									<td>${o.stock }</td>
+									<td>${o.soldNumber }</td>
+									<td>
+										<c:choose>
+											<c:when test="${o.isHot=='Y' }">是</c:when>
+											<c:otherwise>否</c:otherwise>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${o.isNew=='Y' }">是</c:when>
+											<c:otherwise>否</c:otherwise>
+										</c:choose>
+									</td>
+									<td><fmt:formatDate value="${o.upTime }" type="both"
+											pattern="yyyy-MM-dd" dateStyle="long" /></td>
+									<td><fmt:formatDate value="${o.downTime }" type="both"
+											pattern="yyyy-MM-dd" dateStyle="long" /></td>
+									<td>
+										<c:choose>
+											<c:when test="${o.status==0 }">在售</c:when>
+											<c:when test="${o.status==1 }">下架</c:when>
+											<c:otherwise>预售</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<!-- 功能按钮区域 -->
+					<div class=" margin-left-20">
+						<span style="font-size: 14px;">操作:</span> 
+						<span class=" margin-left-10"> 
+							<input onclick="addGoodsLayer();" type="button" value="增加" class="btn btn-info"
+								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" /> 
+							<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info"
+								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" />
+							<input onclick="deleteData();" type="button" value="删除" class="btn btn-info"
+								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" /> 
+						</span>
+					</div>
+				</div>
+			</form>
+			<div class="pkp">
+				<div id="kkpager"></div>
 			</div>
-			<!-- 检索结果区域 -->	
-			<div class="content-box" style="overflow:scroll;">
-			  	<div class="content-box-header"></div>
-			    <table class="table table-bordered table-striped table-hover">
-		      	<tbody>
-			        <tr align="center">
-			       	 	<td nowrap="nowrap" width="3%"><input type="checkbox" id="isSelectAll"/></td>
-						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="10%"><strong>商品编号</strong></td>
-						<td nowrap="nowrap" width="15%"><strong>商品标题</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品图片</strong></td>
-						<td nowrap="nowrap" width="8%"><strong>商品促销价</strong></td>
-						<td nowrap="nowrap" width="6%"><strong>可用积分</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品库存</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>已售数量</strong></td>
-						<td nowrap="nowrap" width="5%"><strong>热销</strong></td>
-						<td nowrap="nowrap" width="5%""><strong>新品</strong></td>
-						<td nowrap="nowrap" width="10%""><strong>上架时间</strong></td>
-						<td nowrap="nowrap" width="10%"><strong>下架时间</strong></td>
-						<td nowrap="nowrap" width="7%"><strong>商品状态</strong></td>
-	       			</tr>
-		       		<c:forEach var="o" items="${list}" varStatus="s">					
-					<tr align="center">
-						<td><input type="checkbox" name="id" value="${o.id}"/></td>
-						<!--  检索结果表格内容 -->
-						<td title="商品详情">
-							<a href="">${o.skuCode }</a>
-						</td>
-						<td title="${o.goodsTitle }">${o.goodsTitle }</td>
-						<td>
-							<c:if test="${not empty o.smallPictureList[0]}">
-								<img src="${o.smallPictureList[0]}" style="width:40px;height:40px;"/>
-							</c:if>
-						</td>
-						<td>${o.promotionPrice }</td>
-						<td>${o.score }</td>
-						<td>${o.stock }</td>
-						<td>${o.soldNumber }</td>
-						<td>
-							<c:choose>
-								<c:when test="${o.isHot=='Y' }">是</c:when>
-								<c:otherwise>否</c:otherwise>
-							</c:choose>
-						</td>
-						<td>
-							<c:choose>
-								<c:when test="${o.isNew=='Y' }">是</c:when>
-								<c:otherwise>否</c:otherwise>
-							</c:choose>
-						</td>
-						<td><fmt:formatDate value="${o.upTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
-						<td><fmt:formatDate value="${o.downTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
-						<td>
-							<c:choose>
-								<c:when test="${o.status==0 }">在售</c:when>
-								<c:when test="${o.status==1 }">下架</c:when>
-								<c:otherwise>预售</c:otherwise>
-							</c:choose>
-						</td>
-					</tr>					
-					</c:forEach>
-		     	  </tbody>
-			   </table>
-			   <!-- 功能按钮区域 -->
-			   <div class=" margin-left-20">
-			   		<span style="font-size:14px;">操作:</span>
-			   		<span class=" margin-left-10">			   	
-				   		<input onclick="addDataPage();" type="button" value="增加" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   	</span>
-			   	</div>
-			</div>
-		</form>
-		<div class="pkp">
-            <div id="kkpager"></div>
-    	</div>
+		</div>
 	</div>
-</div>
-
-<script type="text/javascript">
+	<div id="addFormDiv" style="display: none;">
+		<table style="width: 100%; max-width: 100%;" class="table-bordered">
+			<tr style="height: 6.0rem">
+				<td align="center" width="50%" style="border-right: 0px;">
+				<span style="margin: 10px;">选择分类:</span> 
+					<select id="addCategory" style="height: 25px; width: 150px;">
+						<c:forEach var="category" items="${categoryList}">
+							<option value="${category.id }">${category.title}</option>
+						</c:forEach>
+				</select></td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript">
   !function(){
 	laydate.skin('molv');
 		laydate({
@@ -323,6 +336,25 @@ response.flushBuffer();
 			format : 'YYYY-MM-DD'
 		});
 	}();
+	
+	//打开弹出层
+	function addGoodsLayer(){
+		layer.open({
+			title: '<i class="icon-location-pin"></i><strong>选择商品分类</strong>',
+			type : 1,
+			area: ['500px', '200px'],
+			btn: ["<i class='fa fa-dot-circle-o'></i> 确定","<i class='fa fa-ban'></i> 返回"],
+			closeBtn: 1,
+			content : $("#addFormDiv"),
+			yes: function(index, layero){
+				var value=$("#addCategory").val();
+				$("#addCategoryId").val(value);
+				$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_addPage.action");
+				$("#totalForm").submit();
+				//layer.close(index);
+			}
+		});
+	}
 </script>
 </body>
 </html>
