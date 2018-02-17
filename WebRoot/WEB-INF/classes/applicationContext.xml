@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+           http://www.springframework.org/schema/tx
+     	   http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 采用注释的方式配置bean -->
+	<context:annotation-config />
+
+	<!-- 配置要扫描的包 -->
+	<context:component-scan base-package="com.gtercn.carhome.cms"></context:component-scan>
+
+	<!--开启切面编程功能.强制使用cglib代理,如果为false则spring会自动选择-->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 数据库配置文件位置 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 配置dbcp数据源 -->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver" value="${db.driver}" />
+		<property name="driverUrl" value="${db.url}" />
+		<property name="user" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+		<!-- 最大的数据库连接数 -->
+		<property name="maximumConnectionCount" value="${db.maximumConnectionCount}" />
+		<!-- 最小的数据库连接数 -->
+		<property name="minimumConnectionCount" value="${db.minimumConnectionCount}" />
+		<!-- 最长等待时间，单位毫秒 -->
+		<property name="maximumActiveTime" value="${db.maximumActiveTime}" />
+		<!-- 连接池中可用的连接数量 -->
+		<property name="prototypeCount" value="${db.prototypeCount}" />
+		<!-- 同时最大连接数 -->
+		<property name="simultaneousBuildThrottle" value="${db.simultaneousBuildThrottle}" />
+		 <!--在使用之前测试-->  
+        <property name="testBeforeUse" value="true"></property>  
+        <!--用于保持连接的测试语句 --> 
+        <property name="houseKeepingTestSql" value="select now()"></property> 
+	</bean>
+
+	<!-- 配置mybitasSqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:com/**/*Mapper.xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.**.dao.common;com.**.dao.shopping" />
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!--
+		使用annotation注解方式配置事务 <tx:annotation-driven
+		transaction-manager="transactionManager"/>
+	-->
+
+	<!-- 拦截器方式配置事物 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="append*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="repair" propagation="REQUIRED" />
+			<tx:method name="delAndRepair" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="load*" propagation="SUPPORTS" />
+			<tx:method name="search*" propagation="SUPPORTS" />
+			<tx:method name="register*" propagation="SUPPORTS" />
+			<tx:method name="*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+	<!--把事务控制在Service层-->
+	<aop:config>
+		<aop:pointcut id="transactionPointcut"
+			expression="execution(* com.gtercn.*.cms.service..*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut"
+			advice-ref="transactionAdvice" />
+	</aop:config>
+    
+	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+        <property name="maxUploadSize">   
+            <value>104857600</value>   
+        </property>   
+        <property name="maxInMemorySize">   
+            <value>4096</value>   
+        </property>   
+    </bean>
+</beans>

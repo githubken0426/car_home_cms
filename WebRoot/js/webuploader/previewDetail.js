@@ -53,8 +53,10 @@ jQuery(function() {
 		    mimeTypes: 'image/*'
 		},*/
 		// swf文件路径
-		/*swf:  '/js/Uploader.swf',
-		server: 'http://2betop.net/fileupload.php',*/
+		/*swf:  '/js/Uploader.swf'*/
+		server: '${pageContext.request.contextPath}/fileupload_upload',
+		fileVal:'multiFile',  //提交到到后台，是要用"multiFile"这个名称属性来取文件的
+		formData: { "picType": 3 },
 		disableGlobalDnd : true,
 		chunked : true,
 		fileNumLimit : 300,
@@ -219,11 +221,10 @@ jQuery(function() {
 		} else if (state === 'confirm') {
 			stats = uploader.getStats();
 			if (stats.uploadFailNum) {
-				text = '已成功上传'
-						+ stats.successNum
-						+ '张照片至XX相册，'
+				text =  stats.successNum
+						+ '张成功上传，'
 						+ stats.uploadFailNum
-						+ '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
+						+ '张上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
 			}
 		} else {
 			stats = uploader.getStats();
@@ -254,14 +255,14 @@ jQuery(function() {
 			break;
 		case 'ready':
 			$placeHolder.addClass('element-invisible');
-			$('#filePicker2').removeClass('element-invisible');
+			$('#filePickerDetail2').removeClass('element-invisible');
 			$queue.parent().addClass('filled');
 			$queue.show();
 			$statusBar.removeClass('element-invisible');
 			uploader.refresh();
 			break;
 		case 'uploading':
-			$('#filePicker2').addClass('element-invisible');
+			$('#filePickerDetail2').addClass('element-invisible');
 			$progress.show();
 			$upload.text('暂停上传');
 			break;
@@ -341,7 +342,13 @@ jQuery(function() {
 	uploader.onError = function(code) {
 		alert('Eroor: ' + code);
 	};
-
+	uploader.onUploadSuccess = function(file, response) {
+		var url=response._raw;
+		if(url!='Error'){
+			var imgPath="<input type='hidden' name='detailPicture' value='"+url+"'/>";
+			$("#addForm").append(imgPath);
+		}
+	};
 	$upload.on('click', function() {
 		if ($(this).hasClass('disabled')) {
 			return false;

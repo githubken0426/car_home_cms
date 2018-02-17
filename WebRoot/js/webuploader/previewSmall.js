@@ -53,8 +53,10 @@ jQuery(function() {
 		    mimeTypes: 'image/*'
 		},*/
 		// swf文件路径
-		/*swf:  '/js/Uploader.swf',
-		server: 'http://2betop.net/fileupload.php',*/
+		/*swf:  '/js/Uploader.swf',*/
+		server: '${pageContext.request.contextPath}/fileupload_upload',
+		fileVal:'multiFile',  //提交到到后台，是要用"multiFile"这个名称属性来取文件的
+		formData: { "picType": 1 },
 		disableGlobalDnd : true,
 		chunked : true,
 		fileNumLimit : 300,
@@ -62,7 +64,8 @@ jQuery(function() {
 		fileSingleSizeLimit : 1 * 1024 * 1024
 	// 50 M
 	});
-
+	//uploader.options.formData.type = 1; 
+	
 	// 添加“添加文件”的按钮，
 	uploader.addButton({
 		id : '#filePickerSmall2',
@@ -75,8 +78,7 @@ jQuery(function() {
 				+ file.name + '</p>' + '<p class="imgWrap"></p>'
 				+ '<p class="progress"><span></span></p>' + '</li>'),
 
-		$btns = $(
-				'<div class="file-panel">' + '<span class="cancel">删除</span>'
+		$btns = $('<div class="file-panel">' + '<span class="cancel">删除</span>'
 						+ '<span class="rotateRight">向右旋转</span>'
 						+ '<span class="rotateLeft">向左旋转</span></div>')
 				.appendTo($li), $prgress = $li.find('p.progress span'), $wrap = $li
@@ -150,41 +152,31 @@ jQuery(function() {
 			});
 		});
 
-		$btns
-				.on(
-						'click',
-						'span',
-						function() {
-							var index = $(this).index(), deg;
-							switch (index) {
-							case 0:
-								uploader.removeFile(file);
-								return;
-							case 1:
-								file.rotation += 90;
-								break;
-							case 2:
-								file.rotation -= 90;
-								break;
-							}
-							if (supportTransition) {
-								deg = 'rotate(' + file.rotation + 'deg)';
-								$wrap.css({
-									'-webkit-transform' : deg,
-									'-mos-transform' : deg,
-									'-o-transform' : deg,
-									'transform' : deg
-								});
-							} else {
-								$wrap
-										.css(
-												'filter',
-												'progid:DXImageTransform.Microsoft.BasicImage(rotation='
-														+ (~~((file.rotation / 90) % 4 + 4) % 4)
-														+ ')');
-							}
+		$btns.on('click','span',function() {
+			var index = $(this).index(), deg;
+			switch (index) {
+				case 0:
+					uploader.removeFile(file);
+					return;
+				case 1:
+					file.rotation += 90;
+					break;
+				case 2:
+					file.rotation -= 90;
+					break;
+				}
+				if (supportTransition) {
+					deg = 'rotate(' + file.rotation + 'deg)';
+					$wrap.css({'-webkit-transform' : deg,
+								'-mos-transform' : deg,
+								'-o-transform' : deg,
+								'transform' : deg
 						});
-
+				} else {
+					$wrap.css('filter','progid:DXImageTransform.Microsoft.BasicImage(rotation='
+								+ (~~((file.rotation / 90) % 4 + 4) % 4)+ ')');
+					}
+				});
 		$li.appendTo($queue);
 	}
 
@@ -198,14 +190,11 @@ jQuery(function() {
 
 	function updateTotalProgress() {
 		var loaded = 0, total = 0, spans = $progress.children(), percent;
-
 		$.each(percentages, function(k, v) {
 			total += v[0];
 			loaded += v[0] * v[1];
 		});
-
 		percent = total ? loaded / total : 0;
-
 		spans.eq(0).text(Math.round(percent * 100) + '%');
 		spans.eq(1).css('width', Math.round(percent * 100) + '%');
 		updateStatus();
@@ -219,11 +208,10 @@ jQuery(function() {
 		} else if (state === 'confirm') {
 			stats = uploader.getStats();
 			if (stats.uploadFailNum) {
-				text = '已成功上传'
-						+ stats.successNum
-						+ '张照片至XX相册，'
+				text =  stats.successNum
+						+ '张成功上传，'
 						+ stats.uploadFailNum
-						+ '张照片上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
+						+ '张上传失败，<a class="retry" href="#">重新上传</a>失败图片或<a class="ignore" href="#">忽略</a>'
 			}
 		} else {
 			stats = uploader.getStats();
@@ -254,14 +242,14 @@ jQuery(function() {
 			break;
 		case 'ready':
 			$placeHolder.addClass('element-invisible');
-			$('#filePicker2').removeClass('element-invisible');
+			$('#filePickerSmall2').removeClass('element-invisible');
 			$queue.parent().addClass('filled');
 			$queue.show();
 			$statusBar.removeClass('element-invisible');
 			uploader.refresh();
 			break;
 		case 'uploading':
-			$('#filePicker2').addClass('element-invisible');
+			$('#filePickerSmall2').addClass('element-invisible');
 			$progress.show();
 			$upload.text('暂停上传');
 			break;
@@ -327,17 +315,23 @@ jQuery(function() {
 		case 'uploadFinished':
 			setState('confirm');
 			break;
-
 		case 'startUpload':
 			setState('uploading');
 			break;
-
 		case 'stopUpload':
 			setState('paused');
 			break;
 		}
 	});
 
+	uploader.onUploadSuccess = function(file, response) {
+		var url=response._raw;
+		if(url!='Error'){
+			var imgPath="<input type='hidden' name='smallPicture' value='"+url+"'/>";
+			$("#addForm").append(imgPath);
+		}
+	};
+	
 	uploader.onError = function(code) {
 		alert('Eroor: ' + code);
 	};
@@ -354,7 +348,7 @@ jQuery(function() {
 			uploader.stop();
 		}
 	});
-
+	
 	$info.on('click', '.retry', function() {
 		uploader.retry();
 	});
@@ -362,7 +356,6 @@ jQuery(function() {
 	$info.on('click', '.ignore', function() {
 		alert('todo');
 	});
-
 	$upload.addClass('state-' + state);
 	updateTotalProgress();
 });

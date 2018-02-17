@@ -18,12 +18,14 @@ response.flushBuffer();
 	<link rel="stylesheet" href="<%=path %>/css/pubmain.css" />
 	<link href="<%=path %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=path %>/css/global.css" rel="stylesheet" type="text/css"/>
+	<link href="<%=path %>/js/webuploader/webuploader.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
+    
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
-    <link href="<%=path %>/js/webuploader/webuploader.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
-     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
+    <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
@@ -159,6 +161,16 @@ function getBrandByCtegory(ele) {
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">已售数量：</td>
 							<td>
 								<input name="entity.soldNumber" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">设置搜索标签：</td>
+							<td>
+								<input name="entity.searchTag" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
+							<td>
+								<input id="upTime" name="entity.upTime" type="text" class="laydate-icon" style="width: 200px; margin: 0px 30px; padding: 3px;" />
 							</td>
 						</tr>
 						<tr>
@@ -300,5 +312,15 @@ function getBrandByCtegory(ele) {
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+!function(){
+	laydate.skin('molv');
+		laydate({
+			elem : '#upTime',
+			istoday : true,
+			format : 'YYYY-MM-DD'
+		});
+	}();
+</script>
 </body>
 </html>

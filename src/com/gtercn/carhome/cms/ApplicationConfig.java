@@ -68,6 +68,11 @@ public final class ApplicationConfig {
 	public final static String FTP_ADVER_PATH = "advertisement";
 	
 	public final static String FTP_BRAND_PATH = "brand";
+	
+	public final static String FTP_GOODS_PATH = "goods";
+	public final static String FTP_SMALL_PATH = "small";
+	public final static String FTP_BIG_PATH = "big";
+	public final static String FTP_DETAIL_PATH = "detail";
 	/**
 	 * 获取并追加ftp服务器路径 
 	 * 可在实体类set方法中可调用此方法
