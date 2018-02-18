@@ -14,7 +14,7 @@ response.flushBuffer();
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>新增</title>
+	<title>商品详情</title>
 	<link rel="stylesheet" href="<%=path %>/css/pubmain.css" />
 	<link href="<%=path %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=path %>/css/global.css" rel="stylesheet" type="text/css"/>
@@ -30,46 +30,6 @@ response.flushBuffer();
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
 <script type="text/javascript">
-function getBrandByCtegory(ele) {
-	$("#brandId").empty();
-	var optA="<option value='-1'>请选择品牌</option>";
-	$("#brandId").append(optA);
-	if (ele.value!=-1) {
-		$.ajax({
-			type : "POST",
-			dataType : "json",
-			data : {
-				categoryId : ele.value
-			},
-			async : true,
-			url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
-			success : function(data) {
-				 var json = eval(data); //数组       
-	             $.each(json, function (index, item) {
-	                 //循环获取数据  
-	                 var name = json[index].cnName;
-	                 var id = json[index].id;
-	                 var opt="<option value="+id+">"+name+"</option>";
-	                 $("#brandId").append(opt);
-	             });
-			}		
-		});
-	}
-}
-   	//添加
-	function addSubmit(){
-   		/* var title=$.trim($("#title").val());
-   		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
-   			return false;
-   		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
-   		} */
-		$("#addForm").submit();	
-	}
     //返回
   	function turnBack(){
   		$("#backForm").submit();
@@ -317,15 +277,5 @@ function getBrandByCtegory(ele) {
 		</form>
 	</div>
 </div>
-<script type="text/javascript">
-!function(){
-	laydate.skin('molv');
-		laydate({
-			elem : '#upTime',
-			istoday : true,
-			format : 'YYYY-MM-DD hh:mm ss'
-		});
-	}();
-</script>
 </body>
 </html>

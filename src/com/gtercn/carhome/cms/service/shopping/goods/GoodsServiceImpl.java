@@ -48,4 +48,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public int deleteBatch(String[] ids) {
 		return dao.deleteBatch(ids);
 	}
+
+	@Override
+	public Goods selectBySkuCode(String skuCode) {
+		return dao.selectBySkuCode(skuCode);
+	}
 }

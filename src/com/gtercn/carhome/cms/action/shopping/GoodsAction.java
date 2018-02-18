@@ -187,13 +187,12 @@ public class GoodsAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void addData() throws Exception {
+	public void add() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		InputStream input=null;
 		PrintWriter writer  = response.getWriter();
 		try {
 			String uuid = CommonUtil.getUID();
@@ -227,17 +226,49 @@ public class GoodsAction extends ActionSupport {
 				relation.setSpecItemId(specItemId);
 				relationList.add(relation);
 			}
-
+			goodsService.insert(entity, relationList);
 			writer.print("<script>alert('添加成功!');window.location.href='goods_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
 			writer .print("<script>alert('添加失败!');window.location.href='goods_list.action';</script>");
-		}finally{
-			if(input!=null)
-				input.close();
 		}
 	}
-
+	
+	/**
+	 * 商品详情
+	 * @return
+	 */
+	public String detail() {
+		ActionContext context = ActionContext.getContext();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		try {
+			int currentIndex = 0;// 当前页
+			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
+			if (index != null && index != "") {
+				currentIndex = Integer.valueOf(index);
+			} else {
+				currentIndex = 1;
+			}
+			String title = request.getParameter("title");
+			String categoryId = request.getParameter("categoryId");
+			String brandId = request.getParameter("brandId");
+			String beginTime = request.getParameter("beginTime");
+			String endTime = request.getParameter("endTime");
+			String skuCode=request.getParameter("skuCode");
+			Goods goods=goodsService.selectBySkuCode(skuCode);
+			
+			context.put("currentIndex", currentIndex);
+			context.put("title", title);
+			context.put("beginTime", beginTime);
+			context.put("endTime", endTime);
+			context.put("categoryId", categoryId);
+			context.put("brandId", brandId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Action.ERROR;
+		}
+		return "detail";
+	}
 	/**
 	 * 修改数据(进入画面)
 	 * 

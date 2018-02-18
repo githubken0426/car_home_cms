@@ -18,6 +18,8 @@ public interface GoodsMapper {
 	 * @date 2018年2月6日 下午1:53:15
 	 */
 	Goods selectByPrimaryKey(String id);
+	
+	Goods selectBySkuCode(String skuCode);
 	/**
 	 * 查询所有数据
 	 * @param map

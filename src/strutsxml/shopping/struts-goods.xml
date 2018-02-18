@@ -8,6 +8,7 @@
 			<result name="list">/shopping/goods/list.jsp</result>
 			<result name="add">/shopping/goods/add.jsp</result>
 			<result name="update">/shopping/goods/update.jsp</result>
+			<result name="detail">/shopping/goods/detail.jsp</result>
 		</action>
 	</package>
 </struts>    

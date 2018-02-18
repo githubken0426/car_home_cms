@@ -22,7 +22,7 @@
   </delete>
   
   <insert id="insert" parameterType="java.util.List">
-    insert into inn_spec_item_goods_relation (id, goods_id, spec_item_id)
+    insert into inn_spec_item_goods_relation (goods_id, spec_item_id)
     values 
     <foreach collection="list" item="item" separator=",">
     	( #{item.goodsId,jdbcType=INTEGER}, #{item.specItemId,jdbcType=VARCHAR})

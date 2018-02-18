@@ -6,7 +6,6 @@
     id, brand_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
     sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,create_time,
-    (select category_id from inn_product where id=product_id) as categoryId,
     (select count(1) from inn_comment where goods_id=G.id) as commentCount,
     round((select count(1) as total from inn_comment  where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
     as percentage 
@@ -64,6 +63,15 @@
     from inn_goods G
     <where>
     	status =0 and id = #{id,jdbcType=VARCHAR}
+    </where>
+  </select>
+  <!-- sku查询 -->
+  <select id="selectBySkuCode" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String" >
+    select G.*,
+    (select title from inn_goods_category where id =(select category_id from inn_goods_brand where id=G.brand_id)) categoryId, 
+    from inn_goods G
+    <where>
+    	status =0 and sku_code = #{skuCode,jdbcType=VARCHAR}
     </where>
   </select>
   

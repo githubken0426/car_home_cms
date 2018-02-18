@@ -233,24 +233,28 @@ response.flushBuffer();
 								<td nowrap="nowrap" width="3%"><input type="checkbox"
 									id="isSelectAll" /></td>
 								<!--  检索结果表格题头 -->
-								<td nowrap="nowrap" width="10%"><strong>商品编号</strong></td>
-								<td nowrap="nowrap" width="15%"><strong>商品标题</strong></td>
+								<td nowrap="nowrap" width="13%"><strong>商品编号</strong></td>
+								<td nowrap="nowrap" width="20%"><strong>商品标题</strong></td>
 								<td nowrap="nowrap" width="7%"><strong>商品图片</strong></td>
-								<td nowrap="nowrap" width="8%"><strong>商品促销价</strong></td>
+								<td nowrap="nowrap" width="7%"><strong>商品促销价</strong></td>
 								<td nowrap="nowrap" width="6%"><strong>可用积分</strong></td>
-								<td nowrap="nowrap" width="7%"><strong>商品库存</strong></td>
-								<td nowrap="nowrap" width="7%"><strong>已售数量</strong></td>
+								<td nowrap="nowrap" width="6%"><strong>商品库存</strong></td>
+								<td nowrap="nowrap" width="6%"><strong>已售数量</strong></td>
 								<td nowrap="nowrap" width="5%"><strong>热销</strong></td>
 								<td nowrap="nowrap" width="5%""><strong>新品</strong></td>
-								<td nowrap="nowrap" width="10%""><strong>上架时间</strong></td>
-								<td nowrap="nowrap" width="10%"><strong>下架时间</strong></td>
+								<td nowrap="nowrap" width="8%""><strong>上架时间</strong></td>
+								<td nowrap="nowrap" width="8%"><strong>下架时间</strong></td>
 								<td nowrap="nowrap" width="7%"><strong>商品状态</strong></td>
 							</tr>
 							<c:forEach var="o" items="${list}" varStatus="s">
 								<tr align="center">
 									<td><input type="checkbox" name="id" value="${o.id}" /></td>
 									<!--  检索结果表格内容 -->
-									<td title="商品详情"><a href="">${o.skuCode }</a></td>
+									<td title="商品详情">
+										<a href="${pageContext.request.contextPath}/goods_detail.action?skuCode="${o.skuCode }>
+											${o.skuCode }
+										</a>
+									</td>
 									<td title="${o.goodsTitle }">${o.goodsTitle }</td>
 									<td>
 										<c:if test="${not empty o.smallPictureList[0]}">

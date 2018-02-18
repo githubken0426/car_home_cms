@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 public class Goods {
-    private String id;
+	private String id;
     private String brandId;
     private Integer score;
     private String skuCode;
@@ -36,8 +36,7 @@ public class Goods {
     private double weight;
     
     private String categoryId;
-    private int commentCount;//评论数量
-    private int percentage;     //好评百分比
+   
     private List<String> bigPictureList;
     private List<String> smallPictureList;
     
@@ -57,44 +56,12 @@ public class Goods {
 		this.brandId = brandId;
 	}
 
-	public Integer getScore() {
-		return score;
-	}
-
-	public void setScore(Integer score) {
-		this.score = score;
-	}
-
 	public String getSkuCode() {
         return skuCode;
     }
 
     public void setSkuCode(String skuCode) {
         this.skuCode = skuCode == null ? null : skuCode.trim();
-    }
-
-    public BigDecimal getPrimePrice() {
-        return primePrice;
-    }
-
-    public void setPrimePrice(BigDecimal primePrice) {
-        this.primePrice = primePrice;
-    }
-
-    public BigDecimal getPromotionPrice() {
-        return promotionPrice;
-    }
-
-    public void setPromotionPrice(BigDecimal promotionPrice) {
-        this.promotionPrice = promotionPrice;
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
     }
 
     public String getProductArea() {
@@ -137,14 +104,6 @@ public class Goods {
         this.searchTag = searchTag == null ? null : searchTag.trim();
     }
 
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
     public String getBigPicture() {
 		return bigPicture;
 	}
@@ -162,14 +121,6 @@ public class Goods {
 		this.smallPicture = smallPicture == null ? "" : smallPicture.trim();
 		this.smallPictureList= StringUtils.isNotBlank(smallPicture) ? Arrays.asList(smallPicture.split(",")):null;
 	}
-
-	public Integer getSoldNumber() {
-        return soldNumber;
-    }
-
-    public void setSoldNumber(Integer soldNumber) {
-        this.soldNumber = soldNumber;
-    }
 
     public String getIsHot() {
         return isHot;
@@ -250,31 +201,6 @@ public class Goods {
 	public void setSmallPictureList(List<String> smallPictureList) {
 		this.smallPictureList = smallPictureList;
 	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
-	public int getCommentCount() {
-		return commentCount;
-	}
-
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
-	}
-
-	public int getPercentage() {
-		return percentage;
-	}
-
-	public void setPercentage(int percentage) {
-		this.percentage = percentage;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -289,5 +215,61 @@ public class Goods {
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	public BigDecimal getPrimePrice() {
+		return primePrice;
+	}
+
+	public void setPrimePrice(BigDecimal primePrice) {
+		this.primePrice = primePrice;
+	}
+
+	public BigDecimal getPromotionPrice() {
+		return promotionPrice;
+	}
+
+	public void setPromotionPrice(BigDecimal promotionPrice) {
+		this.promotionPrice = promotionPrice;
+	}
+
+	public BigDecimal getCostPrice() {
+		return costPrice;
+	}
+
+	public void setCostPrice(BigDecimal costPrice) {
+		this.costPrice = costPrice;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
+	public Integer getSoldNumber() {
+		return soldNumber;
+	}
+
+	public void setSoldNumber(Integer soldNumber) {
+		this.soldNumber = soldNumber;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 }
