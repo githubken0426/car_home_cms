@@ -172,6 +172,7 @@ public class GoodsAction extends ActionSupport {
 			context.put("title", title);
 			context.put("beginTime", beginTime);
 			context.put("endTime", endTime);
+			context.put("addCategoryId", addCategoryId);
 			context.put("categoryId", categoryId);
 			context.put("brandId", brandId);
 		} catch (Exception e) {

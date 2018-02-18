@@ -92,7 +92,7 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
-								<input type="hidden" name="categoryId" value="${categoryId}" />
+								<input type="hidden" name="categoryId" value="${addCategoryId}" />
 								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="brand" items="${brandList}">
 										<option value="${brand.id }">
