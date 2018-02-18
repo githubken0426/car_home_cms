@@ -37,4 +37,12 @@
     </where>
     order by sort
   </select>
+  
+  <select id="selectDetailSpecByGoodsId" parameterType="java.lang.String" resultType="com.gtercn.carhome.cms.entity.shopping.Spec">
+  	select S.*,I.item as item from inn_spec S inner join inn_spec_item I on S.id=I.spec_id
+	where I.id in 
+	(select id from inn_spec_item where id in  
+		(select spec_item_id from inn_spec_item_goods_relation where goods_id=#{goodsId,jdbcType=VARCHAR}))
+	order by sort
+  </select>
 </mapper>

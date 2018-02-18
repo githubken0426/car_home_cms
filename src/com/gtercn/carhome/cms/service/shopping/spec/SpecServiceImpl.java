@@ -26,4 +26,8 @@ public class SpecServiceImpl implements SpecService {
 	public Spec selectByPrimaryKey(String id) {
 		return dao.selectByPrimaryKey(id);
 	}
+	@Override
+	public List<Spec> selectDetailSpecByGoodsId(String goodsId) {
+		return dao.selectDetailSpecByGoodsId(goodsId);
+	}
 }

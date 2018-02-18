@@ -255,7 +255,12 @@ public class GoodsAction extends ActionSupport {
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
 			String skuCode=request.getParameter("skuCode");
-			Goods goods=goodsService.selectBySkuCode(skuCode);
+			Goods goods = goodsService.selectBySkuCode(skuCode);
+			String goodsId = goods != null ? goods.getId() : "";
+			List<Spec> specList = specService.selectDetailSpecByGoodsId(goodsId);
+			
+			context.put("specList", specList);
+			context.put("goods", goods);
 			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);

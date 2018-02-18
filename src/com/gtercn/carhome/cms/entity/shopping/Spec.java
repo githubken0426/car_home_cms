@@ -11,7 +11,17 @@ public class Spec {
     private Integer sort;
     private List<SpecItem> items;//规格选项
     
-    public String getId() {
+    private String itme;
+    
+    public String getItme() {
+		return itme;
+	}
+
+	public void setItme(String itme) {
+		this.itme = itme;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -16,4 +16,11 @@ public interface SpecService {
     List<Spec> selectGoodsSpecItems(Map<String,Object> map);
 
 	Spec selectByPrimaryKey(String id);
+	
+	 /**
+     * 查询某商品的规格列表
+     * @param goodsId
+     * @return
+     */
+    List<Spec> selectDetailSpecByGoodsId(String goodsId);
 }
