@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
+import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
@@ -57,7 +59,16 @@ public class GoodsAction extends ActionSupport {
 	public void setEntity(Goods entity) {
 		this.entity = entity;
 	}
+	
+	private String categoryId;
 
+	public String getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
 	/**
 	 * 分页检索数据
 	 * @return
@@ -184,30 +195,38 @@ public class GoodsAction extends ActionSupport {
 		InputStream input=null;
 		PrintWriter writer  = response.getWriter();
 		try {
-			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
+			String sku=CommonUtil.randomUpperCode(5, uuid);
+			entity.setSkuCode(sku);
 			DealerUser user = (DealerUser) session.get("dealer_user");
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
 			if(null!=user) 
 				cityCode = user.getCityCode();
 			entity.setCityCode(cityCode);
+			String small[]=request.getParameterValues("smallPicture");
+			String smallPaths = CommonUtil.arrayToString(small);
+			entity.setSmallPicture(smallPaths);
+			String big[] = request.getParameterValues("bigPicture");
+			String bigPaths = CommonUtil.arrayToString(big);
+			entity.setBigPicture(bigPaths);
+			String dtail[] = request.getParameterValues("detailPicture");
+			String dtailPaths = CommonUtil.arrayToString(dtail);
+			entity.setGoodsDetail(dtailPaths);
 			
-			// 上传展示图片
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
-			File[] resUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : resUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
-							+ File.separator + ApplicationConfig.FTP_ADVER_PATH
-							+ File.separator + portraitFileName;
-					//entity.setPicturePath(picturePath);
-				}
+			//goods item关系表
+			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
+			Map<String,Object> map=new HashMap<String, Object>();
+			map.put("categoryId", categoryId);
+			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			for (Spec spec : specList) {
+				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
+				String specItemId=request.getParameter(spec.getId());
+				relation.setGoodsId(uuid);
+				relation.setSpecItemId(specItemId);
+				relationList.add(relation);
 			}
-			
+
 			writer.print("<script>alert('添加成功!');window.location.href='goods_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();

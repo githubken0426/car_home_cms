@@ -58,7 +58,7 @@ function getBrandByCtegory(ele) {
 }
    	//添加
 	function addSubmit(){
-   		var title=$.trim($("#title").val());
+   		/* var title=$.trim($("#title").val());
    		if(!title){
    			layer.tips('请输入广告标题！', '#title');
    			return false;
@@ -67,7 +67,7 @@ function getBrandByCtegory(ele) {
 		if(!url){
 			layer.tips('请输入广告链接！', '#url');
 			return false;
-   		}
+   		} */
 		$("#addForm").submit();	
 	}
     //返回
@@ -92,6 +92,7 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
+								<input type="hidden" name="categoryId" value="${categoryId}" />
 								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="brand" items="${brandList}">
 										<option value="${brand.id }">
@@ -100,16 +101,9 @@ function getBrandByCtegory(ele) {
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌默认商品：</td>
+							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
 							<td width="40%" >
-								<label style="margin-left: 35px; display: inline;">
-			                		<input type="radio" name="isBrandGoods" checked="checked" value="0" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">是</span>
-			                	</label>
-			                	<label style="margin-left: 25px;display: inline;">
-			                		<input type="radio" name="isBrandGoods" value="1" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">否</span>
-			                	</label>
+								
 							</td>
 						</tr>
 						

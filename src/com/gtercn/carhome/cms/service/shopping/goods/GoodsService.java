@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.gtercn.carhome.cms.entity.shopping.Goods;
+import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
 public interface GoodsService {
 	/**
@@ -37,7 +38,7 @@ public interface GoodsService {
 	 * @throws 
 	 * @date 2018年2月6日 下午1:52:54
 	 */
-    int insert(Goods record);
+    int insert(Goods record,List<SpecItemGoodsRelation> relationList);
     /**
      * 修改
      * @param record

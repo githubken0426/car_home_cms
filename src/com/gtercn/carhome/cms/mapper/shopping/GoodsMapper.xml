@@ -67,4 +67,22 @@
     </where>
   </select>
   
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.Goods" >
+    insert into inn_goods (id, brand_id, score, 
+      sku_code, prime_price, promotion_price, 
+      cost_price, product_area, goods_title, 
+      goods_synopsis, goods_description, search_tag, 
+      stock, small_picture, big_picture,goods_detail, sold_number, 
+      is_hot, is_new, up_time, down_time, 
+      status, weight,city_code, create_time, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{brandId,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, 
+      #{skuCode,jdbcType=VARCHAR}, #{primePrice,jdbcType=DECIMAL}, #{promotionPrice,jdbcType=DECIMAL}, 
+      #{costPrice,jdbcType=DECIMAL}, #{productArea,jdbcType=VARCHAR}, #{goodsTitle,jdbcType=VARCHAR}, 
+      #{goodsSynopsis,jdbcType=VARCHAR}, #{goodsDescription,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, 
+      #{stock,jdbcType=INTEGER}, #{smallPicture,jdbcType=VARCHAR},#{bigPicture,jdbcType=VARCHAR},
+      #{goodsDetail,jdbcType=VARCHAR},#{soldNumber,jdbcType=INTEGER},#{isHot,jdbcType=CHAR},
+      #{isNew,jdbcType=CHAR}, #{upTime,jdbcType=TIMESTAMP}, #{downTime,jdbcType=TIMESTAMP},0 , 
+      #{weight,jdbcType=INTEGER}, #{cityCode,jdbcType=CHAR}, now(),now())
+  </insert>
 </mapper>

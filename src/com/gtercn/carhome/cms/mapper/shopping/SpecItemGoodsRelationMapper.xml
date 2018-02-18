@@ -15,62 +15,20 @@
     from inn_spec_item_goods_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from inn_spec_item_goods_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation" >
-    insert into inn_spec_item_goods_relation (id, goods_id, spec_item_id, 
-      default_item)
-    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{specItemId,jdbcType=VARCHAR}, 
-      #{defaultItem,jdbcType=CHAR})
+  
+  <insert id="insert" parameterType="java.util.List">
+    insert into inn_spec_item_goods_relation (id, goods_id, spec_item_id)
+    values 
+    <foreach collection="list" item="item" separator=",">
+    	( #{item.goodsId,jdbcType=INTEGER}, #{item.specItemId,jdbcType=VARCHAR})
+    </foreach>
   </insert>
-  <insert id="insertSelective" parameterType="com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation" >
-    insert into inn_spec_item_goods_relation
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="goodsId != null" >
-        goods_id,
-      </if>
-      <if test="specItemId != null" >
-        spec_item_id,
-      </if>
-      <if test="defaultItem != null" >
-        default_item,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="goodsId != null" >
-        #{goodsid,jdbcType=INTEGER},
-      </if>
-      <if test="specItemId != null" >
-        #{specItemId,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultItem != null" >
-        #{defaultItem,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation" >
-    update inn_spec_item_goods_relation
-    <set >
-      <if test="goodsId != null" >
-        goods_id = #{goodsid,jdbcType=INTEGER},
-      </if>
-      <if test="specItemId != null" >
-        spec_item_id = #{specItemId,jdbcType=VARCHAR},
-      </if>
-      <if test="defaultItem != null" >
-        default_item = #{defaultItem,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+   
   <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation" >
     update inn_spec_item_goods_relation
     set goods_id = #{goodsId,jdbcType=VARCHAR},

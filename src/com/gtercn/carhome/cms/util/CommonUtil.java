@@ -1,11 +1,16 @@
 package com.gtercn.carhome.cms.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class CommonUtil {
@@ -96,5 +101,47 @@ public class CommonUtil {
 	public static String generateTokenFor16(String userName) {
 		return generateToken(userName).substring(8, 24);
 	}
-
+	/**
+	 * 数组输出纯字符串
+	 * @param t
+	 * @return
+	 */
+	public static <T> String arrayToString(T[] t) {
+		List<T> list = Arrays.asList(t);
+		Iterator<T> it = list.iterator();
+		if (!it.hasNext())
+			return "";
+		StringBuilder sb = new StringBuilder();
+		for (;;) {
+			T e = it.next();
+			sb.append(e);
+			if (!it.hasNext())
+				return sb.toString();
+			sb.append(", ");
+		}
+	}
+	
+	/**
+	 * 生成随机字符
+	 * @param length
+	 * @param id
+	 * @return
+	 */
+	public static String randomUpperCode(int length, String id) {
+		if (StringUtils.isBlank(id))
+			return "";
+		Random random = new Random();
+		// StringBuffer类型的可以append增加字符
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			// 可生成[0,n)之间的整数，获得随机位置
+			int randomNum = random.nextInt(id.length());
+			// 获得随机位置对应的字符
+			char result = id.charAt(randomNum);
+			// 组成一个随机字符串
+			sb.append(result);
+		}
+		String code = sb.toString().toUpperCase() + System.currentTimeMillis();
+		return code;
+	}
 }
