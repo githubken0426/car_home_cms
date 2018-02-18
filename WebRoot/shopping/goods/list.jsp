@@ -251,7 +251,7 @@ response.flushBuffer();
 									<td><input type="checkbox" name="id" value="${o.id}" /></td>
 									<!--  检索结果表格内容 -->
 									<td title="商品详情">
-										<a href="${pageContext.request.contextPath}/goods_detail.action?skuCode="${o.skuCode }>
+										<a href="${pageContext.request.contextPath}/goods_detail.action?skuCode=${o.skuCode }">
 											${o.skuCode }
 										</a>
 									</td>

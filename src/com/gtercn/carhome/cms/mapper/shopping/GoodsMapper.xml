@@ -68,7 +68,8 @@
   <!-- sku查询 -->
   <select id="selectBySkuCode" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String" >
     select G.*,
-    (select title from inn_goods_category where id =(select category_id from inn_goods_brand where id=G.brand_id)) categoryId, 
+    (select cn_name from inn_goods_brand where G.brand_id=id) brandName,
+    (select title from inn_goods_category where id =(select category_id from inn_goods_brand where id=G.brand_id)) categoryId
     from inn_goods G
     <where>
     	status =0 and sku_code = #{skuCode,jdbcType=VARCHAR}

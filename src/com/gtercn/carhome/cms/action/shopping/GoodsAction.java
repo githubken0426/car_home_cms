@@ -260,7 +260,7 @@ public class GoodsAction extends ActionSupport {
 			List<Spec> specList = specService.selectDetailSpecByGoodsId(goodsId);
 			
 			context.put("specList", specList);
-			context.put("goods", goods);
+			context.put("entity", goods);
 			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);

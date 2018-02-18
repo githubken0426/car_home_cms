@@ -18,17 +18,7 @@ response.flushBuffer();
 	<link rel="stylesheet" href="<%=path %>/css/pubmain.css" />
 	<link href="<%=path %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=path %>/css/global.css" rel="stylesheet" type="text/css"/>
-	<link href="<%=path %>/js/webuploader/webuploader.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
-    
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
 <script type="text/javascript">
     //返回
   	function turnBack(){
@@ -43,7 +33,8 @@ response.flushBuffer();
 		<form action="${pageContext.request.contextPath}/goods_add.action" method="post" id="addForm">
 			<div class="content-box">
 				<div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>添加
+			    	<span class="now_location">当前位置:</span>商品详情
+			        <input type="button" value="返回" class="btn btn-info" style="width:80px;position: absolute;right: 40px;top: 25px;" onclick="turnBack()"/>
 			        <div class="clear"></div>
 			    </div>
 		   		<div style="margin:0 auto; margin:10px;">
@@ -52,14 +43,7 @@ response.flushBuffer();
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
-								<input type="hidden" name="categoryId" value="${addCategoryId}" />
-								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
-									<c:forEach var="brand" items="${brandList}">
-										<option value="${brand.id }">
-											${brand.cnName}
-										</option>
-									</c:forEach>
-								</select>
+								<span style="margin-left:30px;">${entity.brandName}</span>
 							</td>
 							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
 							<td width="40%" >
@@ -71,197 +55,132 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">${spec.name}：</td>
 							<td colspan="3">
-								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
-									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
-			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" 
-			                				<c:if test="${index.index==0}">checked='checked'</c:if> />
-			                			<span>${specItem.item} </span>
-			                		</label>
-								</c:forEach>
+								<span style="margin-left:30px;">${spec.item} </span>
 							</td>
 						</tr>
 						</c:forEach>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">
-								<input name="entity.goodsTitle" type="text" style="margin-left: 30px;width:60%;" />
+								<span style="margin-left:30px;">${entity.goodsTitle} </span>
 							</td>
 						</tr>
 						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">原价：</td>
 							<td>
-								<input name="entity.primePrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<span style="margin-left:30px;">${entity.primePrice}(元)</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">促销价：</td>
 							<td>
-								<input name="entity.promotionPrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<span style="margin-left:30px;">${entity.promotionPrice}(元)</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">进货价：</td>
 							<td>
-								<input name="entity.costPrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<span style="margin-left:30px;">${entity.costPrice}(元)</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">积分抵值：</td>
 							<td>
-								<input name="entity.score" type="text" style="margin-left: 30px;width:200px;" />
+								<span style="margin-left:30px;">${entity.score}</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品重量：</td>
 							<td>
-								<input name="entity.weight" type="text" style="margin-left: 30px;width:200px;" />(kg)
+								<span style="margin-left:30px;">${entity.weight}(kg)</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品产地：</td>
 							<td>
-								<input name="entity.productArea" type="text" style="margin-left: 30px;width:200px;" />
+								<span style="margin-left:30px;">${entity.productArea}</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">库存：</td>
 							<td>
-								<input name="entity.stock" type="text" style="margin-left: 30px;width:200px;" />
+								<span style="margin-left:30px;">${entity.stock}</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">已售数量：</td>
 							<td>
-								<input name="entity.soldNumber" type="text" style="margin-left: 30px;width:200px;" />
+								<span style="margin-left:30px;">${entity.soldNumber}</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">设置搜索标签：</td>
 							<td>
-								<input name="entity.searchTag" type="text" style="margin-left: 30px;width:200px;" />
+								<span style="margin-left:30px;">${entity.searchTag}</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
 							<td>
-								<input id="upTime" name="entity.upTime" type="text" readonly="readonly" class="laydate-icon" style="cursor:pointer;width: 200px; margin: 0px 30px; padding: 3px;" />
+								<span style="margin-left:30px;">${entity.upTime}</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">热门产品：</td>
 							<td>
-								<label style="margin-left: 35px; display: inline;">
-			                		<input type="radio" name="entity.isHot" checked="checked" value="Y" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">是</span>
-			                	</label>
-			                	<label style="margin-left: 25px;display: inline;">
-			                		<input type="radio" name="entity.isHot" value="N" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">否</span>
-			                	</label>
+								<c:choose>
+									<c:when test="${entity.isHot eq 'Y' }">
+										<span style="margin-left: 30px;">是</span>
+									</c:when>
+									<c:otherwise>
+										<span style="margin-left: 30px;">否</span>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">新品：</td>
 							<td>
-								<label style="margin-left: 35px; display: inline;">
-			                		<input type="radio" name="entity.isNew" checked="checked" value="Y" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">是</span>
-			                	</label>
-			                	<label style="margin-left: 25px;display: inline;">
-			                		<input type="radio" name="entity.isNew" value="N" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">否</span>
-			                	</label>
+								<c:choose>
+									<c:when test="${entity.isNew eq 'Y' }">
+										<span style="margin-left: 30px;">是</span>
+									</c:when>
+									<c:otherwise>
+										<span style="margin-left: 30px;">否</span>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品简介：</td>
 							<td colspan="3">
-								<textarea name="entity.goodsSynopsis" style="height:50px;margin-left: 30px;width:60%;"></textarea>
+								<span style="margin-left: 30px;" title="${entity.goodsSynopsis }">${entity.goodsSynopsis }</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品描述：</td>
 							<td colspan="3">
-								<textarea name="entity.goodsDescription" style="height:70px;margin-left: 30px;width:60%;"></textarea>
+								<span style="margin-left: 30px;" title="${entity.goodsDescription}">${entity.goodsDescription}</span>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品小图：</td>
 							<td colspan="3">
-								<div class="container"  style="margin-left: 30px">
-						            <div id="uploaderSmall" class="uploader">
-						                <div class="queueList">
-						                    <div id="dndAreaSmall" class="placeholder">
-						                        <div id="filePickerSmall"></div>
-						                    </div>
-						                </div>
-						                <div class="statusBar" style="display:none;">
-						                    <div class="progress">
-						                        <span class="text">0%</span>
-						                        <span class="percentage"></span>
-						                    </div>
-						                    <div class="info"></div>
-						                    <div class="btns">
-						                        <div id="filePickerSmall2" class="filePicker2"></div>
-						                        <div class="uploadBtn">开始上传</div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
+								<span style="margin-left:25px;"></span>
+								<c:forEach var="small" items="${entity.smallPictureList}">
+									<img src="${small}" style="width:50px;height:50px;margin:5px;"></img>
+								</c:forEach>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品大图：</td>
 							<td colspan="3">
-								<div class="container"  style="margin-left: 30px">
-						            <div id="uploaderBig" class="uploader">
-						                <div class="queueList">
-						                    <div id="dndAreaBig" class="placeholder">
-						                        <div id="filePickerBig"></div>
-						                    </div>
-						                </div>
-						                <div class="statusBar" style="display:none;">
-						                    <div class="progress">
-						                        <span class="text">0%</span>
-						                        <span class="percentage"></span>
-						                    </div>
-						                    <div class="info"></div>
-						                    <div class="btns">
-						                        <div id="filePickerBig2" class="filePicker2"></div>
-						                        <div class="uploadBtn">开始上传</div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
+								<span style="margin-left:25px;"></span>
+								<c:forEach var="big" items="${entity.bigPictureList}">
+									<img src="${big}" style="width:100px;height:100px;margin:5px;"></img>
+								</c:forEach>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品详情图：</td>
 							<td colspan="3">
-								<div class="container"  style="margin-left: 30px">
-						            <div id="uploaderDetail" class="uploader">
-						                <div class="queueList">
-						                    <div id="dndAreaDetail" class="placeholder">
-						                        <div id="filePickerDetail"></div>
-						                    </div>
-						                </div>
-						                <div class="statusBar" style="display:none;">
-						                    <div class="progress">
-						                        <span class="text">0%</span>
-						                        <span class="percentage"></span>
-						                    </div>
-						                    <div class="info"></div>
-						                    <div class="btns">
-						                        <div id="filePickerDetail2" class="filePicker2"></div>
-						                        <div class="uploadBtn">开始上传</div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
+								<span style="margin-left:25px;"></span>
+								<c:forEach var="detail" items="${entity.detailPictureList}">
+									<img src="${detail}" style="width:100px;height:100px;margin:5px;"></img>
+								</c:forEach>
 							</td>
 						</tr>
 	            	</table>
-	            	 <table  class="margin-bottom-20 table  no-border" style="margin-top:20px;">
-			              <tr>
-			     	         <td align="right">
-			     	         	<input type="button" value="保存" class="btn btn-info " style="width:80px;" onclick="addSubmit()" />
-			     	         </td>
-			     	         <td align="center">
-			     	         	<input type="button" value="返回" class="btn btn-info " style="width:80px;"  onclick="turnBack()"/>
-			     	         </td>
-			     	         <td></td>
-			             </tr>
-			        </table>
 	         	</div> 
 			</div>
 		</form>

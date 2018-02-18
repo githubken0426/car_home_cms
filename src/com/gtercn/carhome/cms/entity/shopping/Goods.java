@@ -36,11 +36,20 @@ public class Goods {
     private double weight;
     
     private String categoryId;
-   
+    private String brandName;
     private List<String> bigPictureList;
     private List<String> smallPictureList;
+    private List<String> detailPictureList;
     
-    public String getId() {
+    public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -183,7 +192,8 @@ public class Goods {
 	}
 
 	public void setGoodsDetail(String goodsDetail) {
-		this.goodsDetail = goodsDetail;
+		this.goodsDetail = goodsDetail == null ? "" : goodsDetail.trim();
+		this.detailPictureList= StringUtils.isNotBlank(goodsDetail) ? Arrays.asList(goodsDetail.split(",")):null;
 	}
 
 	public List<String> getBigPictureList() {
@@ -201,6 +211,15 @@ public class Goods {
 	public void setSmallPictureList(List<String> smallPictureList) {
 		this.smallPictureList = smallPictureList;
 	}
+	
+	public List<String> getDetailPictureList() {
+		return detailPictureList;
+	}
+
+	public void setDetailPictureList(List<String> detailPictureList) {
+		this.detailPictureList = detailPictureList;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}

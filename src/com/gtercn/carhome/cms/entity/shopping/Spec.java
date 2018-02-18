@@ -11,14 +11,14 @@ public class Spec {
     private Integer sort;
     private List<SpecItem> items;//规格选项
     
-    private String itme;
+    private String item;
     
-    public String getItme() {
-		return itme;
+	public String getItem() {
+		return item;
 	}
 
-	public void setItme(String itme) {
-		this.itme = itme;
+	public void setItem(String item) {
+		this.item = item;
 	}
 
 	public String getId() {
