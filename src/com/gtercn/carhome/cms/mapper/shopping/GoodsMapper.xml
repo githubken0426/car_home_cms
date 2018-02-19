@@ -59,7 +59,8 @@
 	</select>
   <!-- 主键查询 -->
   <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map" >
-    select <include refid="Base_Column_List" /> 
+    select <include refid="Base_Column_List" />,
+    (select category_id from inn_goods_brand where id=G.brand_id) categoryId 
     from inn_goods G
     <where>
     	status =0 and id = #{id,jdbcType=VARCHAR}

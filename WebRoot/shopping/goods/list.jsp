@@ -129,7 +129,7 @@ response.flushBuffer();
   			return;
   		} else if (ret == 1) {
 			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
+			$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_updateDataPage.action");
 			$("#totalForm").submit();	
   		}
   	}

@@ -280,6 +280,7 @@ public class GoodsAction extends ActionSupport {
 	 * @return
 	 */
 	public String updateDataPage() {
+		Map<String,Object> map=new HashMap<String,Object>();
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
@@ -296,7 +297,15 @@ public class GoodsAction extends ActionSupport {
 			String id = request.getParameter("id");
 			entity=goodsService.selectByPrimaryKey(id);
 			
+			String categoryId=entity!=null ?entity.getCategoryId():"";
+			map.put("categoryId", categoryId);
+			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
+			
+			context.put("specList", specList);
+			context.put("brandList", brandList);
 			context.put("entity", entity);
+			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
 			context.put("beginTime", beginTime);

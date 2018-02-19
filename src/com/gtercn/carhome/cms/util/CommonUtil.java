@@ -107,6 +107,8 @@ public class CommonUtil {
 	 * @return
 	 */
 	public static <T> String arrayToString(T[] t) {
+		if(t==null)
+			return "";
 		List<T> list = Arrays.asList(t);
 		Iterator<T> it = list.iterator();
 		if (!it.hasNext())

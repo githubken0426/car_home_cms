@@ -113,7 +113,9 @@ response.flushBuffer();
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
 							<td>
-								<span style="margin-left:30px;">${entity.upTime}</span>
+								<span style="margin-left:30px;">
+									<fmt:formatDate value="${entity.upTime}" type="both"/>
+								</span>
 							</td>
 						</tr>
 						<tr>
