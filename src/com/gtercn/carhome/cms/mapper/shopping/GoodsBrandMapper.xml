@@ -28,6 +28,10 @@
 		</where>
 	</select>
 	
+	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand" parameterType="java.lang.String">
+		select * from inn_goods_brand where id = #{id}
+	</select>
+	
 	<select id="queryDataByCategory" resultType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand" parameterType="java.lang.String">
 		select * 
 		from inn_goods_brand 

@@ -30,60 +30,38 @@ response.flushBuffer();
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
 <script type="text/javascript">
-function getBrandByCtegory(ele) {
-	$("#brandId").empty();
-	var optA="<option value='-1'>请选择品牌</option>";
-	$("#brandId").append(optA);
-	if (ele.value!=-1) {
-		$.ajax({
-			type : "POST",
-			dataType : "json",
-			data : {
-				categoryId : ele.value
-			},
-			async : true,
-			url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
-			success : function(data) {
-				 var json = eval(data); //数组       
-	             $.each(json, function (index, item) {
-	                 //循环获取数据  
-	                 var name = json[index].cnName;
-	                 var id = json[index].id;
-	                 var opt="<option value="+id+">"+name+"</option>";
-	                 $("#brandId").append(opt);
-	             });
-			}		
-		});
+	function deleteImg(type,index){
+		$("#"+type+"Del_"+index).remove();
+		$("#"+type+"Src_"+index).remove();
+		$("#"+type+"Input_"+index).remove();
 	}
-}
+	
    	//添加
 	function addSubmit(){
-   		/* var title=$.trim($("#title").val());
-   		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
-   			return false;
-   		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
-   		} */
-		$("#addForm").submit();	
+		$("#updateForm").submit();	
 	}
     //返回
   	function turnBack(){
   		$("#backForm").submit();
   	}
+    
   </script>
+  <style type="">
+  	.imgDiv {
+            display: inline-block;
+            position: relative;
+        }
+ 
+  </style>
 </head>
 <body>
 
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form action="${pageContext.request.contextPath}/goods_add.action" method="post" id="addForm">
+		<form action="${pageContext.request.contextPath}/goods_update.action" method="post" id="updateForm">
 			<div class="content-box">
 				<div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>添加
+			    	<span class="now_location">当前位置:</span>修改
 			        <div class="clear"></div>
 			    </div>
 		   		<div style="margin:0 auto; margin:10px;">
@@ -251,6 +229,14 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品小图：</td>
 							<td colspan="3">
+								 <div style="margin-left:45px;margin-top:10px;width:100%;">
+								 <c:forEach var="small" items="${entity.smallPictureList}" varStatus="index">
+										<img onclick="deleteImg('small',${index.index})" id="smallDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
+								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
+										<img id="smallSrc_${index.index}" src="${small}" style="width:110px;height:110px;margin-right:3px;"/>
+										<input id="smallInput_${index.index}" type="hidden" value="${small}" name="smallPicture"/>
+									</c:forEach>
+							    </div>
 								<div class="container"  style="margin-left: 30px">
 						            <div id="uploaderSmall" class="uploader">
 						                <div class="queueList">
@@ -276,6 +262,14 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品大图：</td>
 							<td colspan="3">
+								<div style="margin-left:45px;margin-top:10px;width:100%;">
+								 	<c:forEach var="big" items="${entity.bigPictureList}" varStatus="index">
+										<img onclick="deleteImg('big',${index.index})" id="bigDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
+								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
+										<img id="bigSrc_${index.index}" src="${big}" style="width:110px;height:110px;margin-right:3px;"/>
+										<input id="bigInput_${index.index}" type="hidden" value="${big}" name="bigPicture"/>
+									</c:forEach>
+							    </div>
 								<div class="container"  style="margin-left: 30px">
 						            <div id="uploaderBig" class="uploader">
 						                <div class="queueList">
@@ -301,6 +295,14 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品详情图：</td>
 							<td colspan="3">
+								<div style="margin-left:45px;margin-top:10px;width:100%;">
+								 	<c:forEach var="detail" items="${entity.detailPictureList}" varStatus="index">
+										<img onclick="deleteImg('detail',${index.index})" id="detailDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
+								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
+										<img id="detailSrc_${index.index}" src="${detail}" style="width:110px;height:110px;margin-right:3px;"/>
+										<input id="detailInput_${index.index}" type="hidden" value="${detail}" name="detailPicture"/>
+									</c:forEach>
+							    </div>
 								<div class="container"  style="margin-left: 30px">
 						            <div id="uploaderDetail" class="uploader">
 						                <div class="queueList">

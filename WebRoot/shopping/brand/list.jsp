@@ -189,14 +189,13 @@ response.flushBuffer();
 			    <table class="table table-bordered table-striped table-hover">
 		      	<tbody>
 			        <tr align="center">
-			       	 	<td nowrap="nowrap" width="30px"><input type="checkbox" id="isSelectAll"/></td>
+			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="50px"><strong>类别</strong></td>
-						<td nowrap="nowrap" width="50px"><strong>中文名称</strong></td>
-						<td nowrap="nowrap" width="50px"><strong>英文名称</strong></td>
-						<td nowrap="nowrap" width="100px"><strong>logo</strong></td>
-						<td nowrap="nowrap" width="10px"><strong>品牌介绍</strong></td>
-						<td nowrap="nowrap" width="200px"><strong>产品图片</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>类别</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>中文名称</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>英文名称</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>logo</strong></td>
+						<td nowrap="nowrap" width="40%"><strong>品牌介绍</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${list}" varStatus="s">					
 					<tr align="center">
@@ -207,7 +206,6 @@ response.flushBuffer();
 						<td>${o.enName }</td>
 						<td>${o.logo }</td>
 						<td>${o.descrption }</td>
-						<td>${o.picture }</td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
