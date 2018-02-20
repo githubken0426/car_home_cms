@@ -26,9 +26,9 @@ response.flushBuffer();
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
     <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewSmall.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewBig.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewDetail.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
 <script type="text/javascript">
 function getBrandByCtegory(ele) {
 	$("#brandId").empty();
