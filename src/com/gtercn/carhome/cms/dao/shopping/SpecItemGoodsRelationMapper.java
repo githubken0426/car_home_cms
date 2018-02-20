@@ -11,6 +11,6 @@ public interface SpecItemGoodsRelationMapper {
 
     int insert(List<SpecItemGoodsRelation> record);
 
-    SpecItemGoodsRelation selectByPrimaryKey(String id);
+    List<SpecItemGoodsRelation> selectByGoodsId(String goodsId);
 
 }

@@ -13,7 +13,8 @@
   
   <!-- 查询所有 -->
 	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map">
-		select * from inn_goods
+		select G.*,(select cn_name from inn_goods_brand where G.brand_id=id) brandName
+		from inn_goods G
 		<where>
 			city_code=#{cityCode}
 			<if test="categoryId!=null and categoryId!=''">

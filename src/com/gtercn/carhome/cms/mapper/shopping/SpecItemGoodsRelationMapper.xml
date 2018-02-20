@@ -6,14 +6,15 @@
     <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="spec_item_id" property="specItemId" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
     id, goods_id, spec_item_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
+  <!-- 根据商品id查询 -->
+  <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select <include refid="Base_Column_List" />
     from inn_spec_item_goods_relation
-    where id = #{id,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

@@ -26,9 +26,9 @@ response.flushBuffer();
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
     <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/webuploader/previewDetail.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewSmall.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewBig.js"></script>
+    <script type="text/javascript" src="<%=path%>/js/webuploader/updatePreviewDetail.js"></script>
 <script type="text/javascript">
 function getBrandByCtegory(ele) {
 	$("#brandId").empty();
@@ -95,16 +95,14 @@ function getBrandByCtegory(ele) {
 								<input type="hidden" name="categoryId" value="${addCategoryId}" />
 								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="brand" items="${brandList}">
-										<option value="${brand.id }">
+										<option value="${brand.id }" <c:if test="${entity.brandId==brand.id }">selected='selected'</c:if>>
 											${brand.cnName}
 										</option>
 									</c:forEach>
 								</select>
 							</td>
 							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
-							<td width="40%" >
-								
-							</td>
+							<td width="40%" ></td>
 						</tr>
 						
 						<c:forEach var="spec" items="${specList}">
@@ -114,7 +112,10 @@ function getBrandByCtegory(ele) {
 								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
 									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
 			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" 
-			                				<c:if test="${index.index==0}">checked='checked'</c:if> />
+				                			<c:forEach var='realtion' items='${relationLst}'>
+				                				<c:if test='${realtion.specItemId==specItem.id }'>checked='checked'</c:if>
+				                			</c:forEach>
+			                			/>
 			                			<span>${specItem.item} </span>
 			                		</label>
 								</c:forEach>
@@ -124,95 +125,127 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">
-								<input name="entity.goodsTitle" type="text" style="margin-left: 30px;width:60%;" />
+								<input name="entity.goodsTitle" value="${ entity.goodsTitle}" type="text" style="margin-left: 30px;width:60%;" />
 							</td>
 						</tr>
 						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">原价：</td>
 							<td>
-								<input name="entity.primePrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<input name="entity.primePrice" value="${ entity.primePrice}" type="text" style="margin-left: 30px;width:200px;" />(元)
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">促销价：</td>
 							<td>
-								<input name="entity.promotionPrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<input name="entity.promotionPrice" value="${entity.promotionPrice}"type="text" style="margin-left: 30px;width:200px;" />(元)
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">进货价：</td>
 							<td>
-								<input name="entity.costPrice" type="text" style="margin-left: 30px;width:200px;" />(元)
+								<input name="entity.costPrice" value="${entity.costPrice}"type="text" style="margin-left: 30px;width:200px;" />(元)
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">积分抵值：</td>
 							<td>
-								<input name="entity.score" type="text" style="margin-left: 30px;width:200px;" />
+								<input name="entity.score" value="${entity.score}" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品重量：</td>
 							<td>
-								<input name="entity.weight" type="text" style="margin-left: 30px;width:200px;" />(kg)
+								<input name="entity.weight" value="${entity.weight}" type="text" style="margin-left: 30px;width:200px;" />(kg)
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品产地：</td>
 							<td>
-								<input name="entity.productArea" type="text" style="margin-left: 30px;width:200px;" />
+								<input name="entity.productArea" value="${entity.productArea}" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">库存：</td>
 							<td>
-								<input name="entity.stock" type="text" style="margin-left: 30px;width:200px;" />
+								<input name="entity.stock" value="${entity.stock}" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">已售数量：</td>
 							<td>
-								<input name="entity.soldNumber" type="text" style="margin-left: 30px;width:200px;" />
+								<input name="entity.soldNumber" value="${entity.soldNumber}" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">设置搜索标签：</td>
 							<td>
-								<input name="entity.searchTag" type="text" style="margin-left: 30px;width:200px;" />
+								<input name="entity.searchTag" value="${entity.searchTag}"  type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
 							<td>
-								<input id="upTime" name="entity.upTime" type="text" readonly="readonly" class="laydate-icon" style="cursor:pointer;width: 200px; margin: 0px 30px; padding: 3px;" />
+								<input id="upTime" name="entity.upTime" type="text" readonly="readonly" class="laydate-icon" 
+								value="<fmt:formatDate value="${entity.upTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long" />"  
+								style="cursor:pointer;width: 200px; margin: 0px 30px; padding: 3px;" />
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">热门产品：</td>
 							<td>
-								<label style="margin-left: 35px; display: inline;">
-			                		<input type="radio" name="entity.isHot" checked="checked" value="Y" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">是</span>
-			                	</label>
-			                	<label style="margin-left: 25px;display: inline;">
-			                		<input type="radio" name="entity.isHot" value="N" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">否</span>
-			                	</label>
+								<c:choose>
+									<c:when test="${entity.isHot=='Y' }">
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.isHot" value="Y" checked="checked"  style="margin:0px"/>
+					                		<span style="margin-left: 10px;">是</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.isHot" value="N"  style="margin:0px"/>
+					                		<span style="margin-left: 10px;">否</span>
+					                	</label>
+									</c:when>
+									<c:otherwise>
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.isHot" value="Y" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">是</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.isHot" value="N" checked="checked"  style="margin:0px"/>
+					                		<span style="margin-left: 10px;">否</span>
+					                	</label>
+									</c:otherwise>
+								</c:choose>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">新品：</td>
 							<td>
-								<label style="margin-left: 35px; display: inline;">
-			                		<input type="radio" name="entity.isNew" checked="checked" value="Y" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">是</span>
-			                	</label>
-			                	<label style="margin-left: 25px;display: inline;">
-			                		<input type="radio" name="entity.isNew" value="N" style="margin:0px"/>
-			                		<span style="margin-left: 10px;">否</span>
-			                	</label>
+								<c:choose>
+									<c:when test="${entity.isHot=='Y' }">
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.isNew" checked="checked" value="Y" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">是</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.isNew" value="N" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">否</span>
+					                	</label>
+									</c:when>
+									<c:otherwise>
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.isNew" value="Y" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">是</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.isNew" value="N" checked="checked" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">否</span>
+					                	</label>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品简介：</td>
 							<td colspan="3">
-								<textarea name="entity.goodsSynopsis" style="height:50px;margin-left: 30px;width:60%;"></textarea>
+								<textarea name="entity.goodsSynopsis" 
+									style="height:50px;margin-left: 30px;width:60%;">${entity.goodsSynopsis }</textarea>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品描述：</td>
 							<td colspan="3">
-								<textarea name="entity.goodsDescription" style="height:70px;margin-left: 30px;width:60%;"></textarea>
+								<textarea name="entity.goodsDescription" 
+									style="height:70px;margin-left: 30px;width:60%;">${entity.goodsDescription }</textarea>
 							</td>
 						</tr>
 						<tr>

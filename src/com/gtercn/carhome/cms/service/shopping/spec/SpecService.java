@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.gtercn.carhome.cms.entity.shopping.Spec;
+import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
 
 public interface SpecService {
@@ -23,4 +24,7 @@ public interface SpecService {
      * @return
      */
     List<Spec> selectDetailSpecByGoodsId(String goodsId);
+    
+    
+    List<SpecItemGoodsRelation> selectByGoodsId(String goodsId);
 }

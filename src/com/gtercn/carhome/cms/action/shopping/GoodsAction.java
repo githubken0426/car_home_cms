@@ -20,6 +20,7 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
+import com.gtercn.carhome.cms.dao.shopping.SpecItemGoodsRelationMapper;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
@@ -295,13 +296,16 @@ public class GoodsAction extends ActionSupport {
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
 			String id = request.getParameter("id");
-			entity=goodsService.selectByPrimaryKey(id);
+			Goods entity=goodsService.selectByPrimaryKey(id);
 			
-			String categoryId=entity!=null ?entity.getCategoryId():"";
+			String goodsId = entity != null ? entity.getId() : "";
+			List<SpecItemGoodsRelation> relationLst= specService.selectByGoodsId(goodsId);
+			String categoryId = entity != null ? entity.getCategoryId() : "";
 			map.put("categoryId", categoryId);
 			List<Spec> specList=specService.selectGoodsSpecItems(map);
 			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
 			
+			context.put("relationLst", relationLst);
 			context.put("specList", specList);
 			context.put("brandList", brandList);
 			context.put("entity", entity);

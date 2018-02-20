@@ -234,7 +234,8 @@ response.flushBuffer();
 									id="isSelectAll" /></td>
 								<!--  检索结果表格题头 -->
 								<td nowrap="nowrap" width="13%"><strong>商品编号</strong></td>
-								<td nowrap="nowrap" width="20%"><strong>商品标题</strong></td>
+								<td nowrap="nowrap" width="18%"><strong>商品标题</strong></td>
+								<td nowrap="nowrap" width="8%"><strong>品牌</strong></td>
 								<td nowrap="nowrap" width="7%"><strong>商品图片</strong></td>
 								<td nowrap="nowrap" width="7%"><strong>商品促销价</strong></td>
 								<td nowrap="nowrap" width="6%"><strong>可用积分</strong></td>
@@ -242,8 +243,7 @@ response.flushBuffer();
 								<td nowrap="nowrap" width="6%"><strong>已售数量</strong></td>
 								<td nowrap="nowrap" width="5%"><strong>热销</strong></td>
 								<td nowrap="nowrap" width="5%""><strong>新品</strong></td>
-								<td nowrap="nowrap" width="8%""><strong>上架时间</strong></td>
-								<td nowrap="nowrap" width="8%"><strong>下架时间</strong></td>
+								<td nowrap="nowrap" width="10%""><strong>上架时间</strong></td>
 								<td nowrap="nowrap" width="7%"><strong>商品状态</strong></td>
 							</tr>
 							<c:forEach var="o" items="${list}" varStatus="s">
@@ -256,6 +256,7 @@ response.flushBuffer();
 										</a>
 									</td>
 									<td title="${o.goodsTitle }">${o.goodsTitle }</td>
+									<td>${o.brandName }</td>
 									<td>
 										<c:if test="${not empty o.smallPictureList[0]}">
 											<img src="${o.smallPictureList[0]}" style="width: 40px; height: 40px;" />
@@ -277,10 +278,9 @@ response.flushBuffer();
 											<c:otherwise>否</c:otherwise>
 										</c:choose>
 									</td>
-									<td><fmt:formatDate value="${o.upTime }" type="both"
-											pattern="yyyy-MM-dd" dateStyle="long" /></td>
-									<td><fmt:formatDate value="${o.downTime }" type="both"
-											pattern="yyyy-MM-dd" dateStyle="long" /></td>
+									<td>
+										<fmt:formatDate value="${o.upTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long" />
+									</td>
 									<td>
 										<c:choose>
 											<c:when test="${o.status==0 }">在售</c:when>
