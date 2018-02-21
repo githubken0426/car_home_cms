@@ -13,4 +13,5 @@ public interface SpecItemGoodsRelationMapper {
 
     List<SpecItemGoodsRelation> selectByGoodsId(String goodsId);
 
+    int deleteByGoodsId(String goodsId);
 }

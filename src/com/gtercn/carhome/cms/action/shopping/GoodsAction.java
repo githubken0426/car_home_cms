@@ -61,14 +61,6 @@ public class GoodsAction extends ActionSupport {
 		this.entity = entity;
 	}
 	
-	private String categoryId;
-
-	public String getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
 	
 	/**
 	 * 分页检索数据
@@ -218,7 +210,7 @@ public class GoodsAction extends ActionSupport {
 			//goods item关系表
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
-			map.put("categoryId", categoryId);
+			map.put("categoryId", entity.getCategoryId());
 			List<Spec> specList=specService.selectGoodsSpecItems(map);
 			for (Spec spec : specList) {
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
@@ -327,36 +319,39 @@ public class GoodsAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void updateData() throws Exception {
+	public void update() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		InputStream input =null;
 		PrintWriter writer = response.getWriter();
 		try {
-			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
-			// 上传展示图片
-			File[] viewResUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : viewResUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths, portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH + File.separator
-							+ ApplicationConfig.FTP_ADVER_PATH + File.separator + portraitFileName;
-					//entity.setPicturePath(picturePath);
-				}
+			String small[]=request.getParameterValues("smallPicture");
+			String smallPaths = CommonUtil.arrayToString(small);
+			entity.setSmallPicture(smallPaths);
+			String big[] = request.getParameterValues("bigPicture");
+			String bigPaths = CommonUtil.arrayToString(big);
+			entity.setBigPicture(bigPaths);
+			String dtail[] = request.getParameterValues("detailPicture");
+			String dtailPaths = CommonUtil.arrayToString(dtail);
+			entity.setGoodsDetail(dtailPaths);
+			//goods item关系表
+			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
+			Map<String,Object> map=new HashMap<String, Object>();
+			map.put("categoryId", entity.getCategoryId());
+			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			for (Spec spec : specList) {
+				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
+				String specItemId=request.getParameter(spec.getId());
+				relation.setGoodsId(entity.getId());
+				relation.setSpecItemId(specItemId);
+				relationList.add(relation);
 			}
-			
+			goodsService.update(entity, relationList);
 			writer .print("<script>alert('修改成功!');window.location.href='goods_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
 			writer.print("<script>alert('修改失败!');window.location.href='goods_list.action';</script>");
-		}finally{
-			if(input!=null)
-				input.close();
 		}
 	}
 

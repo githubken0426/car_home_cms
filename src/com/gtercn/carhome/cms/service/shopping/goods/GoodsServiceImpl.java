@@ -40,7 +40,9 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public int update(Goods record) {
+	public int update(Goods record,List<SpecItemGoodsRelation> relationList) {
+		relationDao.deleteByGoodsId(record.getId());
+		relationDao.insert(relationList);
 		return dao.update(record);
 	}
 

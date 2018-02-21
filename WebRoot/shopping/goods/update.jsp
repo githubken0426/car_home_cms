@@ -22,9 +22,6 @@ response.flushBuffer();
     <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
     
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
@@ -38,7 +35,7 @@ response.flushBuffer();
 	
    	//添加
 	function addSubmit(){
-		$("#updateForm").submit();	
+		$("#addForm").submit();	
 	}
     //返回
   	function turnBack(){
@@ -46,19 +43,12 @@ response.flushBuffer();
   	}
     
   </script>
-  <style type="">
-  	.imgDiv {
-            display: inline-block;
-            position: relative;
-        }
- 
-  </style>
 </head>
 <body>
 
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form action="${pageContext.request.contextPath}/goods_update.action" method="post" id="updateForm">
+		<form action="${pageContext.request.contextPath}/goods_update.action" method="post" id="addForm">
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>修改
@@ -70,7 +60,8 @@ response.flushBuffer();
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
-								<input type="hidden" name="categoryId" value="${addCategoryId}" />
+								<input type="hidden" name="entity.id" value="${entity.id}" />
+								<input type="hidden" name="entity.categoryId" value="${entity.categoryId}" />
 								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="brand" items="${brandList}">
 										<option value="${brand.id }" <c:if test="${entity.brandId==brand.id }">selected='selected'</c:if>>
@@ -152,11 +143,30 @@ response.flushBuffer();
 							<td>
 								<input name="entity.searchTag" value="${entity.searchTag}"  type="text" style="margin-left: 30px;width:200px;" />
 							</td>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品状态：</td>
 							<td>
-								<input id="upTime" name="entity.upTime" type="text" readonly="readonly" class="laydate-icon" 
-								value="<fmt:formatDate value="${entity.upTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long" />"  
-								style="cursor:pointer;width: 200px; margin: 0px 30px; padding: 3px;" />
+								<c:choose>
+									<c:when test="${entity.status=='0' }">
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.status" checked="checked" value="0" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">上架</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.status" value="1" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">下架</span>
+					                	</label>
+									</c:when>
+									<c:otherwise>
+										<label style="margin-left: 35px; display: inline;">
+					                		<input type="radio" name="entity.status" value="0" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">上架</span>
+					                	</label>
+					                	<label style="margin-left: 25px;display: inline;">
+					                		<input type="radio" name="entity.status" value="1" checked="checked" style="margin:0px"/>
+					                		<span style="margin-left: 10px;">下架</span>
+					                	</label>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 						<tr>
@@ -211,7 +221,6 @@ response.flushBuffer();
 								</c:choose>
 							</td>
 						</tr>
-						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品简介：</td>
 							<td colspan="3">
@@ -229,7 +238,7 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品小图：</td>
 							<td colspan="3">
-								 <div style="margin-left:45px;margin-top:10px;width:100%;">
+								 <div style="margin-left:45px;margin-top:10px;width:100%;margin-bottom:10px;">
 								 <c:forEach var="small" items="${entity.smallPictureList}" varStatus="index">
 										<img onclick="deleteImg('small',${index.index})" id="smallDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
 								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
@@ -262,7 +271,7 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品大图：</td>
 							<td colspan="3">
-								<div style="margin-left:45px;margin-top:10px;width:100%;">
+								<div style="margin-left:45px;margin-top:10px;width:100%;margin-bottom:10px;">
 								 	<c:forEach var="big" items="${entity.bigPictureList}" varStatus="index">
 										<img onclick="deleteImg('big',${index.index})" id="bigDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
 								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
@@ -295,7 +304,7 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品详情图：</td>
 							<td colspan="3">
-								<div style="margin-left:45px;margin-top:10px;width:100%;">
+								<div style="margin-left:45px;margin-top:10px;width:100%;margin-bottom:10px;">
 								 	<c:forEach var="detail" items="${entity.detailPictureList}" varStatus="index">
 										<img onclick="deleteImg('detail',${index.index})" id="detailDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
 								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
@@ -352,15 +361,5 @@ response.flushBuffer();
 		</form>
 	</div>
 </div>
-<script type="text/javascript">
-!function(){
-	laydate.skin('molv');
-		laydate({
-			elem : '#upTime',
-			istoday : true,
-			format : 'YYYY-MM-DD hh:mm ss'
-		});
-	}();
-</script>
 </body>
 </html>

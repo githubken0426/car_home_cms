@@ -22,9 +22,7 @@ response.flushBuffer();
     <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
     
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
-    <script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
@@ -92,7 +90,7 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品品牌：</td>
 							<td width="40%">
-								<input type="hidden" name="categoryId" value="${addCategoryId}" />
+								<input type="hidden" name="entity.categoryId" value="${addCategoryId}" />
 								<select id="brandId" name="entity.brandId" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="brand" items="${brandList}">
 										<option value="${brand.id }">
@@ -173,9 +171,16 @@ function getBrandByCtegory(ele) {
 							<td>
 								<input name="entity.searchTag" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">上架时间：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品状态：</td>
 							<td>
-								<input id="upTime" name="entity.upTime" type="text" readonly="readonly" class="laydate-icon" style="cursor:pointer;width: 200px; margin: 0px 30px; padding: 3px;" />
+								<label style="margin-left: 35px; display: inline;">
+					              <input type="radio" name="entity.status" checked="checked" value="0" style="margin:0px"/>
+					              <span style="margin-left: 10px;">上架</span>
+					             </label>
+					             <label style="margin-left: 25px;display: inline;">
+					               <input type="radio" name="entity.status" value="1" style="margin:0px"/>
+					                <span style="margin-left: 10px;">下架</span>
+					             </label>
 							</td>
 						</tr>
 						<tr>
@@ -317,15 +322,5 @@ function getBrandByCtegory(ele) {
 		</form>
 	</div>
 </div>
-<script type="text/javascript">
-!function(){
-	laydate.skin('molv');
-		laydate({
-			elem : '#upTime',
-			istoday : true,
-			format : 'YYYY-MM-DD hh:mm ss'
-		});
-	}();
-</script>
 </body>
 </html>

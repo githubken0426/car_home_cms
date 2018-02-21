@@ -34,6 +34,7 @@ response.flushBuffer();
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>商品详情
+			    	<c:if test="${entity.status==1 }"><font color='red'>(此商品已下架)</font></c:if>
 			        <input type="button" value="返回" class="btn btn-info" style="width:80px;position: absolute;right: 40px;top: 25px;" onclick="turnBack()"/>
 			        <div class="clear"></div>
 			    </div>
@@ -45,9 +46,15 @@ response.flushBuffer();
 							<td width="40%">
 								<span style="margin-left:30px;">${entity.brandName}</span>
 							</td>
-							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
+							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">
+								<c:if test="${entity.status==1 }">下架时间:</c:if>
+							</td>
 							<td width="40%" >
-								
+								<c:if test="${entity.status==1 }">
+									<span style="margin-left:30px;">
+										<fmt:formatDate value="${entity.downTime}" type="both"/>
+									</span>
+								</c:if>
 							</td>
 						</tr>
 						

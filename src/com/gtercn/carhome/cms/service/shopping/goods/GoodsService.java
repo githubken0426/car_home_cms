@@ -47,7 +47,7 @@ public interface GoodsService {
      * @return
      * 2017-3-1 上午11:14:59
      */
-    int update(Goods record);
+    int update(Goods record,List<SpecItemGoodsRelation> relationList);
     /**
 	 * 批量下架
 	 * @param ids

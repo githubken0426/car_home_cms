@@ -17,9 +17,9 @@
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByGoodsId" parameterType="java.lang.String" >
     delete from inn_spec_item_goods_relation
-    where id = #{id,jdbcType=INTEGER}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
   </delete>
   
   <insert id="insert" parameterType="java.util.List">
@@ -30,11 +30,5 @@
     </foreach>
   </insert>
    
-  <update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation" >
-    update inn_spec_item_goods_relation
-    set goods_id = #{goodsId,jdbcType=VARCHAR},
-      spec_item_id = #{specItemId,jdbcType=VARCHAR},
-      default_item = #{defaultItem,jdbcType=CHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
 </mapper>

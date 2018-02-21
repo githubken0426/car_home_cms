@@ -64,7 +64,7 @@
     (select category_id from inn_goods_brand where id=G.brand_id) categoryId 
     from inn_goods G
     <where>
-    	status =0 and id = #{id,jdbcType=VARCHAR}
+    	id = #{id,jdbcType=VARCHAR}
     </where>
   </select>
   <!-- sku查询 -->
@@ -74,7 +74,7 @@
     (select title from inn_goods_category where id =(select category_id from inn_goods_brand where id=G.brand_id)) categoryId
     from inn_goods G
     <where>
-    	status =0 and sku_code = #{skuCode,jdbcType=VARCHAR}
+    	sku_code = #{skuCode,jdbcType=VARCHAR}
     </where>
   </select>
   
@@ -93,7 +93,36 @@
       #{goodsSynopsis,jdbcType=VARCHAR}, #{goodsDescription,jdbcType=VARCHAR}, #{searchTag,jdbcType=VARCHAR}, 
       #{stock,jdbcType=INTEGER}, #{smallPicture,jdbcType=VARCHAR},#{bigPicture,jdbcType=VARCHAR},
       #{goodsDetail,jdbcType=VARCHAR},#{soldNumber,jdbcType=INTEGER},#{isHot,jdbcType=CHAR},
-      #{isNew,jdbcType=CHAR}, #{upTime,jdbcType=TIMESTAMP}, #{downTime,jdbcType=TIMESTAMP},0 , 
+      #{isNew,jdbcType=CHAR}, now(), #{downTime,jdbcType=TIMESTAMP},0 , 
       #{weight,jdbcType=INTEGER}, #{cityCode,jdbcType=CHAR}, now(),now())
   </insert>
+  
+  <update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.Goods">
+	update inn_goods G
+	<set>
+		brand_id=#{brandId,jdbcType=VARCHAR},
+		score=#{score,jdbcType=VARCHAR},
+		prime_price=#{primePrice,jdbcType=DECIMAL},
+		promotion_price=#{promotionPrice,jdbcType=DECIMAL},
+		cost_price=#{costPrice,jdbcType=DECIMAL},
+		product_area=#{productArea,jdbcType=VARCHAR},
+		goods_title=#{goodsTitle,jdbcType=VARCHAR},
+		goods_synopsis=#{goodsSynopsis,jdbcType=VARCHAR},
+		goods_description=#{goodsDescription,jdbcType=VARCHAR},
+		search_tag=#{searchTag,jdbcType=VARCHAR},
+		stock=#{stock,jdbcType=INTEGER},
+		small_picture=#{smallPicture,jdbcType=VARCHAR},
+		big_picture=#{bigPicture,jdbcType=VARCHAR},
+		goods_detail=#{goodsDetail,jdbcType=VARCHAR},
+		sold_number=#{soldNumber,jdbcType=INTEGER},
+		is_hot=#{isHot,jdbcType=CHAR},
+		is_new=#{isNew,jdbcType=CHAR},
+		G.status=#{status,jdbcType=INTEGER},
+		<if test="status ==1">
+			down_time=now(),
+		</if>
+		weight=#{weight,jdbcType=DOUBLE}
+	</set>
+	where id=#{id,jdbcType=VARCHAR}
+  </update>
 </mapper>
