@@ -6,12 +6,13 @@ public class Advertisement {
     private String id;
     private String title;
     private String picturePath;
-    private String url;
+    private String goodsId;
     private String cityCode;
     private String deleteFlag;
     private Date insertTime;
     private Date updateTime;
-
+    private String goodsTitle;
+    
     public String getId() {
         return id;
     }
@@ -35,16 +36,23 @@ public class Advertisement {
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath == null ? null : picturePath.trim();
     }
+    public String getGoodsId() {
+		return goodsId;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
+	}
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
-    }
+	public String getGoodsTitle() {
+		return goodsTitle;
+	}
 
-    public String getCityCode() {
+	public void setGoodsTitle(String goodsTitle) {
+		this.goodsTitle = goodsTitle;
+	}
+
+	public String getCityCode() {
         return cityCode;
     }
 

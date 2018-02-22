@@ -191,7 +191,7 @@ response.flushBuffer();
 						<!--  检索结果表格题头 -->
 						<td nowrap="nowrap" width="120px"><strong>广告标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>广告链接</strong></td>
+						<td nowrap="nowrap" width="220px"><strong>关联商品</strong></td>
 						<td nowrap="nowrap" width="70px"><strong>城市编号</strong></td>
 						<td nowrap="nowrap" width="120px"><strong>创建时间</strong></td>
 	       			</tr>
@@ -205,7 +205,7 @@ response.flushBuffer();
 								<img src="${ o.picturePath }"  style="width:40px;height:40px;"/>
 							</c:if>
 						</td>
-						<td>${o.url }</td>
+						<td>${o.goodsTitle }</td>
 						<td>${o.cityCode }</td>
 						<td><fmt:formatDate value="${o.insertTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
 					</tr>					
@@ -217,8 +217,8 @@ response.flushBuffer();
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
 				   		<input onclick="addDataPage();" type="button" value="增加" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
 			   	</div>
 			</div>

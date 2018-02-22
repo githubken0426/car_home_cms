@@ -174,7 +174,7 @@ response.flushBuffer();
 						</select>
 					</span>
 					<span style="font-size: 15px;margin-left:25px;">
-						中文名称<input type="text" id="cnName" name="cnName" value="${cnName}" style="width:150px;padding:5px;" />
+						中文名称 <input type="text" id="cnName" name="cnName" value="${cnName}" style="width:150px;padding:5px;" />
 					</span>
 					<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
@@ -204,7 +204,11 @@ response.flushBuffer();
 						<td>${o.categoryName }</td>
 						<td>${o.cnName }</td>
 						<td>${o.enName }</td>
-						<td>${o.logo }</td>
+						<td>
+							<c:if test="${ not empty o.logo }">
+								<img src="${ o.logo }"  style="width:40px;height:40px;"/>
+							</c:if>
+						</td>
 						<td>${o.descrption }</td>
 					</tr>					
 					</c:forEach>
@@ -215,8 +219,8 @@ response.flushBuffer();
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
 				   		<input onclick="addDataPage();" type="button" value="增加" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
 			   	</div>
 			</div>

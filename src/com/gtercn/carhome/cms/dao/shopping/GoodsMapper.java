@@ -27,6 +27,8 @@ public interface GoodsMapper {
 	 * 2017-2-21 下午02:48:14
 	 */
 	List<Goods> queryAllData(Map<String, Object> map);
+	
+	List<Goods> queryGoodsByCity(@Param("cityCode")String cityCode);
 	/**
 	 * 查询所有数据条数
 	 * @param map

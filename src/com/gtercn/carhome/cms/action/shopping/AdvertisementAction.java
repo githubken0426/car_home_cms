@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Advertisement;
+import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
+import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -35,6 +37,8 @@ public class AdvertisementAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private AdvertisementService advertisementService;
+	@Autowired
+	private GoodsService goodsService;
 	
 	private Advertisement entity;
 	public Advertisement getEntity() {
@@ -110,6 +114,14 @@ public class AdvertisementAction extends ActionSupport {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
+			Map<String, Object> session = context.getSession();
+			DealerUser user = (DealerUser) session.get("dealer_user");
+			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
+			if(null!=user) 
+				cityCode = user.getCityCode();
+			List<Goods> goodsList=goodsService.queryGoodsByCity(cityCode);
+			context.put("goodsList", goodsList);
+			
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
 			if (index != null && index != "") {
@@ -191,6 +203,14 @@ public class AdvertisementAction extends ActionSupport {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
+			Map<String, Object> session = context.getSession();
+			DealerUser user = (DealerUser) session.get("dealer_user");
+			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
+			if(null!=user) 
+				cityCode = user.getCityCode();
+			List<Goods> goodsList=goodsService.queryGoodsByCity(cityCode);
+			context.put("goodsList", goodsList);
+			
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
 			if (index != null && index != "") {

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gtercn.carhome.cms.dao.shopping.AdvertisementMapper">
 	<sql id="Base_Column_List">
-		id, title, picture_path, url,city_code,insert_time,
-		update_time
+		id, title, picture_path, goods_id,city_code,insert_time,
+		update_time,(select goods_title from inn_goods where id=goods_id) goodsTitle
 	</sql>
 	<!-- <![CDATA[ right(left(content,position('</' in content)-1),position('>' 
 		in content)) as content,]]> -->
@@ -48,29 +48,26 @@
 	<!-- 插入数据 -->
 	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
 		insert into inn_advertisement
-		(id, title, picture_path,url,city_code,delete_flag,
+		(id, title, picture_path,goods_id,city_code,delete_flag,
 		insert_time,update_time)
 		values
 		(#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
-		#{picturePath,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},
+		#{picturePath,jdbcType=VARCHAR},#{goodsId,jdbcType=VARCHAR},
 		#{cityCode,jdbcType=VARCHAR},0,now(),now())
 	</insert>
 
 	<!-- 修改 -->
-	<update id="update"
-		parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
+	<update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
 		update inn_advertisement
 		set
 		title = #{title,jdbcType=VARCHAR},
 		picture_path = #{picturePath,jdbcType=VARCHAR},
-		url = #{url,jdbcType=INTEGER}
+		goods_id = #{goodsId,jdbcType=INTEGER}
 		where
 		id = #{id,jdbcType=VARCHAR}
 	</update>
 
-	<select id="selectByPrimaryKey"
-		resultType="com.gtercn.carhome.cms.entity.shopping.Advertisement"
-		parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Advertisement" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from inn_advertisement

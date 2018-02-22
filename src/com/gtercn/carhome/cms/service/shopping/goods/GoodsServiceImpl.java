@@ -55,4 +55,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public Goods selectBySkuCode(String skuCode) {
 		return dao.selectBySkuCode(skuCode);
 	}
+
+	@Override
+	public List<Goods> queryGoodsByCity(String cityCode) {
+		return dao.queryGoodsByCity(cityCode);
+	}
 }

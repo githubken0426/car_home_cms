@@ -56,4 +56,6 @@ public interface GoodsService {
 	 * @date 2018年2月6日 下午1:52:42
 	 */
 	int deleteBatch(@Param("ids")String []ids);
+	
+	List<Goods> queryGoodsByCity(@Param("cityCode")String cityCode);
 }

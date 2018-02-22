@@ -54,7 +54,7 @@ response.flushBuffer();
 
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/adver_add.action" method="post" id="addForm">
+		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/brand_add.action" method="post" id="addForm">
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>添加
@@ -64,9 +64,15 @@ response.flushBuffer();
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
 							<td width="25%">
-								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:220px;margin-left:30px;"/>
+								<select id="categoryId" name="categoryId" style="height:25px;width:220px;margin-left:30px;">
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.id }">
+											${category.title}
+										</option>
+									</c:forEach>
+								</select>
 							</td>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
 							<td width="25%">
@@ -75,15 +81,9 @@ response.flushBuffer();
 							<td width="30%"></td>
 						</tr>
 						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
 							<td>
-								<select id="categoryId" name="categoryId" style="height:25px;width:220px;margin-left:30px;">
-									<c:forEach var="category" items="${categoryList}">
-										<option value="${category.id }">
-											${category.title}
-										</option>
-									</c:forEach>
-								</select>
+								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌LOGO：</td>
 							<td>
@@ -140,12 +140,10 @@ response.flushBuffer();
 		</form>
 			
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/article_listData.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/brand_list.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
-			<input type="hidden" name="expertName" value="${expertName}" />
-			<input type="hidden" name="title" value="${title}" />
-			<input type="hidden" name="beginTime" value="${beginTime}" />
-			<input type="hidden" name="endTime" value="${endTime}" />
+			<input type="hidden" name="cnName" value="${cnName}" />
+			<input type="hidden" name="categoryId" value="${categoryId}" />
 		</form>
 	</div>
 </div>

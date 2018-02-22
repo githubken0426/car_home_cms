@@ -29,11 +29,6 @@ response.flushBuffer();
    			layer.tips('请输入广告标题！', '#title');
    			return false;
    		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
-   		}
 		$("#addForm").submit();	
 	}
     //返回
@@ -64,7 +59,13 @@ response.flushBuffer();
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
-								<input type="text" id="url" name="entity.url" tabindex="2" style="padding:8px;width:400px;margin-left:30px;"/>
+								<select id="goodsId" name="entity.goodsId" style="padding:3px;margin:5px 5px;width:415px;margin-left:30px;">
+								<option value="-1">请选择促销商品</option>
+								<c:forEach var="goods" items="${goodsList}">
+									<option value="${goods.id }">
+										${goods.goodsTitle}</option>
+								</c:forEach>
+								</select>
 							</td>
 						</tr>
 						<tr>

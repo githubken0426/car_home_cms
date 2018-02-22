@@ -29,11 +29,6 @@ response.flushBuffer();
    			layer.tips('请输入广告标题！', '#title');
    			return false;
    		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
-   		}
 		$("#updateForm").submit();	
 	}
    	// 返回
@@ -58,13 +53,20 @@ response.flushBuffer();
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">文章标题：</td>
 							<td colspan="3">
 								<input type="hidden" name="entity.id" value="${entity.id }"/>
-								<input type="text" id="title" name="entity.title" value="${entity.title }" tabindex="3" style="width:600px;margin-left:30px;"/>
+								<input type="text" id="title" name="entity.title" value="${entity.title }" tabindex="3" style="width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
-								<input type="text" id="url" name="entity.url" value="${entity.url }"tabindex="3" style="width:600px;margin-left:30px;"/>
+								<select id="goodsId" name="entity.goodsId" style="padding:3px;margin:5px 5px;width:415px;margin-left:30px;">
+								<option value="-1">请选择促销商品</option>
+								<c:forEach var="goods" items="${goodsList}">
+									<option value="${goods.id }"
+										<c:if test='${entity.goodsId ==goods.id}'>selected='selected'</c:if>>
+										${goods.goodsTitle}</option>
+								</c:forEach>
+								</select>
 							</td>
 						</tr>
 						<tr>

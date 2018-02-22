@@ -58,6 +58,11 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="queryGoodsByCity" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String">
+		select G.* from inn_goods G where city_code=#{cityCode} and status!=1
+	</select>
+	
   <!-- 主键查询 -->
   <select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.util.Map" >
     select <include refid="Base_Column_List" />,
@@ -120,6 +125,9 @@
 		G.status=#{status,jdbcType=INTEGER},
 		<if test="status ==1">
 			down_time=now(),
+		</if>
+		<if test="status ==0">
+			down_time=NULL,
 		</if>
 		weight=#{weight,jdbcType=DOUBLE}
 	</set>
