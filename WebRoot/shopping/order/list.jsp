@@ -15,7 +15,7 @@ response.flushBuffer();
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>产品列表</title>
+	<title>订单列表</title>
 	<link rel="stylesheet" href="<%=path%>/css/pubmain.css" />
 	<link href="<%=request.getContextPath() %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=request.getContextPath() %>/css/global.css" rel="stylesheet" type="text/css"/>
@@ -161,7 +161,7 @@ response.flushBuffer();
 			<!-- 查询条件区域 -->
 			<div class="content-box">
 			    <div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>[产品]
+			    	<span class="now_location">当前位置:</span>[订单]
 			        <div class="clear"></div>
 			    </div>
 			    <div class=" margin-bottom-5 mt10">
