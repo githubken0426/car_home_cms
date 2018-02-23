@@ -206,7 +206,7 @@ response.flushBuffer();
 						<td>${o.enName }</td>
 						<td>
 							<c:if test="${ not empty o.logo }">
-								<img src="${ o.logo }"  style="width:40px;height:40px;"/>
+								<img src="${ o.logo }"  style="width:30px;height:30px;"/>
 							</c:if>
 						</td>
 						<td>${o.descrption }</td>

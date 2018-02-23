@@ -46,7 +46,7 @@ response.flushBuffer();
 <body>
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/adver_update.action" method="post" id="updateForm">
+		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/brand_update.action" method="post" id="updateForm">
 			<div class="content-box">
 				<div class="content-box-header">
 					<span class="now_location">当前位置:</span>修改
@@ -55,16 +55,26 @@ response.flushBuffer();
 	            	<table class="table table-bordered" >
 						<!-- 数据修改  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">文章标题：</td>
-							<td colspan="3">
-								<input type="hidden" name="entity.id" value="${entity.id }"/>
-								<input type="text" id="title" name="entity.title" value="${entity.title }" tabindex="3" style="width:600px;margin-left:30px;"/>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
+							<td width="25%">
+								<select id="categoryId" name="entity.categoryId" style="height:25px;width:220px;margin-left:30px;">
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.id }" 
+										<c:if test="${entity.categoryId==category.id }">selected="selected"</c:if>>
+											${category.title}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
+							<td width="25%">
+								<input type="text" id="enName" name="entity.enName" value="${entity.enName }" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
-							<td colspan="3">
-								<input type="text" id="url" name="entity.url" value="${entity.url }"tabindex="3" style="width:600px;margin-left:30px;"/>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td>
+								<input type="text" id="cnName" name="entity.cnName" value="${entity.cnName }" tabindex="3" style="width:210px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
@@ -72,9 +82,9 @@ response.flushBuffer();
 							<td colspan="3">
 								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" 
 									tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
-								<input type="hidden" name="picturePath" id="picturePath" value="${entity.picturePath}" />
-								 <c:if test="${not empty entity.picturePath}"> 
-									<img src="${entity.picturePath}" style="width:50px;height:50px;" id="viewResUrlList"/>
+								<input type="hidden" name="entity.logo" id="logo" value="${entity.logo}" />
+								 <c:if test="${not empty entity.logo}"> 
+									<img src="${entity.logo}" style="width:50px;height:50px;" id="viewResUrlList"/>
 								 </c:if>
 							</td>
 						</tr>
@@ -94,11 +104,10 @@ response.flushBuffer();
 		</form>
 		</div>
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/adver_listData.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/brand_list.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
-			<input type="hidden" name="title" value="${title}" />
-			<input type="hidden" name="beginTime" value="${beginTime}" />
-			<input type="hidden" name="endTime" value="${endTime}" />
+			<input type="hidden" name="cnName" value="${cnName}" />
+			<input type="hidden" name="categoryId" value="${categoryId}" />
 		</form>
 	</div>
 </body>

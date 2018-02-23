@@ -202,7 +202,7 @@ response.flushBuffer();
 						<td>${o.title }</td>
 						<td>
 							<c:if test="${ not empty o.picturePath }">
-								<img src="${ o.picturePath }"  style="width:40px;height:40px;"/>
+								<img src="${ o.picturePath }"  style="width:30px;height:30px;"/>
 							</c:if>
 						</td>
 						<td>${o.goodsTitle }</td>

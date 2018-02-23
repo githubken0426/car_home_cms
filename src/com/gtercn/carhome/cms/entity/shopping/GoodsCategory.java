@@ -6,6 +6,7 @@ public class GoodsCategory {
     private String parentCode;
     private Integer deleteFlag;
     private String descriptiion;
+    private String url;
 
     public String getId() {
         return id;
@@ -46,4 +47,12 @@ public class GoodsCategory {
     public void setDescriptiion(String descriptiion) {
         this.descriptiion = descriptiion == null ? null : descriptiion.trim();
     }
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

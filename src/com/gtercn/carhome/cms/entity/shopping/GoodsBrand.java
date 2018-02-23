@@ -1,5 +1,6 @@
 package com.gtercn.carhome.cms.entity.shopping;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ public class GoodsBrand {
     private String categoryId;
     private String cnName;
     private String enName;
-    private Integer sort;
+    private Date createTime;
     private String logo;
     private String descrption;
     private String picture;
@@ -63,16 +64,16 @@ public class GoodsBrand {
     public void setEnName(String enName) {
         this.enName = enName == null ? null : enName.trim();
     }
+    
+    public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Integer getSort() {
-        return sort;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public String getLogo() {
+	public String getLogo() {
         return logo;
     }
 

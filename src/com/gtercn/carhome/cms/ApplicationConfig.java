@@ -65,10 +65,11 @@ public final class ApplicationConfig {
 	
 	public final static String FTP_SHOPPING_PATH = "shopping";
 	
+	/**
+	 * 电商相关图片路径
+	 */
 	public final static String FTP_ADVER_PATH = "advertisement";
-	
-	public final static String FTP_BRAND_PATH = "brand";
-	
+	public final static String FTP_BRAND_PATH = "brandlogo";
 	public final static String FTP_GOODS_PATH = "goods";
 	public final static String FTP_SMALL_PATH = "small";
 	public final static String FTP_BIG_PATH = "big";

@@ -60,7 +60,7 @@ public class GoodsBrandAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
 			String categoryId = request.getParameter("categoryId");
-			if (StringUtils.isNotBlank(categoryId))
+			if (StringUtils.isNotBlank(categoryId) && !"-1".equals(categoryId))
 				map.put("categoryId", categoryId);
 			
 			String cnName = request.getParameter("cnName");
@@ -140,34 +140,32 @@ public class GoodsBrandAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		InputStream input=null;
 		PrintWriter writer  = response.getWriter();
 		try {
 			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
 			// 上传展示图片
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
-			File[] resUrlList = multipartRequest.getFiles("resUrlList");
+			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_BRAND_PATH };
+			File[] resUrlList = multipartRequest.getFiles("logo");
 			for (File file : resUrlList) {
-				input = new FileInputStream(file);
+				InputStream input = new FileInputStream(file);
 				String portraitFileName = System.currentTimeMillis() + ".jpg";
 				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
 				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
+					String logo = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
 							+ File.separator + ApplicationConfig.FTP_BRAND_PATH
 							+ File.separator + portraitFileName;
-					//entity.setPicturePath(picturePath);
+					entity.setLogo(logo);
 				}
+				input.close();
 			}
+			goodsBrandService.insert(entity);
 			
 			writer.print("<script>alert('添加成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
 			writer .print("<script>alert('添加失败!');window.location.href='brand_list.action';</script>");
-		}finally{
-			if(input!=null)
-				input.close();
 		}
 	}
 

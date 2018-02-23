@@ -40,4 +40,8 @@
 			category_id = #{categoryId}
 		</where>
 	</select>
+	
+	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand">
+		
+	</insert>
 </mapper>

@@ -259,7 +259,7 @@ response.flushBuffer();
 									<td>${o.brandName }</td>
 									<td>
 										<c:if test="${not empty o.smallPictureList[0]}">
-											<img src="${o.smallPictureList[0]}" style="width: 40px; height: 40px;" />
+											<img src="${o.smallPictureList[0]}" style="width: 30px; height: 30px;" />
 										</c:if>
 									</td>
 									<td>${o.promotionPrice }</td>
