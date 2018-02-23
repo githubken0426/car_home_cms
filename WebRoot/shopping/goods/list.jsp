@@ -134,14 +134,16 @@ response.flushBuffer();
   		}
   	}
   	
-  	//批量修改状态
-  	function deleteData(){
+  	//批量删除
+  	function deleteBatch(){
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
-	  		$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_list.action");
-	  		$("#totalForm").submit();
+  			if(confirm("下架商品后,商品将无法销售!确定下架选中商品吗?")){
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/goods_deleteBatch.action");
+  		  		$("#totalForm").submit();
+  			}
   		}else{
-  			alert("请选择修改项！");
+  			alert("请选择要下架选中的商品！");
   		}
   	}
  
@@ -300,7 +302,7 @@ response.flushBuffer();
 								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" /> 
 							<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info"
 								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" />
-							<input onclick="deleteData();" type="button" value="删除" class="btn btn-info"
+							<input onclick="deleteBatch();" type="button" value="下架商品" class="btn btn-info"
 								style="width: 80px; margin-right: 8px; margin-bottom: 8px;" /> 
 						</span>
 					</div>

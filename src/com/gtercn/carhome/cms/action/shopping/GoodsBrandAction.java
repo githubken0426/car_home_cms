@@ -135,7 +135,7 @@ public class GoodsBrandAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void addData() throws Exception {
+	public void add() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");
@@ -148,20 +148,21 @@ public class GoodsBrandAction extends ActionSupport {
 			// 上传展示图片
 			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_BRAND_PATH };
 			File[] resUrlList = multipartRequest.getFiles("logo");
-			for (File file : resUrlList) {
-				InputStream input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
-				if (bool) {
-					String logo = File.separator + ApplicationConfig.FTP_SHOPPING_PATH
-							+ File.separator + ApplicationConfig.FTP_BRAND_PATH
-							+ File.separator + portraitFileName;
-					entity.setLogo(logo);
+			if(resUrlList!=null) {
+				for (File file : resUrlList) {
+					InputStream input = new FileInputStream(file);
+					String portraitFileName = System.currentTimeMillis() + ".jpg";
+					boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
+					if (bool) {
+						String logo = ApplicationConfig.HTTP_PROTOCOL_IP+ File.separator + ApplicationConfig.FTP_SHOPPING_PATH
+								+ File.separator + ApplicationConfig.FTP_BRAND_PATH
+								+ File.separator + portraitFileName;
+						entity.setLogo(logo);
+					}
+					input.close();
 				}
-				input.close();
 			}
 			goodsBrandService.insert(entity);
-			
 			writer.print("<script>alert('添加成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,17 +186,18 @@ public class GoodsBrandAction extends ActionSupport {
 			} else {
 				currentIndex = 1;
 			}
-			String title = request.getParameter("title");
-			String beginTime = request.getParameter("beginTime");
-			String endTime = request.getParameter("endTime");
+			String categoryId = request.getParameter("categoryId");
+			String cnName = request.getParameter("cnName");
 			String id = request.getParameter("id");
 			entity=goodsBrandService.selectByPrimaryKey(id);
-			
 			context.put("entity", entity);
+			
+			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
+			context.put("categoryList", categoryList);
+			
 			context.put("currentIndex", currentIndex);
-			context.put("title", title);
-			context.put("beginTime", beginTime);
-			context.put("endTime", endTime);
+			context.put("categoryId", categoryId);
+			context.put("cnName", cnName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;
@@ -209,7 +211,7 @@ public class GoodsBrandAction extends ActionSupport {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void updateData() throws Exception {
+	public void update() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");
@@ -218,20 +220,23 @@ public class GoodsBrandAction extends ActionSupport {
 		PrintWriter writer = response.getWriter();
 		try {
 			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
+			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_BRAND_PATH };
 			// 上传展示图片
-			File[] viewResUrlList = multipartRequest.getFiles("resUrlList");
-			for (File file : viewResUrlList) {
-				input = new FileInputStream(file);
-				String portraitFileName = System.currentTimeMillis() + ".jpg";
-				boolean bool = UploadFtpFileTools.uploadFile(ftpPaths, portraitFileName, input);
-				if (bool) {
-					String picturePath = File.separator + ApplicationConfig.FTP_SHOPPING_PATH + File.separator
-							+ ApplicationConfig.FTP_BRAND_PATH + File.separator + portraitFileName;
-					//entity.setPicturePath(picturePath);
+			File[] viewResUrlList = multipartRequest.getFiles("logo");
+			if(viewResUrlList!=null) {
+				for (File file : viewResUrlList) {
+					input = new FileInputStream(file);
+					String portraitFileName = System.currentTimeMillis() + ".jpg";
+					boolean bool = UploadFtpFileTools.uploadFile(ftpPaths, portraitFileName, input);
+					if (bool) {
+						String logo = ApplicationConfig.HTTP_PROTOCOL_IP + File.separator
+								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator 
+								+ ApplicationConfig.FTP_BRAND_PATH + File.separator + portraitFileName;
+						entity.setLogo(logo);
+					}
 				}
 			}
-			
+			goodsBrandService.update(entity);
 			writer .print("<script>alert('修改成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -14,7 +14,7 @@
 				cn_name like '%${cnName}%'
 			</if>
 		</where>
-		order by sort limit #{beginResult},#{pageSize}
+		order by create_time desc limit #{beginResult},#{pageSize}
 	</select>
 	<!-- 查询所有数据数 -->
 	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
@@ -34,14 +34,33 @@
 	</select>
 	
 	<select id="queryDataByCategory" resultType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand" parameterType="java.lang.String">
-		select * 
-		from inn_goods_brand 
-		<where>
-			category_id = #{categoryId}
-		</where>
+		select * from inn_goods_brand where category_id = #{categoryId}
 	</select>
 	
 	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand">
-		
+		insert into inn_goods_brand(id,category_id,cn_name,en_name,logo,descrption,create_time)
+		values(
+			#{id,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR},#{cnName,jdbcType=VARCHAR},
+			#{enName,jdbcType=VARCHAR},#{logo,jdbcType=VARCHAR},#{descrption,jdbcType=VARCHAR},now()
+		)
 	</insert>
+	
+	<update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsBrand">
+		update inn_goods_brand
+		<set>
+			category_id=#{categoryId,jdbcType=VARCHAR},
+			cn_name=#{cnName,jdbcType=VARCHAR},
+			en_name=#{enName,jdbcType=VARCHAR},
+			logo=#{logo,jdbcType=VARCHAR},
+			descrption=#{descrption,jdbcType=VARCHAR}
+		</set>
+		where id=#{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteBatch" parameterType="java.lang.String">
+		delete from inn_goods_brand where id in
+		<foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id,jdbcType=VARCHAR}
+        </foreach>
+	</delete>
 </mapper>

@@ -24,15 +24,10 @@ response.flushBuffer();
 <script type="text/javascript">
    	// 更新
 	function updateSubmit(){
-		var title=$.trim($("#title").val());
-   		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
+		var enName=$.trim($("#enName").val());
+   		if(!enName){
+   			layer.tips('请输入品牌中文名称！', '#enName');
    			return false;
-   		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
    		}
 		$("#updateForm").submit();	
 	}
@@ -57,6 +52,7 @@ response.flushBuffer();
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">所属分类：</td>
 							<td width="25%">
+								<input type="hidden" name="entity.id" value="${entity.id }"/>
 								<select id="categoryId" name="entity.categoryId" style="height:25px;width:220px;margin-left:30px;">
 									<c:forEach var="category" items="${categoryList}">
 										<option value="${category.id }" 
@@ -66,26 +62,28 @@ response.flushBuffer();
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
 							<td width="25%">
 								<input type="text" id="enName" name="entity.enName" value="${entity.enName }" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
 							<td>
 								<input type="text" id="cnName" name="entity.cnName" value="${entity.cnName }" tabindex="3" style="width:210px;margin-left:30px;"/>
 							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
+							<td>
+								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="logo" 
+									tabindex="4" maxlength="300" style="margin:0px;width:220px;margin-left:30px;"/>
+								<input type="hidden" name="entity.logo" id="logo" value="${entity.logo}" />
+									<img src="${entity.logo}" style="width:50px;height:50px;" id="viewResUrlList"/>
+							</td>
 						</tr>
 						<tr>
-							<td width="15%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
-							<td colspan="3">
-								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="resUrlList" 
-									tabindex="4" maxlength="300" style="width:400px;margin-left:30px;"/>
-								<input type="hidden" name="entity.logo" id="logo" value="${entity.logo}" />
-								 <c:if test="${not empty entity.logo}"> 
-									<img src="${entity.logo}" style="width:50px;height:50px;" id="viewResUrlList"/>
-								 </c:if>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌介绍：</td>
+							<td colspan="3" height="125px;">
+								<textarea id="descrption" name="entity.descrption" style="height:105px;width:575px;margin:0px 30px;padding:10px;">${entity.descrption }</textarea>
 							</td>
 						</tr>
 	            	</table>

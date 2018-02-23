@@ -1,8 +1,6 @@
 package com.gtercn.carhome.cms.entity.shopping;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class GoodsBrand {
     private String id;
@@ -12,10 +10,7 @@ public class GoodsBrand {
     private Date createTime;
     private String logo;
     private String descrption;
-    private String picture;
-    
     private String categoryName;
-    private List<Map<String,String>> pictureList;
     
     public String getCategoryName() {
 		return categoryName;
@@ -24,15 +19,6 @@ public class GoodsBrand {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-
-    public List<Map<String, String>> getPictureList() {
-		return pictureList;
-	}
-
-	public void setPictureList(List<Map<String, String>> pictureList) {
-		this.pictureList = pictureList;
-	}
-
 	public String getId() {
         return id;
     }
@@ -88,12 +74,4 @@ public class GoodsBrand {
     public void setDescrption(String descrption) {
         this.descrption = descrption == null ? null : descrption.trim();
     }
-
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture == null ? "" : picture.trim();
-	}
 }

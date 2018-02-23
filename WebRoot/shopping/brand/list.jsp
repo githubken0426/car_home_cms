@@ -138,10 +138,12 @@ response.flushBuffer();
   	function deleteData(){
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
-	  		$("#totalForm").attr("action","${pageContext.request.contextPath}/brand_deleteBatch.action");
-	  		$("#totalForm").submit();
+  			if(confirm("确定要删除选择的数据吗?")){
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/brand_deleteBatch.action");
+  		  		$("#totalForm").submit();
+  			}
   		}else{
-  			alert("请选择修改项！");
+  			alert("请选择删除的数据！");
   		}
   	}
   </script>
@@ -191,7 +193,7 @@ response.flushBuffer();
 			        <tr align="center">
 			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="15%"><strong>类别</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>所属分类</strong></td>
 						<td nowrap="nowrap" width="15%"><strong>中文名称</strong></td>
 						<td nowrap="nowrap" width="15%"><strong>英文名称</strong></td>
 						<td nowrap="nowrap" width="10%"><strong>logo</strong></td>

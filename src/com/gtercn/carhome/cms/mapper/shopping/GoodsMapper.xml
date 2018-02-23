@@ -133,4 +133,13 @@
 	</set>
 	where id=#{id,jdbcType=VARCHAR}
   </update>
+  
+  <update id="deleteBatch" parameterType="java.lang.String">
+		update inn_goods set status =1,down_time=now()
+		where id in
+		<foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id,jdbcType=VARCHAR}
+        </foreach>
+   </update>
+	
 </mapper>

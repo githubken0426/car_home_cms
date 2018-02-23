@@ -25,15 +25,10 @@ response.flushBuffer();
 <script type="text/javascript">
    	//添加
 	function addSubmit(){
-   		var title=$.trim($("#title").val());
-   		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
+   		var enName=$.trim($("#enName").val());
+   		if(!enName){
+   			layer.tips('请输入品牌中文名称！', '#enName');
    			return false;
-   		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
-			return false;
    		}
 		$("#addForm").submit();	
 	}
@@ -42,9 +37,6 @@ response.flushBuffer();
   		$("#backForm").submit();
   	}
   </script>
-<style type="text/css">
-  	input{padding:8px;}
-</style>
 </head>
 <body>
 
@@ -70,19 +62,19 @@ response.flushBuffer();
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
 							<td width="25%">
-								<input type="text" id="enName" name="entity.enName" tabindex="3" style="width:220px;margin-left:30px;"/>
+								<input type="text" id="enName" name="entity.enName" tabindex="3" style="width:210px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
 							<td>
-								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:210px;margin-left:30px;"/>
+								<input type="text" id="cnName" name="entity.cnName" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌LOGO：</td>
 							<td>
-								<input onchange="viewUploadImg(this,'brandLogo')" type="file" id="logo" name="logo" tabindex="4" style="width:210px;margin-left:30px;"/>
+								<input onchange="viewUploadImg(this,'brandLogo')" type="file" id="logo" name="logo" tabindex="4" style="margin:0px;width:220px;margin-left:30px;"/>
 								<img style="width:50px;height:50px;display:none;" id="brandLogo"/>
 							</td>
 						</tr>

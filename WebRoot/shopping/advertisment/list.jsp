@@ -145,7 +145,7 @@ response.flushBuffer();
   		  		$("#totalForm").submit();
   			}
   		}else{
-  			alert("请选择修改项！");
+  			alert("请选择要删除的数据！");
   		}
   	}
   </script>
