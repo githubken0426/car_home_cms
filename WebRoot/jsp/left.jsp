@@ -113,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</c:if>
 					<c:if test="${menu0001}">
 						<li><a href="javascript:void(0);"
-							onclick="setMainContent('group_queryAllGroup.action');">
+							onclick="setMainContent('order_list.action');">
 							<i class="fa fa-angle-double-right"></i>订单管理</a>
 						</li>
 					</c:if>
