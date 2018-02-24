@@ -11,14 +11,14 @@
 		from inn_order O
 		<where>
 			<!-- city_code=#{cityCode} -->
-			<if test="title!=null and title!=''">
-				and title like '%${title}%'
+			<if test="orderNo!=null and orderNo!=''">
+				and order_no =#{orderNo}
 			</if>
-			<if test="beginTime!=null and beginTime!=''">
-				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			<if test="expertId!=null and expertId!=''">
+				and expert_id=#{expertId}
 			</if>
-			<if test="endTime!=null and endTime!=''">
-				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			<if test="orderStatus!=null and orderStatus!=''">
+				and order_status=#{orderStatus}
 			</if>
 		</where>
 		order by order_time desc limit #{beginResult},#{pageSize}
@@ -30,14 +30,14 @@
 		select count(1) from inn_order
 		<where>
 			<!-- city_code=#{cityCode} -->
-			<if test="title!=null and title!=''">
-				and title like '%${title}%'
+			<if test="orderNo!=null and orderNo!=''">
+				and order_no =#{orderNo}
 			</if>
-			<if test="beginTime!=null and beginTime!=''">
-				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			<if test="expertId!=null and expertId!=''">
+				and expert_id=#{expertId}
 			</if>
-			<if test="endTime!=null and endTime!=''">
-				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			<if test="orderStatus!=null and orderStatus!=''">
+				and order_status=#{orderStatus}
 			</if>
 		</where>
 	</select>
@@ -46,4 +46,8 @@
 		select * from inn_order where id = #{id,jdbcType=VARCHAR}
 	</select>
 
+	<select id="queryAllExpert" resultType="com.gtercn.carhome.cms.entity.ExpertTop" parameterType="java.lang.String">
+		select id,user_id,expert_name from tb_expert_top where delete_flag=0 
+		<!-- and city_code=#{cityCode} -->
+	</select>
 </mapper>

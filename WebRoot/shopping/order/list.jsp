@@ -22,7 +22,6 @@ response.flushBuffer();
 	<link rel="stylesheet" href="<%=path%>/js/cms/kkpager/kkpager_blue.css"/>
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/cms/kkpager/kkpager.js"></script>
-   	<script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
     		
 <script type="text/javascript">
 	function getParameter(name) { 
@@ -34,10 +33,9 @@ response.flushBuffer();
 	}
   	$(function(){
 		//分页开始
-		var title = $.trim($("#title").val());
-		title=encodeURI(encodeURI(title));
-		var beginTime = $.trim($("#beginTime").val());
-		var endTime = $.trim($("#endTime").val());
+		var orderNo = $.trim($("#orderNo").val());
+		var orderStatus = $.trim($("#orderStatus").val());
+		var expertId = $.trim($("#expertId").val());
 		
   		var totalPage = ${totalPages};
   		var totalRecords = ${totalCount};
@@ -57,57 +55,66 @@ response.flushBuffer();
   			totalRecords : totalRecords, //总数据条数
   			hrefFormer : '${pageContext.request.contextPath}/order_list',//链接前部
   			hrefLatter : '.action',		 //链接尾部
-  			getLink : function(n){
-  				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title+"&beginTime="+beginTime +"&endTime="+endTime;
-  			},
-  			lang : {
-  				prePageText : '上一页',
-  				nextPageText : '下一页',
-  				totalPageBeforeText : '共',
-  				totalPageAfterText : '页',
-  				totalRecordsAfterText : '条数据',
-  				gopageBeforeText : '转到',
-  				gopageButtonOkText : '确定',
-  				gopageAfterText : '页',
-  				buttonTipBeforeText : '第',
-  				buttonTipAfterText : '页'
-  			}
-  		});
-  		//生成
-  		kkpager.generPageHtml();
-  		//全选全不选
-  		$("#isSelectAll").bind({
-  			click:function(){
-  				var checkboxs=$("input:checkbox[name=id]");
-  				if($("#isSelectAll").is(":checked")){
-  					for(var i=0;i<checkboxs.length;i++){
-  					  if(!(checkboxs[i].checked)){
-						  	checkboxs[i].checked=true;
+			getLink : function(n) {
+				return this.hrefFormer + this.hrefLatter + "?pno=" + n
+						+ "&orderNo=" + orderNo + "&orderStatus=" + orderStatus
+						+ "&expertId=" + expertId;
+			},
+			lang : {
+				prePageText : '上一页',
+				nextPageText : '下一页',
+				totalPageBeforeText : '共',
+				totalPageAfterText : '页',
+				totalRecordsAfterText : '条数据',
+				gopageBeforeText : '转到',
+				gopageButtonOkText : '确定',
+				gopageAfterText : '页',
+				buttonTipBeforeText : '第',
+				buttonTipAfterText : '页'
+			}
+		});
+		//生成
+		kkpager.generPageHtml();
+		//全选全不选
+		$("#isSelectAll").bind({
+			click : function() {
+				var checkboxs = $("input:checkbox[name=id]");
+				if ($("#isSelectAll").is(":checked")) {
+					for (var i = 0; i < checkboxs.length; i++) {
+						if (!(checkboxs[i].checked)) {
+							checkboxs[i].checked = true;
 						}
-  					}
-  				}else{
-  					for(var i=0;i<checkboxs.length;i++){
-  					  if((checkboxs[i].checked)){
-						  	checkboxs[i].checked=false;
+					}
+				} else {
+					for (var i = 0; i < checkboxs.length; i++) {
+						if ((checkboxs[i].checked)) {
+							checkboxs[i].checked = false;
 						}
-  					}
-  				}
-  			}
-  		});
-  	});
-
+					}
+				}
+			}
+		});
+		//默认选中
+		if('${orderStatus}'){
+			$("#orderStatus").find("option").each(function(){
+				if($(this).val()=="${orderStatus}"){
+					$(this).attr("selected","selected");
+				}
+			});
+		}
+	});
 	//按条件查询
-  	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/order_list.action");
-	  	$("#totalForm").submit();
-  	}
-  	//重置
-  	function clean(){
-		$("#title").attr("value","");
-		$("#beginTime").attr("value","");
-		$("#endTime").attr("value","");
-  	}
-  </script>
+	function query() {
+		$("#totalForm").attr("action","${pageContext.request.contextPath}/order_list.action");
+		$("#totalForm").submit();
+	}
+	//重置
+	function clean() {
+		$("#orderNo").attr("value", "");
+		$("#orderStatus").attr("value", "-1");
+		$("#expertId").attr("value", "-1");
+	}
+</script>
   <style type="">
   	.footer{margin-top:0px;}
   </style>
@@ -126,13 +133,31 @@ response.flushBuffer();
 					<!--  条件检索区 -->
 					<span  style="font-size: 15px;margin-left:25px;">
 					订单号
-					<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
+					<input type="text" id="orderNo" name="orderNo" value="${orderNo}" style="width:150px;padding:5px;" />
 					</span>
 					<span class="margin-left-10" style="font-size: 15px;">助销达人
-						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"class="laydate-icon" style="width:163px;padding:3px;" />
+						<select id="expertId" name="expertId" style="height: 30px;width:150px;font-size: 14px;">
+							<option value="-1">请选择达人...</option>
+							<c:forEach var="expert" items="${expertList}" varStatus="s">
+								<option value="${expert.id }"<c:if test='${expertId ==expert.id}'>selected='selected'</c:if>>
+									${expert.expertName }
+								</option>
+							</c:forEach>
+						</select>
 					</span>
 					<span class="margin-left-10" style="font-size: 15px;">订单状态
-						<input type="text" id="endTime" name="endTime" placeholder="结束日期" value="${endTime}"class="laydate-icon" style="width:164px;margin:0px 10px 0px 2px;padding:3px;" />
+						<select id="orderStatus" name="orderStatus" style="height: 30px;width:150px;font-size: 14px;">
+							<option value="-1">请选择订单状态...</option>
+							<option value="1">待付款</option>
+							<option value="2">已付款</option>
+							<option value="3">订单关闭</option>
+							<option value="4">已发货</option>
+							<option value="5">已签收</option>
+							<option value="6">订单完成</option>
+							<option value="7">退货申请</option>
+							<option value="8">退货中</option>
+							<option value="9">退货完成</option>
+						</select>
 			   		</span>
 			   		<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
@@ -165,7 +190,7 @@ response.flushBuffer();
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td><a href="order_list.action?orderId=${o.id}">${o.orderNo }</a></td>
+						<td title="订单详情"><a href="${pageContext.request.contextPath}/order_detaill.action?orderId=${o.id}">${o.orderNo }</a></td>
 						<td>${o.userName }</td>
 						<td>${o.expertName }</td>
 						<td>
@@ -205,31 +230,13 @@ response.flushBuffer();
 				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
-			   	</div>
-			</div>-->
+			   	</div>-->
+			</div>
 		</form>
 		<div class="pkp">
             <div id="kkpager"></div>
     	</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-  !function(){
-	laydate.skin('molv');
-		laydate({
-			elem : '#beginTime',
-			istoday : true,
-			format : 'YYYY-MM-DD',
-			max : laydate.now()
-		});
-		laydate({
-			elem : '#endTime',
-			istime: true,
-			istoday : false,
-			format : 'YYYY-MM-DD'
-		});
-	}();
-</script>
 </body>
 </html>

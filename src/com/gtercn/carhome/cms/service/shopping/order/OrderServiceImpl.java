@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gtercn.carhome.cms.dao.shopping.OrderMapper;
+import com.gtercn.carhome.cms.entity.ExpertTop;
 import com.gtercn.carhome.cms.entity.shopping.Order;
 
 @Service(value="orderService")
@@ -27,5 +28,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order selectByPrimaryKey(String id) {
 		return orderDao.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<ExpertTop> queryAllExpert(String cityCode) {
+		return orderDao.queryAllExpert(cityCode);
 	}
 }

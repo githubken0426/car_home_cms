@@ -3,6 +3,7 @@ package com.gtercn.carhome.cms.dao.shopping;
 import java.util.List;
 import java.util.Map;
 
+import com.gtercn.carhome.cms.entity.ExpertTop;
 import com.gtercn.carhome.cms.entity.shopping.Order;
 
 
@@ -23,5 +24,7 @@ public interface OrderMapper {
 	public int getTotalCount(Map<String, Object> map);
     
 	Order selectByPrimaryKey(String id);
+	
+	List<ExpertTop> queryAllExpert(String cityCode);
 
 }

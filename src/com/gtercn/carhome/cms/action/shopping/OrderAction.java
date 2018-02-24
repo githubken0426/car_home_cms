@@ -1,6 +1,5 @@
 package com.gtercn.carhome.cms.action.shopping;
 
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
+import com.gtercn.carhome.cms.entity.ExpertTop;
 import com.gtercn.carhome.cms.entity.shopping.Order;
 import com.gtercn.carhome.cms.service.shopping.order.LogisticsService;
 import com.gtercn.carhome.cms.service.shopping.order.OrderService;
@@ -54,23 +54,15 @@ public class OrderAction extends ActionSupport {
 			if(null!=user) 
 				cityCode = user.getCityCode();
 			map.put("cityCode", cityCode);
-			String title = request.getParameter("title");
-			if (title != null && !title.equals("")) {
-				title = URLDecoder.decode(title, "UTF-8");
-				map.put("goodsTitle", title);
-			}
-			String categoryId = request.getParameter("categoryId");
-			if(StringUtils.isNotBlank(categoryId) && (!"-1".equals(categoryId)))
-				map.put("categoryId", categoryId);
-			String brandId = request.getParameter("brandId");
-			if(StringUtils.isNotBlank(brandId) && (!"-1".equals(brandId)))
-				map.put("brandId", brandId);
-			String beginTime = request.getParameter("beginTime");
-			if (beginTime != null && !beginTime.equals(""))
-				map.put("beginTime", beginTime);
-			String endTime = request.getParameter("endTime");
-			if (endTime != null && !endTime.equals(""))
-				map.put("endTime", endTime);
+			String expertId = request.getParameter("expertId");
+			if(StringUtils.isNotBlank(expertId) && (!"-1".equals(expertId)))
+				map.put("expertId", expertId);
+			String orderStatus = request.getParameter("orderStatus");
+			if(StringUtils.isNotBlank(orderStatus) && (!"-1".equals(orderStatus)))
+				map.put("orderStatus", orderStatus);
+			String orderNo = request.getParameter("orderNo");
+			if (orderNo != null && !orderNo.equals(""))
+				map.put("orderNo", orderNo);
 			
 			int pageSize = ApplicationConfig.PAGE_SIZE;// 每页显示数据
 			int totalCount = orderService.getTotalCount(map);
@@ -86,17 +78,17 @@ public class OrderAction extends ActionSupport {
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
 			List<Order> list = orderService.queryAllData(map);
+			List<ExpertTop> expertList=orderService.queryAllExpert(cityCode);
 			
 			context.put("list", list);
+			context.put("expertList", expertList);
 			context.put("totalPages", totalPages);
 			context.put("totalCount", totalCount);
 			context.put("currentIndex", currentIndex);
 			// 设置查询参数
-			context.put("categoryId", categoryId);
-			context.put("brandId", brandId);
-			context.put("title", title);
-			context.put("beginTime", beginTime);
-			context.put("endTime", endTime);
+			context.put("expertId", expertId);
+			context.put("orderStatus", orderStatus);
+			context.put("orderNo", orderNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;
