@@ -55,7 +55,7 @@ response.flushBuffer();
   			pno : pageNo,
   			total : totalPage,			 //总页码
   			totalRecords : totalRecords, //总数据条数
-  			hrefFormer : '${pageContext.request.contextPath}/product_list',//链接前部
+  			hrefFormer : '${pageContext.request.contextPath}/order_list',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
   				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title+"&beginTime="+beginTime +"&endTime="+endTime;
@@ -98,7 +98,7 @@ response.flushBuffer();
 
 	//按条件查询
   	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/product_list.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/order_list.action");
 	  	$("#totalForm").submit();
   	}
   	//重置
@@ -107,53 +107,11 @@ response.flushBuffer();
 		$("#beginTime").attr("value","");
 		$("#endTime").attr("value","");
   	}
-  	//添加
-  	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/product_addDataPage.action");
-	  	$("#totalForm").submit();
-  	}
-  	//修改
-  	function updateDataPage(){
-  		var checkboxs=$("input:checkbox[name=id]");
-  		var ret = 0;  // 选中的记录数
-  		var idx = 0;  // 被选中的数据索引号
-  		for(var i=0; i<checkboxs.length; i++){ 
-  			if(checkboxs[i].checked) {
-  				ret = ret + 1;
-  				idx = i;
-  			}
- 		} 
-  		if (ret == 0) {
-  			alert("请选择修改数据！");
-  			return;
-  		} else if (ret > 1) {
-  			alert("请只选择一条数据！");
-  			return;
-  		} else if (ret == 1) {
-			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/product_updateDataPage.action");
-			$("#totalForm").submit();	
-  		}
-  	}
-  	
-  	//批量修改状态
-  	function deleteData(){
-  		var checkboxs=$("input:checkbox[name=id]");
-  		if(checkboxs.is(":checked")){
-  			if(confirm("确定要删除选中的数据吗?")){
-  				$("#totalForm").attr("action","${pageContext.request.contextPath}/product_deleteData.action");
-  		  		$("#totalForm").submit();
-  			}
-  		}else{
-  			alert("请选择修改项！");
-  		}
-  	}
   </script>
   <style type="">
   	.footer{margin-top:0px;}
   </style>
   </head>
-  
 <body>
 <div id="middle">
 	<div class="right"  id="mainFrame">    	
@@ -167,13 +125,15 @@ response.flushBuffer();
 			    <div class=" margin-bottom-5 mt10">
 					<!--  条件检索区 -->
 					<span  style="font-size: 15px;margin-left:25px;">
-					标题
+					订单号
 					<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
 					</span>
-					<span class="margin-left-10" style="font-size: 15px;">发表时间</span>
+					<span class="margin-left-10" style="font-size: 15px;">助销达人
 						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"class="laydate-icon" style="width:163px;padding:3px;" />
-						 至
+					</span>
+					<span class="margin-left-10" style="font-size: 15px;">订单状态
 						<input type="text" id="endTime" name="endTime" placeholder="结束日期" value="${endTime}"class="laydate-icon" style="width:164px;margin:0px 10px 0px 2px;padding:3px;" />
+			   		</span>
 			   		<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
 			   			<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width:100px;margin-right:8px;" />
@@ -189,30 +149,55 @@ response.flushBuffer();
 			        <tr align="center">
 			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="12%"><strong>产品编码</strong></td>
-						<td nowrap="nowrap" width="8%"><strong>所属分类</strong></td>
-						<td nowrap="nowrap" width="10%"><strong>品牌</strong></td>
-						<td nowrap="nowrap" width="15%"><strong>产品名称</strong></td>
-						<td nowrap="nowrap" width="15%"><strong>产品简介</strong></td>
-						<td nowrap="nowrap" width="20%"><strong>产品详情</strong></td>
-						<td nowrap="nowrap" width="10%"><strong>创建时间</strong></td>
+						<td nowrap="nowrap" width="14%"><strong>订单号</strong></td>
+						<td nowrap="nowrap" width="8%"><strong>购买用户</strong></td>
+						<td nowrap="nowrap" width="8%"><strong>助销达人</strong></td>
+						<td nowrap="nowrap" width="5%"><strong>订单状态</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>下单时间</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>付款时间</strong></td>
+						<td nowrap="nowrap" width="5%"><strong>支付方式</strong></td>
+						<td nowrap="nowrap" width="5%"><strong>总金额</strong></td>
+						<td nowrap="nowrap" width="5%"><strong>应付金额</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>物流单号</strong></td>
+						<td nowrap="nowrap" width="15%"><strong>收货地址</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${list}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td><a href="goods_list.action?productId=${o.id}">${o.spuCode }</a></td>
-						<td>${o.categoryName }</td>
-						<td>${o.brandName }</td>
-						<td>${o.productName }</td>
-						<td title="${o.synopsis }">${o.synopsis }</td>
-						<td title="${o.detail }">${o.detail }</td>
-						<td><fmt:formatDate value="${o.createTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/></td>
+						<td><a href="order_list.action?orderId=${o.id}">${o.orderNo }</a></td>
+						<td>${o.userName }</td>
+						<td>${o.expertName }</td>
+						<td>
+							<c:choose>
+								<c:when test="${o.orderStatus==1 }">待付款</c:when>
+								<c:when test="${o.orderStatus==2 }">已付款</c:when>
+								<c:when test="${o.orderStatus==3 }">订单关闭</c:when>
+								<c:when test="${o.orderStatus==4 }">已发货</c:when>
+								<c:when test="${o.orderStatus==5 }">已签收</c:when>
+								<c:when test="${o.orderStatus==6 }">订单完成</c:when>
+								<c:when test="${o.orderStatus==7 }">退货申请</c:when>
+								<c:when test="${o.orderStatus==8 }">退货中</c:when>
+								<c:when test="${o.orderStatus==9 }">退货完成</c:when>
+							</c:choose>
+						</td>
+						<td><fmt:formatDate value="${o.orderTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long"/></td>
+						<td><fmt:formatDate value="${o.payTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long"/></td>
+						<td>
+							<c:choose>
+								<c:when test="${o.payChannel==A }">支付宝</c:when>
+								<c:otherwise>微信</c:otherwise>
+							</c:choose>
+						</td>
+						<td>${o.totalAmount }</td>
+						<td>${o.payment }</td>
+						<td><a href="">${o.logisticsNo }</a></td>
+						<td title="${o.address }">${o.address }</td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
 			   </table>
-			   <!-- 功能按钮区域 -->
+			   <!-- 功能按钮区域 
 			   <div class=" margin-left-20">
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
@@ -221,7 +206,7 @@ response.flushBuffer();
 				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
 			   	</div>
-			</div>
+			</div>-->
 		</form>
 		<div class="pkp">
             <div id="kkpager"></div>

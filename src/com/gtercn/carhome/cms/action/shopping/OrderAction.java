@@ -1,14 +1,10 @@
 package com.gtercn.carhome.cms.action.shopping;
 
-import java.io.PrintWriter;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,45 +13,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
-import com.gtercn.carhome.cms.entity.shopping.Goods;
-import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
-import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
-import com.gtercn.carhome.cms.entity.shopping.Spec;
-import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
-import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
-import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
-import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
-import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
-import com.gtercn.carhome.cms.util.CommonUtil;
+import com.gtercn.carhome.cms.entity.shopping.Order;
+import com.gtercn.carhome.cms.service.shopping.order.LogisticsService;
+import com.gtercn.carhome.cms.service.shopping.order.OrderService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * 商品
+ * 订单
  * @author ken 2017-2-23 下午03:39:05
  */
 public class OrderAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private GoodsService goodsService;
+	private OrderService orderService;
 	@Autowired
-	private GoodsCategoryService categoryService;
-	@Autowired
-	private GoodsBrandService goodsBrandService;
-	@Autowired
-	private SpecService specService;
+	private LogisticsService logisticsService;
 	
-	
-	private Goods entity;
-	public Goods getEntity() {
+	private Order entity;
+	public Order getEntity() {
 		return entity;
 	}
-	public void setEntity(Goods entity) {
+	public void setEntity(Order entity) {
 		this.entity = entity;
 	}
-	
-	
+
 	/**
 	 * 分页检索数据
 	 * @return
@@ -90,7 +73,7 @@ public class OrderAction extends ActionSupport {
 				map.put("endTime", endTime);
 			
 			int pageSize = ApplicationConfig.PAGE_SIZE;// 每页显示数据
-			int totalCount = goodsService.getTotalCount(map);
+			int totalCount = orderService.getTotalCount(map);
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("pno");
 			if (index != null && index != "") {
@@ -102,12 +85,8 @@ public class OrderAction extends ActionSupport {
 					: (totalCount / pageSize + 1);
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
-			List<Goods> list = goodsService.queryAllData(map);
-			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
-			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
+			List<Order> list = orderService.queryAllData(map);
 			
-			context.put("brandList", brandList);
-			context.put("categoryList", categoryList);
 			context.put("list", list);
 			context.put("totalPages", totalPages);
 			context.put("totalCount", totalCount);
@@ -146,14 +125,9 @@ public class OrderAction extends ActionSupport {
 			String brandId = request.getParameter("brandId");
 			String beginTime = request.getParameter("beginTime");
 			String endTime = request.getParameter("endTime");
-			String skuCode=request.getParameter("skuCode");
-			Goods goods = goodsService.selectBySkuCode(skuCode);
-			String goodsId = goods != null ? goods.getId() : "";
-			List<Spec> specList = specService.selectDetailSpecByGoodsId(goodsId);
-			
-			context.put("specList", specList);
-			context.put("entity", goods);
-			
+			String orderId=request.getParameter("orderId");
+			Order order = orderService.selectByPrimaryKey(orderId);
+			context.put("order", order);
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
 			context.put("beginTime", beginTime);

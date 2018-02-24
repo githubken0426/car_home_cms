@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.shopping.OrderMapper">
+	<!-- 查询所有 -->
+	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.shopping.Order" parameterType="java.util.Map">
+		select O.*,
+		(select real_name from tc_user L where L.user_id=O.user_id )as userName ,
+		(select expert_name from tb_expert_top L where L.id=O.expert_id )as expertName,
+		(select logistics_no from inn_logistics L where L.id=O.logistics_id )as logisticsNo ,
+		(select address from inn_logistics L where L.id=O.logistics_id )as address 
+		from inn_order O
+		<where>
+			<!-- city_code=#{cityCode} -->
+			<if test="title!=null and title!=''">
+				and title like '%${title}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+		order by order_time desc limit #{beginResult},#{pageSize}
+	</select>
+
+	<!-- 查询所有数据数 -->
+	<select id="getTotalCount" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(1) from inn_order
+		<where>
+			<!-- city_code=#{cityCode} -->
+			<if test="title!=null and title!=''">
+				and title like '%${title}%'
+			</if>
+			<if test="beginTime!=null and beginTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&gt;=#{beginTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and DATE_FORMAT(insert_time,'%Y-%m-%d')&lt;=#{endTime}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Order" parameterType="java.lang.String">
+		select * from inn_order where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

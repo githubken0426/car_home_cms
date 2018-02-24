@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gtercn.carhome.cms.dao.shopping.LogisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.gtercn.carhome.cms.entity.shopping.Logistics" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="postal_code" property="postalCode" jdbcType="VARCHAR"/>
+    <result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
+    <result column="logistics_type" property="logisticsType" jdbcType="INTEGER" />
+    <result column="logistics_name" property="logisticsName" jdbcType="VARCHAR"/>
+    <result column="logistics_fee" property="logisticsFee" jdbcType="VARCHAR" />
+    <result column="delivery_amount" property="deliveryAmount" jdbcType="VARCHAR" />
+    <result column="logistics_status" property="logisticsStatus" jdbcType="INTEGER"/>
+    <result column="settlement_status" property="settlementStatus" jdbcType="INTEGER"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    <collection property="details" column="id" javaType="ArrayList" 
+                ofType="inn.shopping.api.entity.LogisticsDetail" select="selectDetailById"/>
+  </resultMap>
+  
+  <select id="selectDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.Logistics" parameterType="java.lang.String" >
+    select * from inn_logistics_detail where logistics_id = #{id} order by create_time desc
+  </select>
+  
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from inn_logistics
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectLogisticsByOrder" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from inn_logistics where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>
