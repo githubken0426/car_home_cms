@@ -190,7 +190,7 @@ response.flushBuffer();
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td title="订单详情"><a href="${pageContext.request.contextPath}/order_detaill.action?orderId=${o.id}">${o.orderNo }</a></td>
+						<td title="订单详情"><a href="${pageContext.request.contextPath}/order_detail.action?orderId=${o.id}">${o.orderNo }</a></td>
 						<td>${o.userName }</td>
 						<td>${o.expertName }</td>
 						<td>
@@ -216,7 +216,7 @@ response.flushBuffer();
 						</td>
 						<td>${o.totalAmount }</td>
 						<td>${o.payment }</td>
-						<td><a href="">${o.logisticsNo }</a></td>
+						<td><a href="javascript:void(0);" onclick="logisticsDetail('${o.logisticsId }')">${o.logisticsNo }</a></td>
 						<td title="${o.address }">${o.address }</td>
 					</tr>					
 					</c:forEach>
@@ -240,10 +240,10 @@ response.flushBuffer();
 </div>
 
 <!-- 物流详情 -->
-	<div id="logisticsDetail" style="display: none">
-		<table class="table table-condensed" style="margin-bottom:0px;">
-		 </table>
-	</div>
+<div id="logisticsDetail" style="display: none">
+	<table class="table table-condensed" style="margin-bottom:0px;"></table>
+</div>
+
 <script type="text/javascript">
 //物流详情
 function logisticsDetail(logisticsId){
@@ -260,10 +260,10 @@ function logisticsDetail(logisticsId){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:center;'>"+value.createTime+"</td>";
+					info+="<td style='text-align:center;'>${value.createTime}</td>";
 					info+="<td style='text-align:center;'>";
-					info+="<fmt:formatDate value='"+${value.description }+"' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>";
-					info+="</td>";
+					info+="<fmt:formatDate value='${value.description }' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>";
+					info+="</td>"; 
 					info = "</tr>";
 	    			$tobdy.append(info);
 	    	});
@@ -276,8 +276,10 @@ function logisticsDetail(logisticsId){
 	    		closeBtn: 1,
 	    		content : $("#logisticsDetail")
 	    	});
-	}
+		}
+	});
 }
+		
 </script>
 </body>
 </html>

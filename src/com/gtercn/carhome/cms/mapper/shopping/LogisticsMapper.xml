@@ -18,10 +18,10 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     <collection property="details" column="id" javaType="ArrayList" 
-                ofType="inn.shopping.api.entity.LogisticsDetail" select="selectDetailById"/>
+                ofType="com.gtercn.carhome.cms.entity.shopping.LogisticsDetail" select="selectDetailById"/>
   </resultMap>
   
-  <select id="selectDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.Logistics" parameterType="java.lang.String" >
+  <select id="selectDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.LogisticsDetail" parameterType="java.lang.String" >
     select * from inn_logistics_detail where logistics_id = #{id} order by create_time desc
   </select>
   

@@ -35,6 +35,7 @@ response.flushBuffer();
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>订单详情
+			    	<input type="button" value="返回" class="btn btn-info" style="width:80px;position: absolute;right: 40px;top: 25px;" onclick="turnBack()"/>
 			        <div class="clear"></div>
 			    </div>
 		   		<div style="margin:0 auto; margin:10px;">
@@ -83,11 +84,15 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">下单时间：</td>
 							<td>
-								<span style="margin-left:30px;">${entity.orderTime}</span>
+								<span style="margin-left:30px;">
+									<fmt:formatDate value='${entity.orderTime}' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>
+								</span>
 							</td>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">付款时间：</td>
 							<td>
-								<span style="margin-left:30px;">${entity.payTime}</span>
+								<span style="margin-left:30px;">
+									<fmt:formatDate value='${entity.payTime}' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>
+								</span>
 							</td>
 						</tr>
 						<tr>
@@ -105,10 +110,10 @@ response.flushBuffer();
 							<td>
 								<span style="margin-left:30px;">${entity.address}</span>
 							</td>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流信息：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流单号：</td>
 							<td>
 								<span style="margin-left:30px;">
-									<a href="logisticsDetail()">${logistics.logisticsNo}</a>
+									<a href="javascript:void(0);" onclick="logisticsDetail()">${entity.logisticsNo}</a>
 								</span>
 							</td>
 						</tr>
@@ -117,8 +122,9 @@ response.flushBuffer();
 							<td>
 								<span style="margin-left:30px;">
 								<c:choose>
-									<c:when test="${entity.payChannel==A }">支付宝</c:when>
-									<c:otherwise>微信</c:otherwise>
+									<c:when test="${entity.payChannel=='A' }">支付宝</c:when>
+									<c:when test="${entity.payChannel=='W' }">微信</c:when>
+									<c:otherwise></c:otherwise>
 								</c:choose>
 								</span>
 							</td>
@@ -146,9 +152,10 @@ response.flushBuffer();
 									<c:when test="${entity.invoiceType eq 'E' }">
 										<span style="margin-left: 30px;">电子发票</span>
 									</c:when>
-									<c:otherwise>
+									<c:when test="${entity.invoiceType eq 'P' }">
 										<span style="margin-left: 30px;">纸质发票</span>
-									</c:otherwise>
+									</c:when>
+									<c:otherwise></c:otherwise>
 								</c:choose>
 							</td>
 						</tr>
@@ -166,19 +173,23 @@ response.flushBuffer();
 						</tr>
 	            	</table>
 	            	<!-- 购买商品明细 -->
-	            	<table>
+	            	<table class="table table-bordered">
+	            		<tr>
+	            			<td width="10%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品明细:</td>
+							<td width="40%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题</td>
+							<td width="40%" align="center"  nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品规格</td>
+							<td width="10%" align="center"  nowrap="nowrap" bgcolor="#f1f1f1" height="40px">购买数量</td>
+						</tr>
 	            		<c:forEach var="goodsDetail" items="${entity.orderDetails }">
 	            		<tr>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
-							<td width="30%">
+	            			<td nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
+							<td align="left" title="${goodsDetail.goodsTitle}">
 								<span style="margin-left:30px;">${goodsDetail.goodsTitle}</span>
 							</td>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品规格：</td>
-							<td width="20%">
-								<span style="margin-left:30px;">${goodsDetail.specItemIds}</span>
+							<td align="left" >
+								<span style="margin-left:30px;">${goodsDetail.specItems}</span>
 							</td>
-							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">购买数量：</td>
-							<td width="20%" >
+							<td align="center" >
 								<span style="margin-left:30px;">${goodsDetail.number}</span>
 							</td>
 						</tr>
@@ -188,7 +199,7 @@ response.flushBuffer();
 			</div>
 		</form>
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/goods_list.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/order_list.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
 			<input type="hidden" name="categoryId" value="${categoryId}" />
 			<input type="hidden" name="brandId" value="${brandId}" />
@@ -202,17 +213,15 @@ response.flushBuffer();
 <div id="logisticsDetail" style="display: none">
 	<table class="table table-condensed" style="margin-bottom:0px;">
 		<tr>
-			<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流信息：</td>
-			<td width="50%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
-			<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">时间：</td>
-			<td width="30%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
+			<td width="70%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流信息</td>
+			<td width="30%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">时间</td>
 		</tr>
 	 <c:forEach var="logiticsDetail" items="${logistics.details }">
 	    <tr>
-			<td colspan="2">
-				<span style="margin-left:30px;">${logiticsDetail.description}</span>
+			<td width="70%" >
+				<span style="margin-left:30px;" title="${logiticsDetail.description}">${logiticsDetail.description}</span>
 			</td>
-			<td colspan="2">
+			<td width="30%">
 				<span style="margin-left:30px;">
 					<fmt:formatDate value='${logiticsDetail.createTime}' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>
 				</span>
@@ -223,9 +232,9 @@ response.flushBuffer();
 </div>
 <script type="text/javascript">
 //物流详情
-function logisticsDetail(logisticsId){
+function logisticsDetail(){
 	layer.open({
-		title : '<i class="icon-location-pin"></i>当前位置 / <strong>物流详情</strong>',
+		title : '<i class="icon-location-pin"></i>物流详情:<strong>${logistics.logisticsName } / ${logistics.logisticsNo }</strong>',
 		type : 1,
 		area: ['600px', '350px'],
 		btn: ["<i class='fa fa-ban'></i> 确定"],

@@ -16,6 +16,7 @@
 		<result column="logistics_id" property="logisticsId" jdbcType="VARCHAR" />
 		<result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
 		<result column="escrow_trade_no" property="escrowTradeNo" jdbcType="VARCHAR" />
+		<result column="buyer_account" property="buyerAccount" jdbcType="VARCHAR" />
 		<result column="customer_mark" property="customerMark" jdbcType="VARCHAR" />
 		<result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR" />
 		<result column="invoice" property="invoice" jdbcType="VARCHAR" />
@@ -23,18 +24,17 @@
 		<result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
 		<result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
 		<result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
-		<result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
-		<result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
-		<result column="realname" property="realname" jdbcType="VARCHAR" />
-		<result column="telphone" property="telphone" jdbcType="VARCHAR" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="expertName" property="expertName" jdbcType="VARCHAR" />
+		<result column="logisticsNo" property="logisticsNo" jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
-		<collection property="orderDetails" column="id"
-			javaType="ArrayList" ofType="com.gtercn.carhome.cms.entity.shopping.OrderDetail" select="selectOrderDetailById" />
+		<collection property="orderDetails" column="id" javaType="ArrayList" 
+			ofType="com.gtercn.carhome.cms.entity.shopping.OrderDetail" select="selectOrderDetailById" />
 	</resultMap>
 	<select id="selectOrderDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.OrderDetail" parameterType="java.lang.String">
 		select OD.*,
 		(select goods_title from inn_goods where OD.goods_id=id )as goodsTitle,
-		(select small_picture from inn_goods where OD.goods_id=id )as smallPicture,
+		(select small_picture from inn_goods where OD.goods_id=id )as smallPicture
 		from inn_order_detail OD
 		where OD.order_id = #{id} order by OD.create_time desc
 	</select>
@@ -80,8 +80,13 @@
 		</where>
 	</select>
 	
-	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Order" parameterType="java.lang.String">
-		select * from inn_order where id = #{id,jdbcType=VARCHAR}
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select O.*,
+		(select real_name from tc_user L where L.user_id=O.user_id )as userName ,
+		(select expert_name from tb_expert_top L where L.id=O.expert_id )as expertName,
+		(select logistics_no from inn_logistics L where L.id=O.logistics_id )as logisticsNo ,
+		(select address from inn_logistics L where L.id=O.logistics_id )as address 
+		from inn_order O where id = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<select id="queryAllExpert" resultType="com.gtercn.carhome.cms.entity.ExpertTop" parameterType="java.lang.String">

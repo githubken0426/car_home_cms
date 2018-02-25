@@ -134,10 +134,11 @@ public class OrderAction extends ActionSupport {
 			if (order != null && order.getOrderDetails() != null) {
 				List<OrderDetail> detailsList=new ArrayList<OrderDetail>();
 				for (OrderDetail detail : order.getOrderDetails()) {
-					String specItemIds = detail.getSpecItems();
+					String specItemIds = detail.getSpecItemIds();
 					if (StringUtils.isBlank(specItemIds))
 						continue;
-					List<String> list = specService.selectConcatSpecItems(Arrays.asList(specItemIds));
+					List<String> itemsList=Arrays.asList(specItemIds.split(","));
+					List<String> list = specService.selectConcatSpecItems(itemsList);
 					detail.setSpecItems(list.toString());
 					detailsList.add(detail);
 				}
