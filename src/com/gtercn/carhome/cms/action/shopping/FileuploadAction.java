@@ -31,7 +31,7 @@ public class FileuploadAction extends ActionSupport {
 	}
 
 	/**
-	 * 上传商品小图
+	 * 上传商品图
 	 * 
 	 * @return
 	 * @throws Exception

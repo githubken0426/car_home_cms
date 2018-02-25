@@ -1,9 +1,11 @@
 package com.gtercn.carhome.cms.action.shopping;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,12 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.ExpertTop;
+import com.gtercn.carhome.cms.entity.shopping.Logistics;
 import com.gtercn.carhome.cms.entity.shopping.Order;
+import com.gtercn.carhome.cms.entity.shopping.OrderDetail;
 import com.gtercn.carhome.cms.service.shopping.order.LogisticsService;
 import com.gtercn.carhome.cms.service.shopping.order.OrderService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import net.sf.json.JSONObject;
+
 
 /**
  * 订单
@@ -119,7 +126,22 @@ public class OrderAction extends ActionSupport {
 			String endTime = request.getParameter("endTime");
 			String orderId=request.getParameter("orderId");
 			Order order = orderService.selectByPrimaryKey(orderId);
-			context.put("order", order);
+			
+			List<OrderDetail> detailsList=new ArrayList<OrderDetail>();
+			if(order!=null && order.getOrderDetails().size()>0) {
+				for (OrderDetail detail : order.getOrderDetails()) {
+					String specItemIds=detail.getSpecItems();
+					
+					detail.setSpecItems("");
+					detailsList.add(detail);
+				}
+				order.setOrderDetails(detailsList);
+			}
+			Logistics logistics = logisticsService.selectLogisticsByOrder(orderId);
+			
+			context.put("entity", order);
+			context.put("logistics", logistics);
+			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
 			context.put("beginTime", beginTime);
@@ -131,5 +153,22 @@ public class OrderAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		return "detail";
+	}
+	
+	/**
+	 * 查询物流详情
+	 * @throws Exception
+	 * @throws 
+	 * @date 2018年2月25日 上午10:55:24
+	 */
+	public void selectByOrder() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		ServletResponse response = ServletActionContext.getResponse();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		String orderId = request.getParameter("orderId");
+		Logistics logistics = logisticsService.selectLogisticsByOrder(orderId);
+		JSONObject json = JSONObject.fromObject(logistics);
+		response.getWriter().write(json.toString());
 	}
 }

@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gtercn.carhome.cms.dao.shopping.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.gtercn.carhome.cms.entity.shopping.Order">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="expert_id" property="expertId" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="item_count" property="itemCount" jdbcType="INTEGER" />
+		<result column="total_amount" property="totalAmount" jdbcType="VARCHAR" />
+		<result column="payment" property="payment" jdbcType="VARCHAR" />
+		<result column="address_id" property="addressId" jdbcType="VARCHAR" />
+		<result column="logistics_id" property="logisticsId" jdbcType="VARCHAR" />
+		<result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
+		<result column="escrow_trade_no" property="escrowTradeNo" jdbcType="VARCHAR" />
+		<result column="customer_mark" property="customerMark" jdbcType="VARCHAR" />
+		<result column="cancel_reason" property="cancelReason" jdbcType="VARCHAR" />
+		<result column="invoice" property="invoice" jdbcType="VARCHAR" />
+		<result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+		<result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+		<result column="invoice_title" property="invoiceTitle" jdbcType="VARCHAR" />
+		<result column="invoice_content" property="invoiceContent" jdbcType="VARCHAR" />
+		<result column="logistics_no" property="logisticsNo" jdbcType="VARCHAR" />
+		<result column="logistics_name" property="logisticsName" jdbcType="VARCHAR" />
+		<result column="realname" property="realname" jdbcType="VARCHAR" />
+		<result column="telphone" property="telphone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<collection property="orderDetails" column="id"
+			javaType="ArrayList" ofType="com.gtercn.carhome.cms.entity.shopping.OrderDetail" select="selectOrderDetailById" />
+	</resultMap>
+	<select id="selectOrderDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.OrderDetail" parameterType="java.lang.String">
+		select OD.*,
+		(select goods_title from inn_goods where OD.goods_id=id )as goodsTitle,
+		(select small_picture from inn_goods where OD.goods_id=id )as smallPicture,
+		from inn_order_detail OD
+		where OD.order_id = #{id} order by OD.create_time desc
+	</select>
+	
 	<!-- 查询所有 -->
 	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.shopping.Order" parameterType="java.util.Map">
 		select O.*,

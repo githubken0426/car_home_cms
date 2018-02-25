@@ -20,7 +20,14 @@ public class OrderDetail {
 	private String smallPicture;
 	private List<String> smallPictureList;
 	private String goodsTitle;
+	private String specItems;
 	
+	public String getSpecItems() {
+		return specItems;
+	}
+	public void setSpecItems(String specItems) {
+		this.specItems = specItems;
+	}
 	public String getId() {
 		return id;
 	}

@@ -22,7 +22,7 @@ response.flushBuffer();
 	<link rel="stylesheet" href="<%=path%>/js/cms/kkpager/kkpager_blue.css"/>
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/cms/kkpager/kkpager.js"></script>
-    		
+    <script type="text/javascript" src="<%=path %>/js/layer/layer.js"></script>
 <script type="text/javascript">
 	function getParameter(name) { 
 		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); 
@@ -182,7 +182,7 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="10%"><strong>付款时间</strong></td>
 						<td nowrap="nowrap" width="5%"><strong>支付方式</strong></td>
 						<td nowrap="nowrap" width="5%"><strong>总金额</strong></td>
-						<td nowrap="nowrap" width="5%"><strong>应付金额</strong></td>
+						<td nowrap="nowrap" width="5%"><strong>实付金额</strong></td>
 						<td nowrap="nowrap" width="10%"><strong>物流单号</strong></td>
 						<td nowrap="nowrap" width="15%"><strong>收货地址</strong></td>
 	       			</tr>
@@ -238,5 +238,46 @@ response.flushBuffer();
     	</div>
 	</div>
 </div>
+
+<!-- 物流详情 -->
+	<div id="logisticsDetail" style="display: none">
+		<table class="table table-condensed" style="margin-bottom:0px;">
+		 </table>
+	</div>
+<script type="text/javascript">
+//物流详情
+function logisticsDetail(logisticsId){
+	var $tobdy=$("#logisticsDetail table tbody");
+	$tobdy.empty();
+	$.ajax({
+		url:'${pageContext.request.contextPath}/logistics_selectByOrder.action',
+		type:'GET',
+		async:true,
+		data:{logisticsId:logisticsId},
+	    timeout:5000,    //超时时间
+	    dataType:'json', //返回的数据格式：json/xml/html/script/jsonp/text
+	    success:function(data,textStatus,jqXHR){
+	    	var json = eval(data.details);
+	    	$.each(json,function(key,value){
+					var info = "<tr>";
+					info+="<td style='text-align:center;'>"+value.createTime+"</td>";
+					info+="<td style='text-align:center;'>";
+					info+="<fmt:formatDate value='"+${value.description }+"' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>";
+					info+="</td>";
+					info = "</tr>";
+	    			$tobdy.append(info);
+	    	});
+	    },complete:function(){
+	    	layer.open({
+	    		title : '<i class="icon-location-pin"></i>当前位置 / <strong>物流详情</strong>',
+	    		type : 1,
+	    		area: ['600px', '350px'],
+	    		btn: ["<i class='fa fa-ban'></i> 确定"],
+	    		closeBtn: 1,
+	    		content : $("#logisticsDetail")
+	    	});
+	}
+}
+</script>
 </body>
 </html>
