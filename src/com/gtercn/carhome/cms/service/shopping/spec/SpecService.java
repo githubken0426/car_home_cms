@@ -26,5 +26,13 @@ public interface SpecService {
     List<Spec> selectDetailSpecByGoodsId(String goodsId);
     
     
+    
+    //SpecItem
     List<SpecItemGoodsRelation> selectByGoodsId(String goodsId);
+    /**
+     * 根据specItemIds,拼接规格名、值
+     * @param specItemIds
+     * @return
+     */
+    List<String> selectConcatSpecItems(List<String> specItemIds);
 }

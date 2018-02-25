@@ -1,6 +1,7 @@
 package com.gtercn.carhome.cms.action.shopping;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.gtercn.carhome.cms.entity.shopping.Order;
 import com.gtercn.carhome.cms.entity.shopping.OrderDetail;
 import com.gtercn.carhome.cms.service.shopping.order.LogisticsService;
 import com.gtercn.carhome.cms.service.shopping.order.OrderService;
+import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -37,6 +39,8 @@ public class OrderAction extends ActionSupport {
 	private OrderService orderService;
 	@Autowired
 	private LogisticsService logisticsService;
+	@Autowired
+	private SpecService specService;
 	
 	private Order entity;
 	public Order getEntity() {
@@ -128,14 +132,17 @@ public class OrderAction extends ActionSupport {
 			Order order = orderService.selectByPrimaryKey(orderId);
 			
 			List<OrderDetail> detailsList=new ArrayList<OrderDetail>();
-			if(order!=null && order.getOrderDetails().size()>0) {
+			if (order != null && order.getOrderDetails() != null) {
 				for (OrderDetail detail : order.getOrderDetails()) {
-					String specItemIds=detail.getSpecItems();
-					
-					detail.setSpecItems("");
+					String specItemIds = detail.getSpecItems();
+					if (StringUtils.isBlank(specItemIds))
+						continue;
+					List<String> list = specService.selectConcatSpecItems(Arrays.asList(specItemIds));
+					detail.setSpecItems(list.toString());
 					detailsList.add(detail);
 				}
-				order.setOrderDetails(detailsList);
+				if (detailsList.size() > 0)
+					order.setOrderDetails(detailsList);
 			}
 			Logistics logistics = logisticsService.selectLogisticsByOrder(orderId);
 			

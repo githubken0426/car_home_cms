@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gtercn.carhome.cms.dao.shopping.SpecItemGoodsRelationMapper;
+import com.gtercn.carhome.cms.dao.shopping.SpecItemMapper;
 import com.gtercn.carhome.cms.dao.shopping.SpecMapper;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
@@ -20,6 +21,8 @@ public class SpecServiceImpl implements SpecService {
 	private SpecMapper dao;
 	@Autowired
 	private SpecItemGoodsRelationMapper relationDao;
+	@Autowired
+	private SpecItemMapper itemDao;
 
 	@Override
 	public List<Spec> selectGoodsSpecItems(Map<String, Object> map) {
@@ -36,5 +39,9 @@ public class SpecServiceImpl implements SpecService {
 	@Override
 	public List<SpecItemGoodsRelation> selectByGoodsId(String goodsId) {
 		return relationDao.selectByGoodsId(goodsId);
+	}
+	@Override
+	public List<String> selectConcatSpecItems(List<String> specItemIds) {
+		return itemDao.selectConcatSpecItems(specItemIds);
 	}
 }
