@@ -131,8 +131,8 @@ public class OrderAction extends ActionSupport {
 			String orderId=request.getParameter("orderId");
 			Order order = orderService.selectByPrimaryKey(orderId);
 			
-			List<OrderDetail> detailsList=new ArrayList<OrderDetail>();
 			if (order != null && order.getOrderDetails() != null) {
+				List<OrderDetail> detailsList=new ArrayList<OrderDetail>();
 				for (OrderDetail detail : order.getOrderDetails()) {
 					String specItemIds = detail.getSpecItems();
 					if (StringUtils.isBlank(specItemIds))
