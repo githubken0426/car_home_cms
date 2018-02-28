@@ -169,7 +169,7 @@ public class OrderAction extends ActionSupport {
 	 * @throws 
 	 * @date 2018年2月25日 上午10:55:24
 	 */
-	public void selectByOrder() throws Exception {
+	public void logisticsDetail() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		ServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("utf-8");

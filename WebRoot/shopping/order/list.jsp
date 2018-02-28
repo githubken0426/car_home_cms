@@ -216,7 +216,7 @@ response.flushBuffer();
 						</td>
 						<td>${o.totalAmount }</td>
 						<td>${o.payment }</td>
-						<td><a href="javascript:void(0);" onclick="logisticsDetail('${o.logisticsId }')">${o.logisticsNo }</a></td>
+						<td><a href="javascript:void(0);" onclick="logisticsDetail('${o.id }')">${o.logisticsNo }</a></td>
 						<td title="${o.address }">${o.address }</td>
 					</tr>					
 					</c:forEach>
@@ -246,23 +246,27 @@ response.flushBuffer();
 
 <script type="text/javascript">
 //物流详情
-function logisticsDetail(logisticsId){
+function logisticsDetail(orderId){
 	var $tobdy=$("#logisticsDetail table tbody");
 	$tobdy.empty();
 	$.ajax({
-		url:'${pageContext.request.contextPath}/logistics_selectByOrder.action',
+		url:'${pageContext.request.contextPath}/order_logisticsDetail.action',
 		type:'GET',
 		async:true,
-		data:{logisticsId:logisticsId},
+		data:{orderId:orderId},
 	    timeout:5000,    //超时时间
 	    dataType:'json', //返回的数据格式：json/xml/html/script/jsonp/text
 	    success:function(data,textStatus,jqXHR){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:center;'>${value.createTime}</td>";
 					info+="<td style='text-align:center;'>";
-					info+="<fmt:formatDate value='${value.description }' type='both' pattern='yyyy-MM-dd HH:mm' dateStyle='long'/>";
+					info+=value.description ;
+					info+="</td>";
+					info+="<td style='text-align:center;'>";
+					
+					info+=value.createTime;
+					
 					info+="</td>"; 
 					info = "</tr>";
 	    			$tobdy.append(info);
