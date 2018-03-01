@@ -247,7 +247,7 @@ response.flushBuffer();
 <script type="text/javascript">
 //物流详情
 function logisticsDetail(orderId){
-	var $tobdy=$("#logisticsDetail table tbody");
+	var $tobdy=$("#logisticsDetail table");
 	$tobdy.empty();
 	$.ajax({
 		url:'${pageContext.request.contextPath}/order_logisticsDetail.action',
@@ -260,15 +260,13 @@ function logisticsDetail(orderId){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:center;'>";
+					info+="<td style='text-align:left;'width='70%'>";
 					info+=value.description ;
 					info+="</td>";
-					info+="<td style='text-align:center;'>";
-					
-					info+=value.createTime;
-					
-					info+="</td>"; 
-					info = "</tr>";
+					info+="<td style='text-align:center;'width='30%'>";
+					var time=value.createTime;
+					info+=time+"</td>"; 
+					info+= "</tr>";
 	    			$tobdy.append(info);
 	    	});
 	    },complete:function(){
