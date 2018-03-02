@@ -139,7 +139,8 @@ response.flushBuffer();
 						<select id="expertId" name="expertId" style="height: 30px;width:150px;font-size: 14px;">
 							<option value="-1">请选择达人...</option>
 							<c:forEach var="expert" items="${expertList}" varStatus="s">
-								<option value="${expert.id }"<c:if test='${expertId ==expert.id}'>selected='selected'</c:if>>
+									<option value="${expert.id }"
+										<c:if test='${expertId ==expert.id}'>selected='selected'</c:if>>
 									${expert.expertName }
 								</option>
 							</c:forEach>
@@ -216,8 +217,10 @@ response.flushBuffer();
 						</td>
 						<td>${o.totalAmount }</td>
 						<td>${o.payment }</td>
-						<td><a href="javascript:void(0);" onclick="logisticsDetail('${o.id }')">${o.logisticsNo }</a></td>
-						<td title="${o.address }">${o.address }</td>
+						<td>
+							<a href="javascript:void(0);" onclick="logisticsDetail('${o.id}','${o.address}','${o.realname}')">${o.logisticsNo }</a>
+						</td>
+						<td title="${o.address }"></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -246,9 +249,17 @@ response.flushBuffer();
 
 <script type="text/javascript">
 //物流详情
-function logisticsDetail(orderId){
+function logisticsDetail(orderId,address,realname){
 	var $tobdy=$("#logisticsDetail table");
 	$tobdy.empty();
+	var addressInfo = "<tr>";
+	addressInfo+="<td style='text-align:left;'width='70%'><span style='margin-left:10px;color:gray;'> 收货地址:";
+	addressInfo+=address ;
+	addressInfo+="</span></td>";
+	addressInfo+="<td style='text-align:center;'width='30%'><span style='margin-left:10px;color:gray;'>姓名:";
+	addressInfo+=realname+"</span></td>"; 
+	addressInfo+= "</tr>";
+	$tobdy.append(addressInfo);
 	$.ajax({
 		url:'${pageContext.request.contextPath}/order_logisticsDetail.action',
 		type:'GET',
@@ -260,12 +271,12 @@ function logisticsDetail(orderId){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:left;'width='70%'>";
+					info+="<td style='text-align:left;><span style='margin-left:10px;'>";
 					info+=value.description ;
-					info+="</td>";
-					info+="<td style='text-align:center;'width='30%'>";
-					var time=value.createTime;
-					info+=time+"</td>"; 
+					info+="</span></td>";
+					info+="<td style='text-align:center;><span style='color:gray;'>";
+					var time=formateDate(value.createTime.time);
+					info+=time+"</span></td>"; 
 					info+= "</tr>";
 	    			$tobdy.append(info);
 	    	});
@@ -281,7 +292,16 @@ function logisticsDetail(orderId){
 		}
 	});
 }
-		
+
+function formateDate(time){
+	var date = new Date(time);
+	Y = date.getFullYear() + '-';
+	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	D = date.getDate() + ' ';
+	h = date.getHours() + ':';
+	m = date.getMinutes();
+	return (Y+M+D+h+m); 
+}	
 </script>
 </body>
 </html>
