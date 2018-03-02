@@ -22,6 +22,7 @@ response.flushBuffer();
     <link href="<%=path %>/js/webuploader/preview.css" rel="stylesheet" type="text/css"/>
     
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
+	<script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/webuploader.min.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewSmall.js"></script>
     <script type="text/javascript" src="<%=path%>/js/webuploader/previewBig.js"></script>
@@ -35,6 +36,18 @@ response.flushBuffer();
 	
    	//添加
 	function addSubmit(){
+		var cityCode=$.trim($("#cityCode").val());
+   		if(!cityCode){
+   			$("#cityCode").focus();
+   			layer.tips('请输入商品城市编码！', '#cityCode');
+   			return false;
+   		}
+   		var goodsTitle=$.trim($("#goodsTitle").val());
+		if(!goodsTitle){
+			$("#goodsTitle").focus();
+			layer.tips('请输入商品标题！', '#goodsTitle');
+			return false;
+   		} 
 		$("#addForm").submit();	
 	}
     //返回
@@ -70,8 +83,10 @@ response.flushBuffer();
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
-							<td width="40%" ></td>
+							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市码：</td>
+							<td width="40%" >
+								<input id="cityCode" name="entity.cityCode" value="${entity.cityCode}" type="text" style="margin-left: 30px;width:200px;" />
+							</td>
 						</tr>
 						
 						<c:forEach var="spec" items="${specList}">
@@ -91,10 +106,11 @@ response.flushBuffer();
 							</td>
 						</tr>
 						</c:forEach>
+						
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">
-								<input name="entity.goodsTitle" value="${ entity.goodsTitle}" type="text" style="margin-left: 30px;width:60%;" />
+								<input id="goodsTitle" name="entity.goodsTitle" value="${ entity.goodsTitle}" type="text" style="margin-left: 30px;width:60%;" />
 							</td>
 						</tr>
 						
@@ -231,8 +247,7 @@ response.flushBuffer();
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品描述：</td>
 							<td colspan="3">
-								<textarea name="entity.goodsDescription" 
-									style="height:70px;margin-left: 30px;width:60%;">${entity.goodsDescription }</textarea>
+								<textarea name="entity.goodsDescription" style="height:70px;margin-left:30px;width:60%;">${entity.goodsDescription }</textarea>
 							</td>
 						</tr>
 						<tr>
@@ -273,7 +288,7 @@ response.flushBuffer();
 							<td colspan="3">
 								<div style="margin-left:45px;margin-top:10px;width:100%;margin-bottom:10px;">
 								 	<c:forEach var="big" items="${entity.bigPictureList}" varStatus="index">
-										<img onclick="deleteImg('big',${index.index})" id="bigDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
+									<img onclick="deleteImg('big',${index.index})" id="bigDel_${index.index}" src="${pageContext.request.contextPath}/js/webuploader/images/delete.png"
 								        	style="width:24px;height:24px;position: absolute;cursor:pointer;" />
 										<img id="bigSrc_${index.index}" src="${big}" style="width:110px;height:110px;margin-right:3px;"/>
 										<input id="bigInput_${index.index}" type="hidden" value="${big}" name="bigPicture"/>

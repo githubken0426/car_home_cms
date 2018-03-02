@@ -16,7 +16,7 @@
 		select G.*,(select cn_name from inn_goods_brand where G.brand_id=id) brandName
 		from inn_goods G
 		<where>
-			city_code=#{cityCode}
+			<!-- city_code=#{cityCode} -->
 			<if test="categoryId!=null and categoryId!=''">
 				and brand_id in (select id from inn_goods_brand where category_id=#{categoryId})
 			</if>
@@ -40,7 +40,7 @@
 	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
 		select count(1) from inn_goods
 		<where>
-			city_code=#{cityCode}
+			<!-- city_code=#{cityCode} -->
 			<if test="categoryId!=null and categoryId!=''">
 				and brand_id in (select id from inn_goods_brand where category_id=#{categoryId})
 			</if>
@@ -106,6 +106,7 @@
 	update inn_goods G
 	<set>
 		brand_id=#{brandId,jdbcType=VARCHAR},
+		city_code= #{cityCode,jdbcType=CHAR},
 		score=#{score,jdbcType=VARCHAR},
 		prime_price=#{primePrice,jdbcType=DECIMAL},
 		promotion_price=#{promotionPrice,jdbcType=DECIMAL},

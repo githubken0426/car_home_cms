@@ -66,11 +66,11 @@ public class GoodsAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		Map<String, Object> session = context.getSession();
 		try {
-			DealerUser user = (DealerUser) session.get("dealer_user");
+			/*DealerUser user = (DealerUser) session.get("dealer_user");
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
 			if(null!=user) 
 				cityCode = user.getCityCode();
-			map.put("cityCode", cityCode);
+			map.put("cityCode", cityCode);*/
 			String title = request.getParameter("title");
 			if (title != null && !title.equals("")) {
 				title = URLDecoder.decode(title, "UTF-8");
@@ -186,11 +186,11 @@ public class GoodsAction extends ActionSupport {
 			entity.setId(uuid);
 			String sku=CommonUtil.randomUpperCode(5, uuid);
 			entity.setSkuCode(sku);
-			DealerUser user = (DealerUser) session.get("dealer_user");
+			/*DealerUser user = (DealerUser) session.get("dealer_user");
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
 			if(null!=user) 
 				cityCode = user.getCityCode();
-			entity.setCityCode(cityCode);
+			entity.setCityCode(cityCode);*/
 			String small[]=request.getParameterValues("smallPicture");
 			String smallPaths = CommonUtil.arrayToString(small);
 			entity.setSmallPicture(smallPaths);

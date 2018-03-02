@@ -56,16 +56,18 @@ function getBrandByCtegory(ele) {
 }
    	//添加
 	function addSubmit(){
-   		/* var title=$.trim($("#title").val());
-   		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
+   		var cityCode=$.trim($("#cityCode").val());
+   		if(!cityCode){
+   			$("#cityCode").focus();
+   			layer.tips('请输入商品城市编码！', '#cityCode');
    			return false;
    		}
-   		var url=$.trim($("#url").val());
-		if(!url){
-			layer.tips('请输入广告链接！', '#url');
+   		var goodsTitle=$.trim($("#goodsTitle").val());
+		if(!goodsTitle){
+			$("#goodsTitle").focus();
+			layer.tips('请输入商品标题！', '#goodsTitle');
 			return false;
-   		} */
+   		} 
 		$("#addForm").submit();	
 	}
     //返回
@@ -99,9 +101,9 @@ function getBrandByCtegory(ele) {
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px"></td>
+							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市码：</td>
 							<td width="40%" >
-								
+								<input id="cityCode" name="entity.cityCode" type="text" style="margin-left: 30px;width:200px;" />
 							</td>
 						</tr>
 						
@@ -110,6 +112,7 @@ function getBrandByCtegory(ele) {
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">${spec.name}：</td>
 							<td colspan="3">
 								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
+			                		<c:if test="${index.index==10}"><br/><span style="margin-left:25px;"></span></c:if>
 									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
 			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" 
 			                				<c:if test="${index.index==0}">checked='checked'</c:if> />
@@ -122,7 +125,7 @@ function getBrandByCtegory(ele) {
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品标题：</td>
 							<td colspan="3">
-								<input name="entity.goodsTitle" type="text" style="margin-left: 30px;width:60%;" />
+								<input id="goodsTitle" name="entity.goodsTitle" type="text" style="margin-left: 30px;width:60%;" />
 							</td>
 						</tr>
 						
