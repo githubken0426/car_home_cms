@@ -281,7 +281,7 @@ function shipping(orderId,addressId,address){
 	layer.open({
 		title : '<i class="icon-location-pin"></i>发货:<strong>填写物流信息</strong>',
 		type : 1,
-		area: ['700px', '350px'],
+		area: ['700px', '250px'],
 		btn: ["<i class='fa fa-ban'></i> 确定","<i class='fa fa-ban'></i> 取消"],
 		closeBtn: 1,
 		content : $("#shipping")
