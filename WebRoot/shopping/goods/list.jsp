@@ -210,8 +210,7 @@ response.flushBuffer();
 						<!--  条件检索区 -->
 						<span style="font-size: 15px; margin-left: 25px;"> 
 						商品标题 
-						<input type="text" id="title" name="title" value="${title}"
-							style="width: 150px; padding: 5px;" />
+						<input type="text" id="title" name="title" value="${title}" style="width: 150px;" />
 						</span> 
 						<span class="margin-left-10" style="font-size: 15px;">上架时间</span>
 						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"

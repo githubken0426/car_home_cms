@@ -53,13 +53,13 @@ response.flushBuffer();
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
 							<td colspan="3">
-								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="padding:8px;width:400px;margin-left:30px;"/>
+								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
-								<select id="goodsId" name="entity.goodsId" style="padding:3px;margin:5px 5px;width:415px;margin-left:30px;">
+								<select id="goodsId" name="entity.goodsId" style="padding:3px;height:35px;font-size:14px;width:415px;margin-left:30px;">
 								<option value="-1">请选择促销商品</option>
 								<c:forEach var="goods" items="${goodsList}">
 									<option value="${goods.id }">
@@ -93,9 +93,8 @@ response.flushBuffer();
 		</form>
 			
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/article_listData.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/adver_listData.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
-			<input type="hidden" name="expertName" value="${expertName}" />
 			<input type="hidden" name="title" value="${title}" />
 			<input type="hidden" name="beginTime" value="${beginTime}" />
 			<input type="hidden" name="endTime" value="${endTime}" />

@@ -176,7 +176,7 @@ response.flushBuffer();
 						</select>
 					</span>
 					<span style="font-size: 15px;margin-left:25px;">
-						中文名称 <input type="text" id="cnName" name="cnName" value="${cnName}" style="width:150px;padding:5px;" />
+						中文名称 <input type="text" id="cnName" name="cnName" value="${cnName}" style="width:150px;" />
 					</span>
 					<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
