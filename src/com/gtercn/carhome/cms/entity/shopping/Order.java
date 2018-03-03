@@ -40,7 +40,6 @@ public class Order {
 	private String address;
 	private String expertName;
 	private String userName;//下单人
-	private String realname;//收货人姓名
 	
 	public String getId() {
 		return id;
@@ -210,11 +209,5 @@ public class Order {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
-	}
-	public String getRealname() {
-		return realname;
-	}
-	public void setRealname(String realname) {
-		this.realname = realname;
 	}
 }

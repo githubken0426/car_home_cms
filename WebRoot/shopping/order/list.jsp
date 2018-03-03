@@ -175,17 +175,17 @@ response.flushBuffer();
 			        <tr align="center">
 			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="14%"><strong>订单号</strong></td>
-						<td nowrap="nowrap" width="8%"><strong>购买用户</strong></td>
-						<td nowrap="nowrap" width="8%"><strong>助销达人</strong></td>
+						<td nowrap="nowrap" width="13%"><strong>订单号</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>购买用户</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>助销达人</strong></td>
 						<td nowrap="nowrap" width="5%"><strong>订单状态</strong></td>
 						<td nowrap="nowrap" width="10%"><strong>下单时间</strong></td>
 						<td nowrap="nowrap" width="10%"><strong>付款时间</strong></td>
 						<td nowrap="nowrap" width="5%"><strong>支付方式</strong></td>
-						<td nowrap="nowrap" width="5%"><strong>总金额</strong></td>
-						<td nowrap="nowrap" width="5%"><strong>实付金额</strong></td>
-						<td nowrap="nowrap" width="10%"><strong>物流单号</strong></td>
-						<td nowrap="nowrap" width="15%"><strong>收货地址</strong></td>
+						<td nowrap="nowrap" width="6%"><strong>总金额</strong></td>
+						<td nowrap="nowrap" width="6%"><strong>实付金额</strong></td>
+						<td nowrap="nowrap" width="12%"><strong>物流单号</strong></td>
+						<td nowrap="nowrap" width="8%"><strong>操 作</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${list}" varStatus="s">					
 					<tr align="center">
@@ -205,6 +205,7 @@ response.flushBuffer();
 								<c:when test="${o.orderStatus==7 }">退货申请</c:when>
 								<c:when test="${o.orderStatus==8 }">退货中</c:when>
 								<c:when test="${o.orderStatus==9 }">退货完成</c:when>
+								<c:when test="${o.orderStatus==10 }">用户取消</c:when>
 							</c:choose>
 						</td>
 						<td><fmt:formatDate value="${o.orderTime }" type="both" pattern="yyyy-MM-dd HH:mm" dateStyle="long"/></td>
@@ -218,9 +219,13 @@ response.flushBuffer();
 						<td>${o.totalAmount }</td>
 						<td>${o.payment }</td>
 						<td>
-							<a href="javascript:void(0);" onclick="logisticsDetail('${o.id}','${o.address}','${o.realname}')">${o.logisticsNo }</a>
+							<a href="javascript:void(0);" onclick="logisticsDetail('${o.id}','${o.address}')">${o.logisticsNo }</a>
 						</td>
-						<td title="${o.address }"></td>
+						<td>
+							<c:if test="${o.orderStatus==2 }">
+							<a href="javascript:void(0);" onclick="shipping('${o.id}','${o.addressId}','${o.address}')">发 货</a>
+							</c:if>
+						</td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -241,24 +246,57 @@ response.flushBuffer();
     	</div>
 	</div>
 </div>
-
+<!-- 发货 -->
+<form id="shipForm">
+<div id="shipping" style="display: none">
+	<table class="table table-condensed" style="margin-bottom:0px;">
+	    <tr>
+	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流单号</td>
+			<td width="45%" >
+				<input name="logistics.logisticsNo" type="text" style="margin-left: 30px;width:200px;"/>
+			</td>
+			<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">时间</td>
+			<td width="25%">
+				
+			</td>
+		</tr>
+		<tr>
+	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">地址</td>
+			<td colspan="3">
+				<span style="margin-left:30px;" id="address"></span>
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
 <!-- 物流详情 -->
 <div id="logisticsDetail" style="display: none">
 	<table class="table table-condensed" style="margin-bottom:0px;"></table>
 </div>
 
 <script type="text/javascript">
+//发货
+function shipping(orderId,addressId,address){
+	$("#address").text(address);
+	layer.open({
+		title : '<i class="icon-location-pin"></i>发货:<strong>填写物流信息</strong>',
+		type : 1,
+		area: ['700px', '350px'],
+		btn: ["<i class='fa fa-ban'></i> 确定","<i class='fa fa-ban'></i> 取消"],
+		closeBtn: 1,
+		content : $("#shipping")
+	});
+}
+
 //物流详情
-function logisticsDetail(orderId,address,realname){
+function logisticsDetail(orderId,address){
 	var $tobdy=$("#logisticsDetail table");
 	$tobdy.empty();
 	var addressInfo = "<tr>";
-	addressInfo+="<td style='text-align:left;'width='70%'><span style='margin-left:10px;color:gray;'> 收货地址:";
+	addressInfo+="<td style='text-align:left;'width='75%'><span style='margin-left:10px;color:gray;'> 收货人";
 	addressInfo+=address ;
 	addressInfo+="</span></td>";
-	addressInfo+="<td style='text-align:center;'width='30%'><span style='margin-left:10px;color:gray;'>姓名:";
-	addressInfo+=realname+"</span></td>"; 
-	addressInfo+= "</tr>";
+	addressInfo+= "<td width='25%'></td></tr>";
 	$tobdy.append(addressInfo);
 	$.ajax({
 		url:'${pageContext.request.contextPath}/order_logisticsDetail.action',
@@ -271,10 +309,10 @@ function logisticsDetail(orderId,address,realname){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:left;><span style='margin-left:10px;'>";
+					info+="<td style='text-align:left;'><span style='margin-left:10px;'>";
 					info+=value.description ;
 					info+="</span></td>";
-					info+="<td style='text-align:center;><span style='color:gray;'>";
+					info+="<td style='text-align:center;'><span style='color:gray;'>";
 					var time=formateDate(value.createTime.time);
 					info+=time+"</span></td>"; 
 					info+= "</tr>";
@@ -284,7 +322,7 @@ function logisticsDetail(orderId,address,realname){
 	    	layer.open({
 	    		title : '<i class="icon-location-pin"></i>当前位置 / <strong>物流详情</strong>',
 	    		type : 1,
-	    		area: ['600px', '350px'],
+	    		area: ['700px', '350px'],
 	    		btn: ["<i class='fa fa-ban'></i> 确定"],
 	    		closeBtn: 1,
 	    		content : $("#logisticsDetail")
