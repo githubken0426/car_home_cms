@@ -45,7 +45,7 @@
 		(select real_name from tc_user L where L.user_id=O.user_id )as userName ,
 		(select expert_name from tb_expert_top L where L.id=O.expert_id )as expertName,
 		(select logistics_no from inn_logistics L where L.id=O.logistics_id )as logisticsNo ,
-		(select concat('姓名：',name,',电话：',phone,',地址：',province,city,district,address) 
+		(select concat('姓名[',name,'],电话[',phone,'],地址[',province,city,district,address,']') 
 			from inn_address L where L.id=O.address_id )as address
 		from inn_order O
 		<where>

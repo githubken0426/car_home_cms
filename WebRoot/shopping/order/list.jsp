@@ -247,23 +247,39 @@ response.flushBuffer();
 	</div>
 </div>
 <!-- 发货 -->
-<form id="shipForm">
+<form id="shipForm" action="${pageContext.request.contextPath}/logistics_delivery">
 <div id="shipping" style="display: none">
 	<table class="table table-condensed" style="margin-bottom:0px;">
 	    <tr>
-	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流单号</td>
+	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流名称</td>
 			<td width="45%" >
-				<input name="logistics.logisticsNo" type="text" style="margin-left: 30px;width:200px;"/>
+				<input name="logistics.logisticsName" placeholder='请输入物流名称' 
+					type="text" style="width:200px;"/>
+					<input type="hidden" id="orderId" name="logistics.orderId" />
+					<input type="hidden" id="addressId" name="addressId" />
 			</td>
-			<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">时间</td>
-			<td width="25%">
-				
+			<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流单号</td>
+			<td width="45%" >
+				<input id="logisticsNo" name="logistics.logisticsNo" placeholder='请输入物流单号' 
+					type="text" style="width:200px;"/>
 			</td>
 		</tr>
 		<tr>
-	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">地址</td>
+	    	<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">客户订单运费</td>
+			<td>
+				<input name="logistics.logisticsFee" placeholder='客户订单运费' 
+					type="text" style="width:200px;"/>
+			</td>
+			<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">实际支付运费</td>
+			<td>
+				<input id="logisticsNo" name="logistics.deliveryAmount" placeholder='支付给物流公司的费用' 
+					type="text" style="width:200px;"/>
+			</td>
+		</tr>
+		<tr>
+	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">收货地址</td>
 			<td colspan="3">
-				<span style="margin-left:30px;" id="address"></span>
+				<span id="address"></span>
 			</td>
 		</tr>
 	</table>
@@ -277,6 +293,11 @@ response.flushBuffer();
 <script type="text/javascript">
 //发货
 function shipping(orderId,addressId,address){
+	var timestamp = Date.parse(new Date());
+	$("#orderId").val(orderId);
+	$("#addressId").val(addressId);
+	$("#logisticsNo").val("CGO"+timestamp);
+	$("#address").attr("title",address);
 	$("#address").text(address);
 	layer.open({
 		title : '<i class="icon-location-pin"></i>发货:<strong>填写物流信息</strong>',
@@ -284,7 +305,11 @@ function shipping(orderId,addressId,address){
 		area: ['700px', '250px'],
 		btn: ["<i class='fa fa-ban'></i> 确定","<i class='fa fa-ban'></i> 取消"],
 		closeBtn: 1,
-		content : $("#shipping")
+		content : $("#shipping"),
+		yes: function(index, layero){
+			$("#shipForm").submit();
+			layer.close(index);
+		}
 	});
 }
 
@@ -293,10 +318,15 @@ function logisticsDetail(orderId,address){
 	var $tobdy=$("#logisticsDetail table");
 	$tobdy.empty();
 	var addressInfo = "<tr>";
-	addressInfo+="<td style='text-align:left;'width='75%'><span style='margin-left:10px;color:gray;'> 收货人";
-	addressInfo+=address ;
-	addressInfo+="</span></td>";
-	addressInfo+= "<td width='25%'></td></tr>";
+	addressInfo+="<td style='text-align:left;'width='75%'>";
+	addressInfo+="</td>";
+	addressInfo+= "<td width='25%'></td>";
+	addressInfo+="</tr>";
+	addressInfo+= "<tr>";
+	addressInfo+="<td style='text-align:left;' colspan='4' title='"+address+"'>";
+	addressInfo+="<span style='margin-left:10px;color:gray;'>收货信息:"+ address +"</span>";
+	addressInfo+="</td>";
+	addressInfo+= "</tr>";
 	$tobdy.append(addressInfo);
 	$.ajax({
 		url:'${pageContext.request.contextPath}/order_logisticsDetail.action',
@@ -309,8 +339,9 @@ function logisticsDetail(orderId,address){
 	    	var json = eval(data.details);
 	    	$.each(json,function(key,value){
 					var info = "<tr>";
-					info+="<td style='text-align:left;'><span style='margin-left:10px;'>";
-					info+=value.description ;
+					info+="<td style='text-align:left;'title='"+value.description+"'>";
+					info+="<span style='margin-left:10px;'>";
+					info+="["+(key+1)+"]"+value.description ;
 					info+="</span></td>";
 					info+="<td style='text-align:center;'><span style='color:gray;'>";
 					var time=formateDate(value.createTime.time);

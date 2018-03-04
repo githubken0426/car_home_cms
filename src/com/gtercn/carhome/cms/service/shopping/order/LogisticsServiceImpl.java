@@ -21,4 +21,11 @@ public class LogisticsServiceImpl implements LogisticsService {
 		return dao.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int add(Logistics logistics) {
+		//更新订单
+		//插入物流信息
+		return dao.add(logistics);
+	}
+
 }

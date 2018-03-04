@@ -22,7 +22,7 @@
   </resultMap>
   
   <select id="selectDetailById" resultType="com.gtercn.carhome.cms.entity.shopping.LogisticsDetail" parameterType="java.lang.String" >
-    select * from inn_logistics_detail where logistics_id = #{id} order by create_time desc
+    select * from inn_logistics_detail where logistics_id = #{id} order by create_time
   </select>
   
  

@@ -49,7 +49,13 @@ public class OrderAction extends ActionSupport {
 	public void setEntity(Order entity) {
 		this.entity = entity;
 	}
-
+	private Logistics logistics;
+	public Logistics getLogistics() {
+		return logistics;
+	}
+	public void setLogistics(Logistics logistics) {
+		this.logistics = logistics;
+	}
 	/**
 	 * 分页检索数据
 	 * @return
@@ -178,5 +184,25 @@ public class OrderAction extends ActionSupport {
 		Logistics logistics = logisticsService.selectLogisticsByOrder(orderId);
 		JSONObject json = JSONObject.fromObject(logistics);
 		response.getWriter().write(json.toString());
+	}
+	
+	/**
+	 * 发货
+	 * 
+	 * @return
+	 */
+	public String delivery() {
+		ActionContext context = ActionContext.getContext();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		try {
+			Map<String, Object> session = context.getSession();
+			String addressId=request.getParameter("addressId");
+			//查询地址
+			//context.put("endTime", endTime);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Action.ERROR;
+		}
+		return "update";
 	}
 }

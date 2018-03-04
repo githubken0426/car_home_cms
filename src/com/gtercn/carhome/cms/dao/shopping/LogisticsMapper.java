@@ -16,4 +16,6 @@ public interface LogisticsMapper {
 	Logistics selectLogisticsByOrder(String orderId);
     
     Logistics selectByPrimaryKey(String id);
+    
+    int add(Logistics logistics);
 }
