@@ -143,7 +143,7 @@ public class CommonUtil {
 			// 组成一个随机字符串
 			sb.append(result);
 		}
-		String code = sb.toString().toUpperCase() + System.currentTimeMillis();
+		String code = sb.toString().toUpperCase() ;
 		return code;
 	}
 }

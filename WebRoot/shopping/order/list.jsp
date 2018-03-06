@@ -252,28 +252,28 @@ response.flushBuffer();
 	<table class="table table-condensed" style="margin-bottom:0px;">
 	    <tr>
 	    	<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流名称</td>
-			<td width="45%" >
+			<td width="35%" >
 				<input name="logistics.logisticsName" placeholder='请输入物流名称' 
-					type="text" style="width:200px;"/>
+					type="text" style="width:150px;"/>
 					<input type="hidden" id="orderId" name="logistics.orderId" />
 					<input type="hidden" id="addressId" name="addressId" />
 			</td>
 			<td width="15%" align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">物流单号</td>
-			<td width="45%" >
+			<td width="35%" >
 				<input id="logisticsNo" name="logistics.logisticsNo" placeholder='请输入物流单号' 
-					type="text" style="width:200px;"/>
+					type="text" style="width:150px;"/>
 			</td>
 		</tr>
 		<tr>
-	    	<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">客户订单运费</td>
+	    	<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">订单运费</td>
 			<td>
 				<input name="logistics.logisticsFee" placeholder='客户订单运费' 
-					type="text" style="width:200px;"/>
+					type="text" style="width:150px;"/>
 			</td>
-			<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">实际支付运费</td>
+			<td align="center" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">实际运费</td>
 			<td>
 				<input id="logisticsNo" name="logistics.deliveryAmount" placeholder='支付给物流公司的费用' 
-					type="text" style="width:200px;"/>
+					type="text" style="width:150px;"/>
 			</td>
 		</tr>
 		<tr>
@@ -296,7 +296,12 @@ function shipping(orderId,addressId,address){
 	var timestamp = Date.parse(new Date());
 	$("#orderId").val(orderId);
 	$("#addressId").val(addressId);
-	$("#logisticsNo").val("CGO"+timestamp);
+	var logisticsNo="";
+	var lstr="INNCGO"+addressId+timestamp;
+	for(var i=0;i<16;i++){
+		logisticsNo+=lstr.charAt(Math.floor(Math.random() * lstr.length));
+	}
+	$("#logisticsNo").val(logisticsNo.toUpperCase());
 	$("#address").attr("title",address);
 	$("#address").text(address);
 	layer.open({

@@ -184,7 +184,7 @@ public class GoodsAction extends ActionSupport {
 		try {
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
-			String sku=CommonUtil.randomUpperCode(5, uuid);
+			String sku=CommonUtil.randomUpperCode(20, uuid+ System.currentTimeMillis());
 			entity.setSkuCode(sku);
 			/*DealerUser user = (DealerUser) session.get("dealer_user");
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
