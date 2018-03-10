@@ -2,7 +2,9 @@ package com.gtercn.carhome.cms.dao.shopping;
 
 import org.springframework.stereotype.Repository;
 
+import com.gtercn.carhome.cms.entity.shopping.Address;
 import com.gtercn.carhome.cms.entity.shopping.Logistics;
+import com.gtercn.carhome.cms.entity.shopping.LogisticsDetail;
 
 
 @Repository
@@ -18,4 +20,7 @@ public interface LogisticsMapper {
     Logistics selectByPrimaryKey(String id);
     
     int add(Logistics logistics);
+    int addDetail(LogisticsDetail detail);
+    
+    Address selectAddressByPrimaryKey(String addressId);
 }

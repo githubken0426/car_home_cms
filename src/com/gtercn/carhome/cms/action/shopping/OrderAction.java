@@ -1,5 +1,6 @@
 package com.gtercn.carhome.cms.action.shopping;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -190,19 +191,21 @@ public class OrderAction extends ActionSupport {
 	 * 发货
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String delivery() {
-		ActionContext context = ActionContext.getContext();
+	public void delivery() throws Exception {
+		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter writer = response.getWriter();
 		try {
-			Map<String, Object> session = context.getSession();
 			String addressId=request.getParameter("addressId");
-			//查询地址
-			//context.put("endTime", endTime);
+			logisticsService.delivery(logistics, addressId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Action.ERROR;
+			writer.print("<script>alert('发货失败!');window.location.href='order_list.action';</script>");
 		}
-		return "update";
+		writer.print("<script>alert('发货成功!');window.location.href='order_list.action';</script>");
 	}
 }

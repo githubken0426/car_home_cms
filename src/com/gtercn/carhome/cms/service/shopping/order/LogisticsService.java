@@ -17,5 +17,5 @@ public interface LogisticsService {
     
     Logistics selectByPrimaryKey(String id);
     
-    int add(Logistics logistics);
+    int delivery(Logistics logistics,String addressId);
 }

@@ -35,4 +35,28 @@
     select * from inn_logistics where order_id = #{orderId,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectAddressByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.shopping.Address" 
+		parameterType="java.lang.String">
+		select * from inn_address where id=#{addressId,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="add" parameterType="com.gtercn.carhome.cms.entity.shopping.Logistics">
+  	insert into inn_logistics
+  		(id,order_id,realname,telphone,address,postal_code,logistics_no,logistics_type,
+  		 logistics_name,logistics_fee,delivery_amount,logistics_status,settlement_status,create_time)
+  	values
+  	(
+  		#{id,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR},#{realname,jdbcType=VARCHAR},
+  		#{telphone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{postalCode,jdbcType=VARCHAR},
+  		#{logisticsNo,jdbcType=VARCHAR},0,#{logisticsName,jdbcType=VARCHAR},
+  		#{logisticsFee,jdbcType=VARCHAR},#{deliveryAmount,jdbcType=VARCHAR},
+  		0,0,now()
+  	)
+  </insert>
+  <insert id="addDetail" parameterType="com.gtercn.carhome.cms.entity.shopping.LogisticsDetail">
+	insert into inn_logistics_detail(id,logistics_id,description,create_time)
+	values(
+		#{id,jdbcType=VARCHAR},#{logisticsId,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},now()
+	)
+  </insert>
 </mapper>

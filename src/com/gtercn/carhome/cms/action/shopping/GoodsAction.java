@@ -16,7 +16,6 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
-import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;

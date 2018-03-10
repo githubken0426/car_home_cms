@@ -94,4 +94,9 @@
 		select id,user_id,expert_name from tb_expert_top where delete_flag=0 
 		<!-- and city_code=#{cityCode} -->
 	</select>
+	<!-- 更新订单物流 -->
+	<update id="updateOrderLogistics" parameterType="java.lang.String">
+		update inn_order set order_status=4,logistics_id=#{logisticsId,jdbcType=VARCHAR}
+		where id=#{orderId,jdbcType=VARCHAR}
+	</update>
 </mapper>

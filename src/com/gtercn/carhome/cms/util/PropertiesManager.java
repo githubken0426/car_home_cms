@@ -65,7 +65,7 @@ public class PropertiesManager extends Thread {
 	 * @param key
 	 * @return
 	 */
-	public synchronized String getValue4GBK(String key) {
+	public synchronized String getValueEncoding(String key,String endcod) {
 		String value = null;
 		if (prop == null) {
 			init();
@@ -73,7 +73,7 @@ public class PropertiesManager extends Thread {
 		value = prop.getProperty(key);
 		if (value != null) {
 			try {
-				value = new String(value.getBytes("iso-8859-1"), "gb2312");
+				value = new String(value.getBytes("iso-8859-1"), endcod);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

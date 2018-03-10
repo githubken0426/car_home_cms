@@ -62,13 +62,13 @@ response.flushBuffer();
 									</c:forEach>
 								</select>
 							</td>
-							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
 							<td width="25%">
 								<input type="text" id="enName" name="entity.enName" value="${entity.enName }" tabindex="3" style="width:220px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌英文名称：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌中文名称：</td>
 							<td>
 								<input type="text" id="cnName" name="entity.cnName" value="${entity.cnName }" tabindex="3" style="width:210px;margin-left:30px;"/>
 							</td>

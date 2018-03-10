@@ -247,7 +247,7 @@ response.flushBuffer();
 	</div>
 </div>
 <!-- 发货 -->
-<form id="shipForm" action="${pageContext.request.contextPath}/logistics_delivery">
+<form id="shipForm" action="${pageContext.request.contextPath}/order_delivery" method="post">
 <div id="shipping" style="display: none">
 	<table class="table table-condensed" style="margin-bottom:0px;">
 	    <tr>
