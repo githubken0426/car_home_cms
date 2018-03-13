@@ -94,7 +94,8 @@ response.flushBuffer();
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">${spec.name}：</td>
 							<td colspan="3">
 								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
-									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
+									<c:if test="${index.index % 8==0}"><br/></c:if>
+									<label style="display: inline;<c:if test="${index.index % 8==0}">margin-left: 25px;</c:if>" >
 			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" 
 				                			<c:forEach var='realtion' items='${relationLst}'>
 				                				<c:if test='${realtion.specItemId==specItem.id }'>checked='checked'</c:if>

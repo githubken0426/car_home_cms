@@ -112,8 +112,8 @@ function getBrandByCtegory(ele) {
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">${spec.name}：</td>
 							<td colspan="3">
 								<c:forEach var="specItem" items="${spec.items}" varStatus="index">
-			                		<c:if test="${index.index==10}"><br/><span style="margin-left:25px;"></span></c:if>
-									<label style="display: inline;<c:if test="${index.index==0}">margin-left: 25px;</c:if>" >
+			                		<c:if test="${index.index % 8==0}"><br/></c:if>
+									<label style="display: inline;<c:if test="${index.index % 8==0}">margin-left: 25px;</c:if>" >
 			                			<input type="radio" name="${specItem.specId}" value="${specItem.id}" 
 			                				<c:if test="${index.index==0}">checked='checked'</c:if> />
 			                			<span>${specItem.item} </span>
