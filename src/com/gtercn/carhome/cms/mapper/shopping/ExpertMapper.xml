@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gtercn.carhome.cms.dao.common.ExpertTopMapper">
-	<sql id="Base_Column_List">
-		id, user_id, top_title, city_code,
-		expert_name,expert_discription_short,
-		expert_portrait_url,
-		expert_wechat_number,
-		expert_experience, expert_tel_number, motto, expert_display_pic_list,
-		expert_discription_detail, delete_flag, insert_time, update_time
-  </sql>
-  
-  	<!-- 查询所有达人,文章等用到 -->
-	<select id="queryAllExpert" resultType="com.gtercn.carhome.cms.entity.ExpertTop">
-		select id,user_id,expert_name from tb_expert_top where delete_flag=0 and is_inn=0 and city_code=#{cityCode}
-	</select>
-	
+<mapper namespace="com.gtercn.carhome.cms.dao.shopping.ExpertMapper">
 	<!-- 查询所有信息 -->
-	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.ExpertTop"
-		parameterType="java.util.Map">
+	<select id="queryAllData" resultType="com.gtercn.carhome.cms.entity.ExpertTop" parameterType="java.util.Map">
 		select id, 
 		(select nickname from tc_user u where u.user_id=e.user_id) as user_id,
 		(select real_name from tc_user u where u.user_id=e.user_id) as expert_name,
@@ -28,7 +13,7 @@
 		expert_discription_detail, delete_flag, insert_time, update_time
 		from tb_expert_top e
 		<where>
-			is_inn=0 
+			is_inn=1 
 			and city_code=#{cityCode,jdbcType=VARCHAR}
 			<if test="expertName!=null and expertName!=''">
 				e.expert_name like '%${expertName}%'
@@ -44,11 +29,10 @@
 	</select>
 
 	<!-- 查询所有数据数 -->
-	<select id="getTotalCount" resultType="java.lang.Integer"
-		parameterType="java.util.Map">
+	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
 		select count(1) from tb_expert_top
 		<where>
-			is_inn=0 and
+			is_inn=1 and
 			city_code=#{cityCode,jdbcType=VARCHAR}
 			<if test="expertName!=null and expertName!=''">
 				expert_name like '%${expertName}%'
@@ -61,30 +45,19 @@
 			</if>
 		</where>
 	</select>
-	<!-- 通过用户id,达人id获取达人 -->
-	<select id="getExcludeExpert" resultType="java.lang.Integer" parameterType="java.lang.String">
-		select count(1) from tb_expert_top
-		where user_id = #{userId,jdbcType=VARCHAR}
-		and is_inn=0 
-		<if test="expertId!=null and expertId!=''">
-  			and id != #{expertId}
-  		</if>
-	</select>
 
-	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.ExpertTop"
-		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from tb_expert_top
-		where id = #{id,jdbcType=VARCHAR}
+	<select id="selectByPrimaryKey" resultType="com.gtercn.carhome.cms.entity.ExpertTop" parameterType="java.lang.String">
+		select * from tb_expert_top where id = #{id,jdbcType=VARCHAR}
 	</select>
-	<!-- 删除数据  修改状态 -->
-	<update id="deleteByPrimaryKey" parameterType="java.lang.String">
-		update tb_expert_top set delete_flag=1
-		where id = #{id,jdbcType=VARCHAR}
-    </update>
-  
-	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.write.WriteExpertTop">
+	
+  <!-- 批量删除,collection:参数是数组,为array,集合,为list -->
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+  	 delete from tb_expert_top where id
+	    <foreach collection="Array" index="index" item="id" open="(" separator="," close=")">  
+	      #{id,jdbcType=VARCHAR} 
+	    </foreach>
+  </delete>
+	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
 		insert into tb_expert_top (id,
 		user_id, top_title,city_code,
 		expert_name, expert_discription_short,
@@ -92,7 +65,7 @@
 		expert_wechat_number, expert_experience,
 		expert_tel_number,
 		motto, expert_display_pic_list,
-		expert_discription_detail,
+		expert_discription_detail,is_inn,
 		delete_flag, insert_time, update_time
 		)
 		values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
@@ -107,12 +80,10 @@
 		#{motto,jdbcType=VARCHAR},
 		#{expertDisplayPicList,jdbcType=VARCHAR},
 		#{expertDiscriptionDetail,jdbcType=VARCHAR},
-		#{deleteFlag,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP},
-		#{updateTime,jdbcType=TIMESTAMP}
+		1,0, now(),now()
 		)
   </insert>
-
-	<update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.write.WriteExpertTop">
+	<update id="update" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
 		update tb_expert_top
 			set 
 			top_title = #{topTitle,jdbcType=VARCHAR},
@@ -123,8 +94,15 @@
 			motto = #{motto,jdbcType=VARCHAR},
 			expert_display_pic_list = #{expertDisplayPicList,jdbcType=VARCHAR},
 			expert_discription_detail = #{expertDiscriptionDetail,jdbcType=VARCHAR},
-			delete_flag = #{deleteFlag,jdbcType=VARCHAR},
-			update_time =now()
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
+	<!-- 通过用户id,达人id获取达人 -->
+	<select id="getExcludeExpert" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from tb_expert_top
+		where user_id = #{userId,jdbcType=VARCHAR}
+		and is_inn=0 
+		<if test="expertId!=null and expertId!=''">
+  			and id != #{expertId}
+  		</if>
+	</select>
 </mapper>

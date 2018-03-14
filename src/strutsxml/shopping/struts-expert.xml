@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" 
+"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+<package name="expert" extends="globalResult">
+	<action name="expert_*" class="com.gtercn.carhome.cms.action.shopping.ExpertAction" method="{1}">
+		<result name="list">/shopping/expert/list.jsp</result>
+		<result name="add">/shopping/expert/add.jsp</result>
+		<result name="update">/shopping/expert/update.jsp</result>
+		<interceptor-ref name="authrity"></interceptor-ref>
+		<interceptor-ref name="defaultStack"></interceptor-ref>
+	</action>
+</package>
+</struts>    
