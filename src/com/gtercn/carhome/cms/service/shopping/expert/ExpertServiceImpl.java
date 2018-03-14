@@ -39,11 +39,6 @@ public class ExpertServiceImpl implements ExpertService {
 	}
 
 	@Override
-	public int updateByPrimaryKey(ExpertTop record) {
-		return expertDao.updateByPrimaryKey(record);
-	}
-
-	@Override
 	public int registerUserAndExpert(ExpertTop o, APIUser user, boolean isAdd) {
 		if(isAdd){
 			userDao.insert(user);

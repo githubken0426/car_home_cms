@@ -31,8 +31,6 @@ public interface ExpertService {
 
     ExpertTop selectByPrimaryKey(String id);
 
-    int updateByPrimaryKey(ExpertTop record);
-    
     public int registerUserAndExpert(ExpertTop o, APIUser user,
 			boolean isAdd);
     
