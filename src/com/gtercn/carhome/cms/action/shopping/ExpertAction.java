@@ -77,13 +77,9 @@ public class ExpertAction extends ActionSupport {
 	public String listData() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ActionContext context = ActionContext.getContext();
-		Map<String,Object> session=context.getSession();
+		//Map<String,Object> session=context.getSession();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
-			DealerUser user=(DealerUser) session.get("dealer_user");
-			String cityCode=user.getCityCode();
-			cityCode=StringUtils.isNotBlank(cityCode)? cityCode :ApplicationConfig.DEFAULT_CITY_CODE;
-			map.put("cityCode", cityCode);
 			// 接收查询参数
 			String expertName = request.getParameter("expertName");
 			if (StringUtils.isNotBlank(expertName)) {

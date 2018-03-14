@@ -54,10 +54,10 @@ response.flushBuffer();
   			pno : pageNo,
   			total : totalPage,			 //总页码
   			totalRecords : totalRecords, //总数据条数
-  			hrefFormer : '${pageContext.request.contextPath}/expertTop_listData',//链接前部
+  			hrefFormer : '${pageContext.request.contextPath}/expert_listData',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
-  				return this.hrefFormer + this.hrefLatter + "?pno="+n+"&expertName="+expertName+"&topType="+topType+"&deleteFlag="+deleteFlag; 
+  				return this.hrefFormer + this.hrefLatter + "?pno="+n+"&expertName="+expertName+"&topType="+topType; 
   			},
   			lang : {
   				prePageText : '上一页',
@@ -99,7 +99,7 @@ response.flushBuffer();
 	
 	//按条件查询
   	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/expertTop_listData.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/expert_listData.action");
 	  	$("#totalForm").submit();
   	}
 	
@@ -112,7 +112,7 @@ response.flushBuffer();
   	
   	//添加
   	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/expertTop_addDataPage.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/expert_addDataPage.action");
 	  	$("#totalForm").submit();
   	}
 
@@ -121,7 +121,7 @@ response.flushBuffer();
 		var checkboxs=$("input:checkbox[name=id]");
 		if(checkboxs.is(":checked")){
 			if(confirm("确定要删除所选中项吗?")){
-				$("#totalForm").attr("action","${pageContext.request.contextPath}/expertTop_deleteData.action");
+				$("#totalForm").attr("action","${pageContext.request.contextPath}/expert_deleteData.action");
 				$("#totalForm").submit();
 			}
 		}else{
@@ -148,7 +148,7 @@ response.flushBuffer();
   			return;
   		} else if (ret == 1) {
 			$("#主键ID").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/expertTop_updateDataPage.action");
+			$("#totalForm").attr("action","${pageContext.request.contextPath}/expert_updateDataPage.action");
 			$("#totalForm").submit();	
   		}
   	}
@@ -215,10 +215,9 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="50px"><strong>经验</strong></td>
 						<td nowrap="nowrap" width="120px"><strong>联系方式</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>达人简介</strong></td>
-						<td nowrap="nowrap" width="80px"><strong>状态</strong></td>
 						<td nowrap="nowrap" width="110px"><strong>创建时间</strong></td>
 	       			</tr>
-		       		<c:forEach var="o" items="${ExpertTopList}" varStatus="s">					
+		       		<c:forEach var="o" items="${expertlist}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
@@ -232,14 +231,6 @@ response.flushBuffer();
 						</td>
 						<td>${o.expertTelNumber }</td>
 						<td>${o.expertDiscriptionShort}</td>
-						<td>
-							<c:choose>
-								<c:when test="${o.deleteFlag==0 }">
-									正常
-								</c:when>
-								<c:otherwise><span style="color:gray;">禁用</span></c:otherwise>
-							</c:choose>
-						</td>
 						<td><fmt:formatDate value="${o.insertTime }" pattern="yyyy-MM-dd" type="BOTH" dateStyle="long" /></td>
 					</tr>					
 					</c:forEach>

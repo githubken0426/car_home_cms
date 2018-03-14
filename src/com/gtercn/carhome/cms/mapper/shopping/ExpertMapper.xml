@@ -14,15 +14,11 @@
 		from tb_expert_top e
 		<where>
 			is_inn=1 
-			and city_code=#{cityCode,jdbcType=VARCHAR}
 			<if test="expertName!=null and expertName!=''">
-				e.expert_name like '%${expertName}%'
+				and e.expert_name like '%${expertName}%'
 			</if>
 			<if test="topType!=null and topType!=''">
 				and e.top_title=#{topType,jdbcType=VARCHAR}
-			</if>
-			<if test="deleteFlag!=null and deleteFlag!=''">
-				and delete_flag=#{deleteFlag,jdbcType=VARCHAR}
 			</if>
 		</where>
 		order by e.insert_time desc limit #{beginResult},#{pageSize}
@@ -32,10 +28,9 @@
 	<select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.util.Map">
 		select count(1) from tb_expert_top
 		<where>
-			is_inn=1 and
-			city_code=#{cityCode,jdbcType=VARCHAR}
+			is_inn=1 
 			<if test="expertName!=null and expertName!=''">
-				expert_name like '%${expertName}%'
+				and expert_name like '%${expertName}%'
 			</if>
 			<if test="topType!=null and topType!=''">
 				and top_title=#{topType,jdbcType=VARCHAR}
