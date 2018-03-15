@@ -36,8 +36,7 @@ response.flushBuffer();
 		//分页开始
 		var expertName = $.trim($("#expertName").val());
 		expertName=encodeURI(encodeURI(expertName));
-		var topType = $.trim($("#topType").val());
-		var deleteFlag = $.trim($("#deleteFlag").val());
+		var category = $.trim($("#category").val());
   		var totalPage = ${totalPages};
   		var totalRecords = ${totalCount};
   		var pageNo = getParameter('pno');
@@ -57,7 +56,7 @@ response.flushBuffer();
   			hrefFormer : '${pageContext.request.contextPath}/expert_listData',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
-  				return this.hrefFormer + this.hrefLatter + "?pno="+n+"&expertName="+expertName+"&topType="+topType; 
+  				return this.hrefFormer + this.hrefLatter + "?pno="+n+"&expertName="+expertName+"&category="+category; 
   			},
   			lang : {
   				prePageText : '上一页',
@@ -176,26 +175,18 @@ response.flushBuffer();
 					</span>
 					<span class="margin-left-10" style="font-size: 15px;">
 						达人类别
-						<select id="topType" name="topType" style="height:25px;">
+						<select id="category" name="category" style="height:25px;">
 							<option value="-1">全部</option>
-							<c:forEach var="type" items="${topTtitle}">
-								<option value="${type.id }" <c:if test="${topType ==type.id}">selected="selected"</c:if>>${type.typeValue}</option>
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.id }" <c:if test='${category ==category.id}'>selected='selected'</c:if>>${category.title}</option>
 							</c:forEach>
-						</select>
-					</span>
-					<span class="margin-left-10" style="font-size: 15px;">
-						达人状态
-						<select id="deleteFlag" name="deleteFlag" style="height:25px;">
-							<option value="-1"></option>
-							<option value="0" <c:if test="${deleteFlag == 0}">selected="selected"</c:if>>正常</option>
-							<option value="1" <c:if test="${deleteFlag == 1}">selected="selected"</c:if>>禁用</option>
 						</select>
 					</span>
 			   		<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
 			   			<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width:100px;margin-right:8px;" />
 			   	 	</span>
-			   	 	<div style="clear:both"></div>			   		
+			   	 	<div style="clear:both"></div>
 			   </div>
 			</div>
 
@@ -249,10 +240,7 @@ response.flushBuffer();
 			   	</div>
 			   	
 			</div>
-			<!-- 给修改用的 -->
-			<input type="hidden" id= "主键ID" name="主键ID" />
 		</form>
-		
 		<div class="pkp">
             <div id="kkpager"></div>
     	</div>

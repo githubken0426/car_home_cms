@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.annotation.PermissionException;
 import com.gtercn.carhome.cms.entity.APIUser;
-import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.ExpertTop;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.apiuser.APIUserService;
