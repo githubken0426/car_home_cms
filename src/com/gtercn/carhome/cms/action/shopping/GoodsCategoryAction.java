@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
+import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -35,6 +36,8 @@ public class GoodsCategoryAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private GoodsCategoryService categoryService;
+	@Autowired
+	private SpecService specService;
 	
 	private GoodsCategory entity;
 	public GoodsCategory getEntity() {
@@ -102,14 +105,13 @@ public class GoodsCategoryAction extends ActionSupport {
 			} else {
 				currentIndex = 1;
 			}
-			String categoryId = request.getParameter("categoryId");
-			String cnName = request.getParameter("cnName");
+			String title = request.getParameter("title");
+			if (StringUtils.isNotBlank(title)) 
+				title = URLDecoder.decode(title, "UTF-8");
 			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
-			
 			context.put("categoryList", categoryList);
 			context.put("currentIndex", currentIndex);
-			context.put("categoryId", categoryId);
-			context.put("cnName", cnName);
+			context.put("title", title);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;

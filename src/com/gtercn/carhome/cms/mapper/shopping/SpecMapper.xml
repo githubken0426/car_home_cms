@@ -39,7 +39,7 @@
   </select>
   
   <select id="selectAllSpec" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from inn_spec  where order by sort
+    select <include refid="Base_Column_List" /> from inn_spec order by sort
   </select>
   
   <select id="selectDetailSpecByGoodsId" parameterType="java.lang.String" resultType="com.gtercn.carhome.cms.entity.shopping.Spec">

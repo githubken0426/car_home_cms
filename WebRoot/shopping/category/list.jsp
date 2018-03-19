@@ -183,20 +183,20 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="120px"><strong>分类标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>描述</strong></td>
-						<td nowrap="nowrap" width="70px"><strong>规格详情</strong></td>
+						<td nowrap="nowrap" width="70px"><strong>规格</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${categoryList}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td>${o.title }</td>
+						<td><a href="${pageContext.request.contextPath}/detail/${o.id }">${o.title }</a></td>
 						<td>
 							<c:if test="${ not empty o.url }">
 								<img src="${ o.url }"  style="width:30px;height:30px;"/>
 							</c:if>
 						</td>
 						<td>${o.descriptiion }</td>
-						<td><a href="${pageContext.request.contextPath}/detail/${o.id }">查看规格详情</a></td>
+						<td><a href="javascript:void(0)" onclick="addSpec('${o.id }')">新增规格</a></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>

@@ -13,7 +13,6 @@ import com.gtercn.carhome.cms.dao.shopping.SpecMapper;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
-
 @Transactional
 @Service(value = "specService")
 public class SpecServiceImpl implements SpecService {
@@ -43,5 +42,9 @@ public class SpecServiceImpl implements SpecService {
 	@Override
 	public List<String> selectConcatSpecItems(List<String> specItemIds) {
 		return itemDao.selectConcatSpecItems(specItemIds);
+	}
+	@Override
+	public List<Spec> selectAllSpec() {
+		return dao.selectAllSpec();
 	}
 }

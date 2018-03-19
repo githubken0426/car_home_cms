@@ -6,7 +6,6 @@ import java.util.Map;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
-
 public interface SpecService {
 
     /**
@@ -25,8 +24,6 @@ public interface SpecService {
      */
     List<Spec> selectDetailSpecByGoodsId(String goodsId);
     
-    
-    
     //SpecItem
     List<SpecItemGoodsRelation> selectByGoodsId(String goodsId);
     /**
@@ -35,4 +32,11 @@ public interface SpecService {
      * @return
      */
     List<String> selectConcatSpecItems(List<String> specItemIds);
+    /**
+     * 查询所有spec
+     * @return
+     * @throws 
+     * @date 2018年3月19日 上午11:36:37
+     */
+    List<Spec> selectAllSpec();
 }

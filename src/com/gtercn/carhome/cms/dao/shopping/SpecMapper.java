@@ -16,6 +16,8 @@ public interface SpecMapper {
      * @return
      */
     List<Spec> selectGoodsSpec(Map<String,Object> map);
+    
+    @Deprecated
     List<Spec> selectAllSpec();
     
     Spec selectByPrimaryKey(String id);

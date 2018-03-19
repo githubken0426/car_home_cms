@@ -70,13 +70,6 @@ response.flushBuffer();
 								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
 							</td>
 						</tr>
-						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品规格：</td>
-							<td >
-								<input type="text" name="entity.spec" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
-								<input type="button" value="添加规格" class="btn btn-info " style="width:80px;" onclick="" />
-							</td>
-						</tr>
 	            	</table>
 	            	 <table  class="margin-bottom-20 table  no-border" style="margin-top:20px;">
 			              <tr>
