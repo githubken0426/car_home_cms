@@ -50,12 +50,10 @@
   <!-- 插入数据 -->
 	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.GoodsCategory">
 		insert into inn_goods_category
-		(id, title, picture_path,goods_id,city_code,delete_flag,
-		insert_time,update_time)
+		(id, title, parent_code,sort,descriptiion,url,delete_flag)
 		values
-		(#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
-		#{picturePath,jdbcType=VARCHAR},#{goodsId,jdbcType=VARCHAR},
-		#{cityCode,jdbcType=VARCHAR},0,now(),now())
+		(#{id,jdbcType=VARCHAR},'0',(select T.sort from (select max(sort)+1 as sort from inn_goods_category)T),
+		#{descriptiion,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},0)
 	</insert>
 
 	<!-- 修改 -->
@@ -63,8 +61,8 @@
 		update inn_goods_category
 		set
 		title = #{title,jdbcType=VARCHAR},
-		picture_path = #{picturePath,jdbcType=VARCHAR},
-		goods_id = #{goodsId,jdbcType=INTEGER}
+		url = #{url,jdbcType=VARCHAR},
+		descriptiion = #{descriptiion,jdbcType=INTEGER}
 		where
 		id = #{id,jdbcType=VARCHAR}
 	</update>

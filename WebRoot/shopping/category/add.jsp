@@ -48,28 +48,46 @@ response.flushBuffer();
 			        <div class="clear"></div>
 			    </div>
 		   		<div style="margin:0 auto; margin:10px;">
-	            	<table class="table table-bordered" >
+	            	<table class="table table-bordered" id="myTable" >
 						<!-- 数据录入区  -->
 						<tr>
 							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类标题：</td>
-							<td width="90%">
+							<td width="90%" >
 								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类描述：</td>
-							<td>
+							<td >
 								<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类图片：</td>
-							<td >
+							<td colspan="3">
 								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
 									id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="padding:4px;width:405px;margin-left:30px;"/>
 								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
 							</td>
 						</tr>
+						<!-- <tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">规格：</td>
+							<td>
+								<input type="text" name="specs" maxlength="40" style="font-size:14px;padding:8px;width:200px;margin-left:30px;"/>
+								<input onclick="appendSpec()" type="button" value="追加规格" class="btn btn-info " style="width:80px;"/>
+							</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">规格属性：</td>
+							<td>
+								 <table class="table table-bordered" style="margin-bottom:0px;">
+			                      <tr>
+					     	         <td align="left">
+					     	         	<input type="text" name="item" maxlength="40" style="font-size:14px;padding:8px;width:200px;margin-left:30px;"/>
+					     	         	<input onclick="appendItem(this)" type="button" value="追加属性" class="btn btn-info " style="width:80px;"/>
+					     	         </td>
+					             </tr>
+					        	</table>
+							</td>
+						</tr> -->
 	            	</table>
 	            	 <table  class="margin-bottom-20 table  no-border" style="margin-top:20px;">
 			              <tr>
@@ -93,5 +111,43 @@ response.flushBuffer();
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+	function appendSpec(){ 
+		//var tr=$("#myTable").find("tr:last");
+		var tr="";
+		tr+="<tr><td></td>";
+		tr+="<td>";
+			tr+="<input type='text' name='specs' maxlength='40' style='font-size:14px;padding:8px;width:200px;margin-left:30px;'/>"
+			tr+="<img src='<%=path%>/img/cms/del.png' onclick='deleteTR(this)' style='margin-left:10px;cursor:pointer;'/>";
+		tr+="</td>";
+		//td
+		tr+="<td></td>";
+		tr+="<td>";
+		tr+="<table class='table table-bordered' style='margin-bottom:0px;'>";
+			tr+="<tr><td align='left'>"
+			tr+="<input type='text' name='item' maxlength='40' style='font-size:14px;padding:8px;width:200px;margin-left:30px;'/> "
+			tr+="<input onclick='appendItem(this)' type='button' value='追加属性' class='btn btn-info' style='width:80px;'/>";
+		tr+="</td></tr>";
+		tr+="</table>";
+		tr+="</td>";
+		
+		tr+="<td></td></tr>";
+		$("#myTable").append(tr);  
+	} 
+	
+	function deleteTR(ele){
+		ele.parentNode.parentNode.remove()
+	}
+	
+	function appendItem(ele){
+		var table=ele.parentNode.parentNode.parentNode;
+		var tr="";
+		tr+="<tr><td>";
+		tr+="<input type='text' name='item' maxlength='40' style='font-size:14px;padding:8px;width:200px;margin-left:30px;'/>"
+		tr+="<img src='<%=path%>/img/cms/del.png' onclick='deleteTR(this)' style='margin-left:10px;cursor:pointer;'/>";
+		tr+="</td></tr>";
+		$(table).append(tr);  
+	}
+</script>
 </body>
 </html>

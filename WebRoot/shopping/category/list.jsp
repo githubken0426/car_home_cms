@@ -22,8 +22,9 @@ response.flushBuffer();
 	<link rel="stylesheet" href="<%=path%>/js/cms/kkpager/kkpager_blue.css"/>
 	<script type="text/javascript" src="<%=path %>/js/jquery1.9.0.min.js"></script>
 	<script type="text/javascript" src="<%=path%>/js/cms/kkpager/kkpager.js"></script>
-   	<script type="text/javascript" src="<%=path %>/js/cms/laydate/laydate.js"></script>
-    		
+	<script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
+	<script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
+	    		
 <script type="text/javascript">
 	function getParameter(name) { 
 		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); 
@@ -144,7 +145,7 @@ response.flushBuffer();
   			alert("请选择要删除的数据！");
   		}
   	}
-  </script>
+</script>
   <style type="">
   	.footer{margin-top:0px;}
   </style>
@@ -183,20 +184,21 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="120px"><strong>分类标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>描述</strong></td>
-						<td nowrap="nowrap" width="70px"><strong>规格</strong></td>
+						<td nowrap="nowrap" width="220px"><strong>规格详情</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${categoryList}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
-						<td><a href="${pageContext.request.contextPath}/detail/${o.id }">${o.title }</a></td>
+						<td><a href="${pageContext.request.contextPath}/detail/${o.id }">${o.title }</a>
+						</td>
 						<td>
 							<c:if test="${ not empty o.url }">
 								<img src="${ o.url }"  style="width:30px;height:30px;"/>
 							</c:if>
 						</td>
 						<td>${o.descriptiion }</td>
-						<td><a href="javascript:void(0)" onclick="addSpec('${o.id }')">新增规格</a></td>
+						<td><a href="${pageContext.request.contextPath}/detail/${o.id }" >详情</a></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -217,22 +219,53 @@ response.flushBuffer();
     	</div>
 	</div>
 </div>
+<!-- 新增区域 -->
+	<div id="addDiv" style="display: none">
+		<form id="addForm" method="post" action="<%=basePath%>/category_add.action" enctype="multipart/form-data">
+			<table class="table table-condensed">
+				<tr>
+					<td width="12%" align="center">分类标题</td>
+					<td width="30%">
+						<input type="text" id="addTitle" name="entity.title" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:180px;"/>
+					</td>
+					<td width="12%" align="center">分类图标</td>
+					<td width="45%">
+						<input id="resUrlList" name="resUrlList" onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
+							tabindex="4" maxlength="300" style="padding:4px;width:180px;"/>
+						<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">分类描述</td>
+					<td colspan="3">
+						<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:180px;"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
 <script type="text/javascript">
-  !function(){
-	laydate.skin('molv');
-		laydate({
-			elem : '#beginTime',
-			istoday : true,
-			format : 'YYYY-MM-DD',
-			max : laydate.now()
-		});
-		laydate({
-			elem : '#endTime',
-			istime: true,
-			istoday : false,
-			format : 'YYYY-MM-DD'
-		});
-	}();
+function addDataPage(){
+	layer.open({
+		title: '<i class="icon-location-pin"></i>当前位置 / <strong>新增分类</strong>',
+		type : 1,
+		area: ['700px', '230px'],
+		btn: ["<i class='fa fa-dot-circle-o'></i> 确定","<i class='fa fa-ban'></i> 返回"],
+		closeBtn: 1,
+		content : $("#addDiv"),
+		yes: function(index, layero){
+			if(!$.trim($("#addTitle").val())){
+				layer.tips('请输入分类标题！','#addTitle');
+				return ;
+			}
+			$("#addForm").submit();
+			layer.close(index);
+		}
+	});
+}
 </script>
 </body>
 </html>

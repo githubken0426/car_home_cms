@@ -89,35 +89,6 @@ public class GoodsCategoryAction extends ActionSupport {
 		return "list";
 	}
 
-	/**
-	 * 添加数据(进入画面)
-	 * 
-	 * @return
-	 */
-	public String addDataPage() {
-		ActionContext context = ActionContext.getContext();
-		HttpServletRequest request = ServletActionContext.getRequest();
-		try {
-			int currentIndex = 0;// 当前页
-			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
-			if (index != null && index != "") {
-				currentIndex = Integer.valueOf(index);
-			} else {
-				currentIndex = 1;
-			}
-			String title = request.getParameter("title");
-			if (StringUtils.isNotBlank(title)) 
-				title = URLDecoder.decode(title, "UTF-8");
-			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
-			context.put("categoryList", categoryList);
-			context.put("currentIndex", currentIndex);
-			context.put("title", title);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Action.ERROR;
-		}
-		return "add";
-	}
 
 	/**
 	 * 添加数据
@@ -135,8 +106,8 @@ public class GoodsCategoryAction extends ActionSupport {
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
 			// 上传展示图片
-			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_BRAND_PATH };
-			File[] resUrlList = multipartRequest.getFiles("logo");
+			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_CATEGORY_PATH };
+			File[] resUrlList = multipartRequest.getFiles("resUrlList");
 			if(resUrlList!=null) {
 				for (File file : resUrlList) {
 					InputStream input = new FileInputStream(file);
@@ -144,7 +115,7 @@ public class GoodsCategoryAction extends ActionSupport {
 					boolean bool = UploadFtpFileTools.uploadFile(ftpPaths,portraitFileName, input);
 					if (bool) {
 						String logo = ApplicationConfig.HTTP_PROTOCOL_IP+ File.separator + ApplicationConfig.FTP_SHOPPING_PATH
-								+ File.separator + ApplicationConfig.FTP_BRAND_PATH
+								+ File.separator + ApplicationConfig.FTP_CATEGORY_PATH
 								+ File.separator + portraitFileName;
 						entity.setUrl(logo);
 					}
@@ -152,10 +123,10 @@ public class GoodsCategoryAction extends ActionSupport {
 				}
 			}
 			categoryService.insert(entity);
-			writer.print("<script>alert('添加成功!');window.location.href='brand_list.action';</script>");
+			writer.print("<script>alert('添加成功!');window.location.href='category_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer .print("<script>alert('添加失败!');window.location.href='brand_list.action';</script>");
+			writer .print("<script>alert('添加失败!');window.location.href='category_list.action';</script>");
 		}
 	}
 

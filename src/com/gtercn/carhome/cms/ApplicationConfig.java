@@ -67,6 +67,7 @@ public final class ApplicationConfig {
 	/**
 	 * 电商相关图片路径
 	 */
+	public final static String FTP_CATEGORY_PATH = "category";
 	public final static String FTP_ADVER_PATH = "advertisement";
 	public final static String FTP_BRAND_PATH = "brandlogo";
 	public final static String FTP_GOODS_PATH = "goods";
