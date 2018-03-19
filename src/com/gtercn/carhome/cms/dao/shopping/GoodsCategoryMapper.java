@@ -39,7 +39,7 @@ public interface GoodsCategoryMapper {
      */
     List<GoodsCategory> selectAllCategory();
     
-    int inert(GoodsCategory category);
+    int insert(GoodsCategory category);
     int update(GoodsCategory category);
-    int delete(String categoryId);
+    int deleteBatch(String []categoryIds);
 }

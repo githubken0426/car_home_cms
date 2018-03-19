@@ -149,7 +149,7 @@ public class GoodsAction extends ActionSupport {
 			String addCategoryId=request.getParameter("addCategoryId");
 			
 			map.put("categoryId", addCategoryId);
-			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			List<Spec> specList=specService.selectGoodsSpec(map);
 			context.put("specList", specList);
 			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(addCategoryId);
 			context.put("brandList", brandList);
@@ -204,7 +204,7 @@ public class GoodsAction extends ActionSupport {
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
 			map.put("categoryId", entity.getCategoryId());
-			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			List<Spec> specList=specService.selectGoodsSpec(map);
 			for (Spec spec : specList) {
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
 				String specItemId=request.getParameter(spec.getId());
@@ -287,7 +287,7 @@ public class GoodsAction extends ActionSupport {
 			List<SpecItemGoodsRelation> relationLst= specService.selectByGoodsId(goodsId);
 			String categoryId = entity != null ? entity.getCategoryId() : "";
 			map.put("categoryId", categoryId);
-			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			List<Spec> specList=specService.selectGoodsSpec(map);
 			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
 			
 			context.put("relationLst", relationLst);
@@ -332,7 +332,7 @@ public class GoodsAction extends ActionSupport {
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
 			map.put("categoryId", entity.getCategoryId());
-			List<Spec> specList=specService.selectGoodsSpecItems(map);
+			List<Spec> specList=specService.selectGoodsSpec(map);
 			for (Spec spec : specList) {
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
 				String specItemId=request.getParameter(spec.getId());

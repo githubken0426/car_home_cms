@@ -15,7 +15,7 @@ response.flushBuffer();
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>广告列表</title>
+	<title>分类列表</title>
 	<link rel="stylesheet" href="<%=path%>/css/pubmain.css" />
 	<link href="<%=request.getContextPath() %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=request.getContextPath() %>/css/global.css" rel="stylesheet" type="text/css"/>
@@ -36,8 +36,6 @@ response.flushBuffer();
 		//分页开始
 		var title = $.trim($("#title").val());
 		title=encodeURI(encodeURI(title));
-		var beginTime = $.trim($("#beginTime").val());
-		var endTime = $.trim($("#endTime").val());
 		
   		var totalPage = ${totalPages};
   		var totalRecords = ${totalCount};
@@ -55,10 +53,10 @@ response.flushBuffer();
   			pno : pageNo,
   			total : totalPage,			 //总页码
   			totalRecords : totalRecords, //总数据条数
-  			hrefFormer : '${pageContext.request.contextPath}/adver_listData',//链接前部
+  			hrefFormer : '${pageContext.request.contextPath}/category_list',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
-  				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title+"&beginTime="+beginTime +"&endTime="+endTime;
+  				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title;
   			},
   			lang : {
   				prePageText : '上一页',
@@ -98,18 +96,16 @@ response.flushBuffer();
 
 	//按条件查询
   	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_listData.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/category_list.action");
 	  	$("#totalForm").submit();
   	}
   	//重置
   	function clean(){
 		$("#title").attr("value","");
-		$("#beginTime").attr("value","");
-		$("#endTime").attr("value","");
   	}
   	//添加
   	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_addDataPage.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/category_addDataPage.action");
 	  	$("#totalForm").submit();
   	}
   	//修改
@@ -131,7 +127,7 @@ response.flushBuffer();
   			return;
   		} else if (ret == 1) {
 			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_updateDataPage.action");
+			$("#totalForm").attr("action","${pageContext.request.contextPath}/category_updateDataPage.action");
 			$("#totalForm").submit();	
   		}
   	}
@@ -141,7 +137,7 @@ response.flushBuffer();
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
   			if(confirm("确定要删除选中的数据吗?")){
-  				$("#totalForm").attr("action","${pageContext.request.contextPath}/adver_deleteData.action");
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteData.action");
   		  		$("#totalForm").submit();
   			}
   		}else{
@@ -161,19 +157,14 @@ response.flushBuffer();
 			<!-- 查询条件区域 -->
 			<div class="content-box">
 			    <div class="content-box-header">
-			    	<span class="now_location">当前位置:</span>[广告]
+			    	<span class="now_location">当前位置:</span>[商品分类]
 			        <div class="clear"></div>
 			    </div>
 			    <div class=" margin-bottom-5 mt10">
 					<!--  条件检索区 -->
 					<span  style="font-size: 15px;margin-left:25px;">
-					标题
-					<input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
+						标题 <input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
 					</span>
-					<span class="margin-left-10" style="font-size: 15px;">发表时间</span>
-						<input class="margin-left-5" type="text" id="beginTime" name="beginTime" placeholder="开始日期" value="${beginTime}"class="laydate-icon" style="width:163px;padding:3px;" />
-						 至
-						<input type="text" id="endTime" name="endTime" placeholder="结束日期" value="${endTime}"class="laydate-icon" style="width:164px;margin:0px 10px 0px 2px;padding:3px;" />
 			   		<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
 			   			<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width:100px;margin-right:8px;" />
@@ -189,25 +180,23 @@ response.flushBuffer();
 			        <tr align="center">
 			       	 	<td nowrap="nowrap" width="40px"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="120px"><strong>广告标题</strong></td>
+						<td nowrap="nowrap" width="120px"><strong>分类标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>关联商品</strong></td>
-						<td nowrap="nowrap" width="70px"><strong>城市编号</strong></td>
-						<td nowrap="nowrap" width="120px"><strong>创建时间</strong></td>
+						<td nowrap="nowrap" width="220px"><strong>描述</strong></td>
+						<td nowrap="nowrap" width="70px"><strong>规格详情</strong></td>
 	       			</tr>
-		       		<c:forEach var="o" items="${list}" varStatus="s">					
+		       		<c:forEach var="o" items="${categoryList}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
 						<td>${o.title }</td>
 						<td>
-							<c:if test="${ not empty o.picturePath }">
-								<img src="${ o.picturePath }"  style="width:30px;height:30px;"/>
+							<c:if test="${ not empty o.url }">
+								<img src="${ o.url }"  style="width:30px;height:30px;"/>
 							</c:if>
 						</td>
-						<td>${o.goodsTitle }</td>
-						<td>${o.cityCode }</td>
-						<td><fmt:formatDate value="${o.insertTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
+						<td>${o.descriptiion }</td>
+						<td><a href="${pageContext.request.contextPath}/detail/${o.id }">查看规格详情</a></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -228,7 +217,6 @@ response.flushBuffer();
     	</div>
 	</div>
 </div>
-
 <script type="text/javascript">
   !function(){
 	laydate.skin('molv');

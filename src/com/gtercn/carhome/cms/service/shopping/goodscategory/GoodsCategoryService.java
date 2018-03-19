@@ -23,14 +23,14 @@ public interface GoodsCategoryService {
 	
 	GoodsCategory selectByPrimaryKey(String id);
     /**
-     * 查询所有商品
+     * 查询所有分类
      * @return
      * @throws 
      * @date 2017年9月22日 上午9:45:38
      */
     List<GoodsCategory> selectAllCategory();
     
-    int inert(GoodsCategory category);
+    int insert(GoodsCategory category);
     int update(GoodsCategory category);
-    int delete(String categoryId);
+    int deleteBatch(String []categoryIds);
 }

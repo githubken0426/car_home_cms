@@ -20,11 +20,6 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	}
 
 	@Override
-	public List<GoodsCategory> selectAllCategory() {
-		return categoryDao.selectAllCategory();
-	}
-
-	@Override
 	public List<GoodsCategory> queryAllData(Map<String, Object> map) {
 		return categoryDao.queryAllData(map);
 	}
@@ -35,8 +30,8 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	}
 
 	@Override
-	public int inert(GoodsCategory category) {
-		return categoryDao.inert(category);
+	public int insert(GoodsCategory category) {
+		return categoryDao.insert(category);
 	}
 
 	@Override
@@ -45,7 +40,12 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	}
 
 	@Override
-	public int delete(String categoryId) {
-		return categoryDao.delete(categoryId);
+	public int deleteBatch(String []categoryIds) {
+		return categoryDao.deleteBatch(categoryIds);
+	}
+
+	@Override
+	public List<GoodsCategory> selectAllCategory() {
+		return categoryDao.selectAllCategory();
 	}
 }

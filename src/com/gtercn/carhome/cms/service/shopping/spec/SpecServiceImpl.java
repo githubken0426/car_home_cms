@@ -25,8 +25,8 @@ public class SpecServiceImpl implements SpecService {
 	private SpecItemMapper itemDao;
 
 	@Override
-	public List<Spec> selectGoodsSpecItems(Map<String, Object> map) {
-		return dao.selectGoodsSpecItems(map);
+	public List<Spec> selectGoodsSpec(Map<String, Object> map) {
+		return dao.selectGoodsSpec(map);
 	}
 	@Override
 	public Spec selectByPrimaryKey(String id) {

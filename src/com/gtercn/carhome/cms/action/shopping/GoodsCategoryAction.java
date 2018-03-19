@@ -19,17 +19,13 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
-import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
-import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
-import net.sf.json.JSONArray;
 
 /**
  * 商品
@@ -38,15 +34,13 @@ import net.sf.json.JSONArray;
 public class GoodsCategoryAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private GoodsBrandService goodsBrandService;
-	@Autowired
-	private GoodsCategoryService categoryBrandService;
+	private GoodsCategoryService categoryService;
 	
-	private GoodsBrand entity;
-	public GoodsBrand getEntity() {
+	private GoodsCategory entity;
+	public GoodsCategory getEntity() {
 		return entity;
 	}
-	public void setEntity(GoodsBrand entity) {
+	public void setEntity(GoodsCategory entity) {
 		this.entity = entity;
 	}
 
@@ -59,17 +53,13 @@ public class GoodsCategoryAction extends ActionSupport {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
-			String categoryId = request.getParameter("categoryId");
-			if (StringUtils.isNotBlank(categoryId) && !"-1".equals(categoryId))
-				map.put("categoryId", categoryId);
-			
-			String cnName = request.getParameter("cnName");
-			if (StringUtils.isNotBlank(cnName)) {
-				cnName = URLDecoder.decode(cnName, "UTF-8");
-				map.put("cnName", cnName);
+			String title = request.getParameter("title");
+			if (StringUtils.isNotBlank(title)) {
+				title = URLDecoder.decode(title, "UTF-8");
+				map.put("title", title);
 			}
 			int pageSize = ApplicationConfig.PAGE_SIZE;// 每页显示数据
-			int totalCount = goodsBrandService.getTotalCount(map);
+			int totalCount = categoryService.getTotalCount(map);
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("pno");
 			if (index != null && index != "") {
@@ -81,17 +71,14 @@ public class GoodsCategoryAction extends ActionSupport {
 					: (totalCount / pageSize + 1);
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
-			List<GoodsBrand> list = goodsBrandService.queryAllData(map);
-			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
+			List<GoodsCategory> categoryList=categoryService.queryAllData(map);
 			
 			context.put("categoryList", categoryList);
-			context.put("list", list);
 			context.put("totalPages", totalPages);
 			context.put("totalCount", totalCount);
 			context.put("currentIndex", currentIndex);
 			// 设置查询参数
-			context.put("cnName", cnName);
-			context.put("categoryId", categoryId);
+			context.put("title", title);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;
@@ -117,7 +104,7 @@ public class GoodsCategoryAction extends ActionSupport {
 			}
 			String categoryId = request.getParameter("categoryId");
 			String cnName = request.getParameter("cnName");
-			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
+			List<GoodsCategory> categoryList=categoryService.selectAllCategory();
 			
 			context.put("categoryList", categoryList);
 			context.put("currentIndex", currentIndex);
@@ -157,12 +144,12 @@ public class GoodsCategoryAction extends ActionSupport {
 						String logo = ApplicationConfig.HTTP_PROTOCOL_IP+ File.separator + ApplicationConfig.FTP_SHOPPING_PATH
 								+ File.separator + ApplicationConfig.FTP_BRAND_PATH
 								+ File.separator + portraitFileName;
-						entity.setLogo(logo);
+						entity.setUrl(logo);
 					}
 					input.close();
 				}
 			}
-			goodsBrandService.insert(entity);
+			categoryService.insert(entity);
 			writer.print("<script>alert('添加成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -189,11 +176,8 @@ public class GoodsCategoryAction extends ActionSupport {
 			String categoryId = request.getParameter("categoryId");
 			String cnName = request.getParameter("cnName");
 			String id = request.getParameter("id");
-			entity=goodsBrandService.selectByPrimaryKey(id);
+			entity=categoryService.selectByPrimaryKey(id);
 			context.put("entity", entity);
-			
-			List<GoodsCategory> categoryList=categoryBrandService.selectAllCategory();
-			context.put("categoryList", categoryList);
 			
 			context.put("currentIndex", currentIndex);
 			context.put("categoryId", categoryId);
@@ -232,11 +216,11 @@ public class GoodsCategoryAction extends ActionSupport {
 						String logo = ApplicationConfig.HTTP_PROTOCOL_IP + File.separator
 								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator 
 								+ ApplicationConfig.FTP_BRAND_PATH + File.separator + portraitFileName;
-						entity.setLogo(logo);
+						entity.setUrl(logo);
 					}
 				}
 			}
-			goodsBrandService.update(entity);
+			categoryService.update(entity);
 			writer .print("<script>alert('修改成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -260,7 +244,7 @@ public class GoodsCategoryAction extends ActionSupport {
 		try {
 			writer = response.getWriter();
 			String ids[] = request.getParameterValues("id");
-			goodsBrandService.deleteBatch(ids);
+			categoryService.deleteBatch(ids);
 			writer.print("<script>alert('删除成功!');window.location.href='brand_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -268,29 +252,4 @@ public class GoodsCategoryAction extends ActionSupport {
 		}
 	}
 	
-	/**
-	 * 获取某分类品牌列表
-	 * @return
-	 */
-	public String getBrandByCtegory() {
-		ServletResponse response = ServletActionContext.getResponse();
-		ServletRequest request = ServletActionContext.getRequest();
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter writer = null;
-		try {
-			writer = response.getWriter();
-			String categoryId = request.getParameter("categoryId");
-			List<GoodsBrand> brandList= goodsBrandService.queryDataByCategory(categoryId);
-			JSONArray array=JSONArray.fromObject(brandList);
-			writer.print(array);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Action.ERROR;
-		} finally {
-			writer.flush();
-			writer.close();
-		}
-		return null;
-	}
 }

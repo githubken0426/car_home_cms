@@ -15,7 +15,8 @@ public interface SpecMapper {
      * @param map
      * @return
      */
-    List<Spec> selectGoodsSpecItems(Map<String,Object> map);
+    List<Spec> selectGoodsSpec(Map<String,Object> map);
+    List<Spec> selectAllSpec();
     
     Spec selectByPrimaryKey(String id);
     

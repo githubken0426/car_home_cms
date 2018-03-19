@@ -26,7 +26,7 @@ response.flushBuffer();
 	function addSubmit(){
    		var title=$.trim($("#title").val());
    		if(!title){
-   			layer.tips('请输入广告标题！', '#title');
+   			layer.tips('请输入分类标题！', '#title');
    			return false;
    		}
 		$("#addForm").submit();	
@@ -41,7 +41,7 @@ response.flushBuffer();
 
 <div id="middle">
 	<div class="right"  id="mainFrame">
-		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/adver_add.action" method="post" id="addForm">
+		<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/category_add.action" method="post" id="addForm">
 			<div class="content-box">
 				<div class="content-box-header">
 			    	<span class="now_location">当前位置:</span>添加
@@ -51,29 +51,30 @@ response.flushBuffer();
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
-							<td colspan="3">
+							<td width="10%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类标题：</td>
+							<td width="90%">
 								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
-							<td colspan="3">
-								<select id="goodsId" name="entity.goodsId" style="padding:3px;height:35px;font-size:14px;width:415px;margin-left:30px;">
-								<option value="-1">请选择促销商品</option>
-								<c:forEach var="goods" items="${goodsList}">
-									<option value="${goods.id }">
-										${goods.goodsTitle}</option>
-								</c:forEach>
-								</select>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类描述：</td>
+							<td>
+								<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
 							</td>
 						</tr>
 						<tr>
-							<td width="15%" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
-							<td colspan="3">
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">分类图片：</td>
+							<td >
 								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
 									id="resUrlList" name="resUrlList" tabindex="4" maxlength="300" style="padding:4px;width:405px;margin-left:30px;"/>
 								<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">商品规格：</td>
+							<td >
+								<input type="text" name="entity.spec" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
+								<input type="button" value="添加规格" class="btn btn-info " style="width:80px;" onclick="" />
 							</td>
 						</tr>
 	            	</table>
@@ -93,11 +94,9 @@ response.flushBuffer();
 		</form>
 			
 		<!-- 返回，记录列表页数据 -->
-		<form id="backForm" method="post" action="${pageContext.request.contextPath}/adver_listData.action">
+		<form id="backForm" method="post" action="${pageContext.request.contextPath}/category_list.action">
 			<input type="hidden" name="pno" value="${currentIndex}" />
 			<input type="hidden" name="title" value="${title}" />
-			<input type="hidden" name="beginTime" value="${beginTime}" />
-			<input type="hidden" name="endTime" value="${endTime}" />
 		</form>
 	</div>
 </div>

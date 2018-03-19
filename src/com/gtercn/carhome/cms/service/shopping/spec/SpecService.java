@@ -14,7 +14,7 @@ public interface SpecService {
      * @param map
      * @return
      */
-    List<Spec> selectGoodsSpecItems(Map<String,Object> map);
+    List<Spec> selectGoodsSpec(Map<String,Object> map);
 
 	Spec selectByPrimaryKey(String id);
 	

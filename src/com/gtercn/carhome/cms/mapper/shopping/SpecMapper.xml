@@ -28,7 +28,7 @@
   </select>
   
   <!-- 查询商品属性列表 -->
-  <select id="selectGoodsSpecItems" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectGoodsSpec" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from inn_spec
@@ -36,6 +36,10 @@
     	filter='A' and category_id=#{categoryId,jdbcType=VARCHAR}
     </where>
     order by sort
+  </select>
+  
+  <select id="selectAllSpec" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from inn_spec  where order by sort
   </select>
   
   <select id="selectDetailSpecByGoodsId" parameterType="java.lang.String" resultType="com.gtercn.carhome.cms.entity.shopping.Spec">
