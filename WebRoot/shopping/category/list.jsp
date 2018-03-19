@@ -207,9 +207,12 @@ response.flushBuffer();
 			   <div class=" margin-left-20">
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
-				   		<input onclick="addDataPage();" type="button" value="增加" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="updateDataPage()" type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="deleteData();"  type="button" value="删除" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   		<input onclick="addDataPage();" type="button" value="增加" 
+				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   		<input onclick="updateDataPage('${o.id }','${o.title }','${o.url }','${o.descriptiion }')" 
+				   			type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   		<input onclick="deleteData();"  type="button" value="删除" 
+				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
 			   	</div>
 			</div>
@@ -246,7 +249,34 @@ response.flushBuffer();
 			</table>
 		</form>
 	</div>
-
+	<!-- 修改区域 -->
+	<div id="updateDiv" style="display: none">
+		<form id="updateForm" method="post" action="<%=basePath%>/category_update.action" enctype="multipart/form-data">
+			<table class="table table-condensed">
+				<tr>
+					<td width="12%" align="center">分类标题</td>
+					<td width="30%">
+						<input type="text" id="updateTitle" name="entity.title" 
+							tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:180px;"/>
+					</td>
+					<td width="12%" align="center">分类图标</td>
+					<td width="45%">
+						<input id="resUrlList" name="resUrlList" onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
+							tabindex="4" maxlength="300" style="padding:4px;width:180px;"/>
+						<input type="hidden" name="entity.url" id="picturePath"/>
+						<img style="width:50px;height:50px;" id="viewResUrlList"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">分类描述</td>
+					<td colspan="3">
+						<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:180px;"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 <script type="text/javascript">
 function addDataPage(){
 	layer.open({
@@ -262,6 +292,25 @@ function addDataPage(){
 				return ;
 			}
 			$("#addForm").submit();
+			layer.close(index);
+		}
+	});
+}
+
+function updateDataPage(id,title,url,descriptiion){
+	layer.open({
+		title: '<i class="icon-location-pin"></i>当前位置 / <strong>修改分类</strong>',
+		type : 1,
+		area: ['700px', '230px'],
+		btn: ["<i class='fa fa-dot-circle-o'></i> 确定","<i class='fa fa-ban'></i> 返回"],
+		closeBtn: 1,
+		content : $("#updateDiv"),
+		yes: function(index, layero){
+			if(!$.trim($("#updateTitle").val())){
+				layer.tips('请输入分类标题！','#updateTitle');
+				return ;
+			}
+			$("#updateForm").submit();
 			layer.close(index);
 		}
 	});
