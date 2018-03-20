@@ -109,29 +109,6 @@ response.flushBuffer();
   		$("#totalForm").attr("action","${pageContext.request.contextPath}/category_addDataPage.action");
 	  	$("#totalForm").submit();
   	}
-  	//修改
-  	function updateDataPage(){
-  		var checkboxs=$("input:checkbox[name=id]");
-  		var ret = 0;  // 选中的记录数
-  		var idx = 0;  // 被选中的数据索引号
-  		for(var i=0; i<checkboxs.length; i++){ 
-  			if(checkboxs[i].checked) {
-  				ret = ret + 1;
-  				idx = i;
-  			}
- 		} 
-  		if (ret == 0) {
-  			alert("请选择修改数据！");
-  			return;
-  		} else if (ret > 1) {
-  			alert("请只选择一条数据！");
-  			return;
-  		} else if (ret == 1) {
-			$("#id").val(checkboxs[idx].value);			 
-			$("#totalForm").attr("action","${pageContext.request.contextPath}/category_updateDataPage.action");
-			$("#totalForm").submit();	
-  		}
-  	}
   	
   	//批量修改状态
   	function deleteData(){
@@ -198,7 +175,7 @@ response.flushBuffer();
 							</c:if>
 						</td>
 						<td>${o.descriptiion }</td>
-						<td><a href="${pageContext.request.contextPath}/detail/${o.id }" >详情</a></td>
+						<td><a href="javascript:void(0)" onclick="updateDataPage('${o.id }','${o.title }','${o.url }','${o.descriptiion }')">修改</a></td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -209,8 +186,6 @@ response.flushBuffer();
 			   		<span class=" margin-left-10">			   	
 				   		<input onclick="addDataPage();" type="button" value="增加" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
-				   		<input onclick="updateDataPage('${o.id }','${o.title }','${o.url }','${o.descriptiion }')" 
-				   			type="button" value="修改" class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="deleteData();"  type="button" value="删除" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   	</span>
@@ -261,16 +236,17 @@ response.flushBuffer();
 					</td>
 					<td width="12%" align="center">分类图标</td>
 					<td width="45%">
-						<input id="resUrlList" name="resUrlList" onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
+						<input id="updateUrl" name="updateUrl" onchange="viewUploadImg(this,'updateUrlList')" type="file" 
 							tabindex="4" maxlength="300" style="padding:4px;width:180px;"/>
-						<input type="hidden" name="entity.url" id="picturePath"/>
-						<img style="width:50px;height:50px;" id="viewResUrlList"/>
+						<input type="hidden" name="entity.url" id="updatePicturePath"/>
+						<input type="hidden" name="entity.id" id="updateId"/>
+						<img style="width:50px;height:50px;" id="updateUrlList"/>
 					</td>
 				</tr>
 				<tr>
 					<td align="center">分类描述</td>
 					<td colspan="3">
-						<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
+						<input type="text" id="updateDescriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
 							style="font-size:14px;padding:8px;width:180px;"/>
 					</td>
 				</tr>
@@ -298,6 +274,12 @@ function addDataPage(){
 }
 
 function updateDataPage(id,title,url,descriptiion){
+	alert(url);
+	$("#updateId").val(id);
+	$("#updateTitle").val(title);
+	$("#updatePicturePath").val(url);
+	$("#updateUrlList").attr("src",url);
+	$("#updateDescriptiion").val(descriptiion);
 	layer.open({
 		title: '<i class="icon-location-pin"></i>当前位置 / <strong>修改分类</strong>',
 		type : 1,
