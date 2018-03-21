@@ -65,7 +65,6 @@ public class DealerUserAction extends ActionSupport {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
-			
 			// 接收查询参数
 			String userName = request.getParameter("userName");
 			map.put("userName", userName);
@@ -94,10 +93,8 @@ public class DealerUserAction extends ActionSupport {
 			map.put("beginResult", (currentIndex - 1) * pageSize);
 			map.put("pageSize", pageSize);
 			List<DealerUser> list = dealerUserService.queryAllData(map);
-			
 			// 城市
-			Map<String, Object> map1 = new HashMap<String, Object>();
-			List<City> listCity = cityService.getAllInfo(map1);
+			List<City> listCity = cityService.getAllInfo();
 			List<City> listNewCity = new ArrayList<City>();
 			City city = new City();
 			city.setCityCode("");
@@ -337,10 +334,8 @@ public class DealerUserAction extends ActionSupport {
 	 * @return
 	 */
 	private List<City> getCityInfo() {
-		
 		// 城市
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		List<City> listCity = cityService.getAllInfo(map1);
+		List<City> listCity = cityService.getAllInfo();
 		List<City> listNewCity = new ArrayList<City>();
 		City city = new City();
 		city.setCityCode("");

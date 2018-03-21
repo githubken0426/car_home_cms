@@ -108,7 +108,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="getAllInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="getAllInfo" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from tb_city

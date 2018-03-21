@@ -16,11 +16,13 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
+import com.gtercn.carhome.cms.entity.City;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
+import com.gtercn.carhome.cms.service.city.CityService;
 import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
@@ -44,6 +46,8 @@ public class GoodsAction extends ActionSupport {
 	private GoodsBrandService goodsBrandService;
 	@Autowired
 	private SpecService specService;
+	@Autowired
+	private CityService cityService;
 	
 	
 	private Goods entity;
@@ -153,6 +157,8 @@ public class GoodsAction extends ActionSupport {
 			context.put("specList", specList);
 			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(addCategoryId);
 			context.put("brandList", brandList);
+			List<City> cityList=cityService.getAllInfo();
+			context.put("cityList", cityList);
 			
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
@@ -289,7 +295,9 @@ public class GoodsAction extends ActionSupport {
 			map.put("categoryId", categoryId);
 			List<Spec> specList=specService.selectGoodsSpec(map);
 			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(categoryId);
+			List<City> cityList=cityService.getAllInfo();
 			
+			context.put("cityList", cityList);
 			context.put("relationLst", relationLst);
 			context.put("specList", specList);
 			context.put("brandList", brandList);

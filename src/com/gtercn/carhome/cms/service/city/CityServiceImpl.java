@@ -45,8 +45,8 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public List<City> getAllInfo(Map<String, Object> map) {
-		return dao.getAllInfo(map);
+	public List<City> getAllInfo() {
+		return dao.getAllInfo();
 	}
 	
 	@Override

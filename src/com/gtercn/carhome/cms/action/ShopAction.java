@@ -1026,10 +1026,7 @@ public class ShopAction extends ActionSupport {
         response.setHeader("Cache-Control", "no-store");  
         response.setHeader("Pragma", "no-cache");  
         response.setDateHeader("Expires", 0);
-        
-        Map<String, Object> map = new HashMap<String, Object>();
-        List<City> cityList = cityService.getAllInfo(map);
-        
+        List<City> cityList = cityService.getAllInfo();
 		if (this.uploadFile == null) {
 			out.write("-1");
 		} else {

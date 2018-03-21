@@ -58,7 +58,7 @@ public interface CityService {
 	 * 
 	 * @return
 	 */
-	public List<City> getAllInfo(Map<String, Object> map);
+	public List<City> getAllInfo();
 	
 	/**
 	 * 根据id获取

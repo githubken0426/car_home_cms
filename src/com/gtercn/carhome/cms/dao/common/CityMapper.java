@@ -34,7 +34,7 @@ public interface CityMapper {
 	 * 获取所有信息
 	 * @return
 	 */
-	public List<City> getAllInfo(Map<String,Object> map);
+	public List<City> getAllInfo();
 	
 	/**
 	 * 通过城市编号获得数据
