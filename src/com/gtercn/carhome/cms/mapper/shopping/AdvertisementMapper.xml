@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gtercn.carhome.cms.dao.shopping.AdvertisementMapper">
 	<sql id="Base_Column_List">
-		id, title, picture_path, goods_id,city_code,insert_time,
+		id, title, picture_path, goods_id,city_id,insert_time,
 		update_time,(select goods_title from inn_goods where id=goods_id) goodsTitle
 	</sql>
 	<!-- <![CDATA[ right(left(content,position('</' in content)-1),position('>' 
@@ -13,7 +13,7 @@
 		select <include refid="Base_Column_List" />
 		from inn_advertisement
 		<where>
-			city_code=#{cityCode}
+			city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
 			<if test="title!=null and title!=''">
 				and title like '%${title}%'
 			</if>
@@ -32,7 +32,7 @@
 		parameterType="java.util.Map">
 		select count(1) from inn_advertisement
 		<where>
-			city_code=#{cityCode}
+			city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
 			<if test="title!=null and title!=''">
 				and title like '%${title}%'
 			</if>
@@ -48,12 +48,12 @@
 	<!-- 插入数据 -->
 	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.Advertisement">
 		insert into inn_advertisement
-		(id, title, picture_path,goods_id,city_code,delete_flag,
+		(id, title, picture_path,goods_id,city_id,delete_flag,
 		insert_time,update_time)
 		values
 		(#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},
 		#{picturePath,jdbcType=VARCHAR},#{goodsId,jdbcType=VARCHAR},
-		#{cityCode,jdbcType=VARCHAR},0,now(),now())
+		#{cityId,jdbcType=VARCHAR},0,now(),now())
 	</insert>
 
 	<!-- 修改 -->
@@ -62,6 +62,7 @@
 		set
 		title = #{title,jdbcType=VARCHAR},
 		picture_path = #{picturePath,jdbcType=VARCHAR},
+		city_id = #{cityId,jdbcType=VARCHAR},
 		goods_id = #{goodsId,jdbcType=INTEGER}
 		where
 		id = #{id,jdbcType=VARCHAR}

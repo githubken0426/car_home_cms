@@ -57,6 +57,18 @@ response.flushBuffer();
 							</td>
 						</tr>
 						<tr>
+							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
+							<td colspan="3">
+								<select id="cityId" name="entity.cityId" style="height:25px;margin-left:30px;width:200px;">
+									<c:forEach var="city" items="${cityList}">
+										<option value="${city.id }" >
+											${city.cityName}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
 								<select id="goodsId" name="entity.goodsId" style="padding:3px;height:35px;font-size:14px;width:415px;margin-left:30px;">

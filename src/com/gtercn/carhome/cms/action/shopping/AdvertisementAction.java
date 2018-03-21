@@ -18,9 +18,11 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gtercn.carhome.cms.ApplicationConfig;
+import com.gtercn.carhome.cms.entity.City;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Advertisement;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
+import com.gtercn.carhome.cms.service.city.CityService;
 import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
 import com.gtercn.carhome.cms.util.CommonUtil;
@@ -39,6 +41,8 @@ public class AdvertisementAction extends ActionSupport {
 	private AdvertisementService advertisementService;
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private CityService cityService;
 	
 	private Advertisement entity;
 	public Advertisement getEntity() {
@@ -121,6 +125,8 @@ public class AdvertisementAction extends ActionSupport {
 				cityCode = user.getCityCode();
 			List<Goods> goodsList=goodsService.queryGoodsByCity(cityCode);
 			context.put("goodsList", goodsList);
+			List<City> cityList=cityService.getAllInfo();
+			context.put("cityList", cityList);
 			
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
@@ -151,7 +157,6 @@ public class AdvertisementAction extends ActionSupport {
 	public void add() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Map<String, Object> session = ActionContext.getContext().getSession();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		InputStream input=null;
@@ -160,12 +165,6 @@ public class AdvertisementAction extends ActionSupport {
 			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
-			DealerUser user = (DealerUser) session.get("dealer_user");
-			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
-			if(null!=user) 
-				cityCode = user.getCityCode();
-			entity.setCityCode(cityCode);
-			
 			// 上传展示图片
 			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_ADVER_PATH };
 			File[] resUrlList = multipartRequest.getFiles("resUrlList");
@@ -223,7 +222,9 @@ public class AdvertisementAction extends ActionSupport {
 			String endTime = request.getParameter("endTime");
 			String id = request.getParameter("id");
 			entity=advertisementService.selectByPrimaryKey(id);
+			List<City> cityList=cityService.getAllInfo();
 			
+			context.put("cityList", cityList);
 			context.put("entity", entity);
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);

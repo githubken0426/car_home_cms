@@ -7,7 +7,7 @@ public class Advertisement {
     private String title;
     private String picturePath;
     private String goodsId;
-    private String cityCode;
+    private String cityId;
     private String deleteFlag;
     private Date insertTime;
     private Date updateTime;
@@ -52,15 +52,15 @@ public class Advertisement {
 		this.goodsTitle = goodsTitle;
 	}
 
-	public String getCityCode() {
-        return cityCode;
-    }
+    public String getCityId() {
+		return cityId;
+	}
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode == null ? null : cityCode.trim();
-    }
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
 
-    public String getDeleteFlag() {
+	public String getDeleteFlag() {
         return deleteFlag;
     }
 

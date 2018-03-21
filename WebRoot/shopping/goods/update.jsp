@@ -36,12 +36,6 @@ response.flushBuffer();
 	
    	//添加
 	function addSubmit(){
-		var cityCode=$.trim($("#cityCode").val());
-   		if(!cityCode){
-   			$("#cityCode").focus();
-   			layer.tips('请输入商品城市编码！', '#cityCode');
-   			return false;
-   		}
    		var goodsTitle=$.trim($("#goodsTitle").val());
 		if(!goodsTitle){
 			$("#goodsTitle").focus();
@@ -85,7 +79,13 @@ response.flushBuffer();
 							</td>
 							<td width="10%"  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市码：</td>
 							<td width="40%" >
-								<input id="cityCode" name="entity.cityCode" value="${entity.cityCode}" type="text" style="margin-left: 30px;width:200px;" />
+								<select id="cityId" name="entity.cityId" style="height:25px;margin-left:30px;width:200px;">
+									<c:forEach var="city" items="${cityList}">
+										<option value="${city.id }" <c:if test="${city.id== entity.cityId}">selected='selected'</c:if> >
+											${city.cityName}
+										</option>
+									</c:forEach>
+								</select>
 							</td>
 						</tr>
 						

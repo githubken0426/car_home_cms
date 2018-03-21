@@ -5,7 +5,7 @@
   <sql id="Base_Column_List" >
     id, brand_id, score, sku_code, prime_price, promotion_price, cost_price, product_area, 
     goods_title, goods_synopsis, goods_description,goods_detail, search_tag, stock, big_picture, small_picture, 
-    sold_number, is_hot, is_new, up_time, down_time, status, city_code, update_time,weight,create_time,
+    sold_number, is_hot, is_new, up_time, down_time, status, city_id, update_time,weight,create_time,
     (select count(1) from inn_comment where goods_id=G.id) as commentCount,
     round((select count(1) as total from inn_comment  where goods_id=G.id)/(select count(1) as cou from inn_comment where goods_id=G.id and status!='B')*100,0)
     as percentage 
@@ -90,7 +90,7 @@
       goods_synopsis, goods_description, search_tag, 
       stock, small_picture, big_picture,goods_detail, sold_number, 
       is_hot, is_new, up_time, down_time, 
-      status, weight,city_code, create_time, update_time
+      status, weight,city_id, create_time, update_time
       )
     values (#{id,jdbcType=VARCHAR}, #{brandId,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, 
       #{skuCode,jdbcType=VARCHAR}, #{primePrice,jdbcType=DECIMAL}, #{promotionPrice,jdbcType=DECIMAL}, 
@@ -99,14 +99,14 @@
       #{stock,jdbcType=INTEGER}, #{smallPicture,jdbcType=VARCHAR},#{bigPicture,jdbcType=VARCHAR},
       #{goodsDetail,jdbcType=VARCHAR},#{soldNumber,jdbcType=INTEGER},#{isHot,jdbcType=CHAR},
       #{isNew,jdbcType=CHAR}, now(), #{downTime,jdbcType=TIMESTAMP},0 , 
-      #{weight,jdbcType=INTEGER}, #{cityCode,jdbcType=CHAR}, now(),now())
+      #{weight,jdbcType=INTEGER}, #{cityId,jdbcType=CHAR}, now(),now())
   </insert>
   
   <update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.Goods">
 	update inn_goods G
 	<set>
 		brand_id=#{brandId,jdbcType=VARCHAR},
-		city_code= #{cityCode,jdbcType=CHAR},
+		city_id= #{cityId,jdbcType=CHAR},
 		score=#{score,jdbcType=VARCHAR},
 		prime_price=#{primePrice,jdbcType=DECIMAL},
 		promotion_price=#{promotionPrice,jdbcType=DECIMAL},
