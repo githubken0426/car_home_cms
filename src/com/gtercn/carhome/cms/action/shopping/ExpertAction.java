@@ -239,8 +239,9 @@ public class ExpertAction extends ActionSupport {
 							portraitFileName, expertPortraitIn);
 					if (bool) {
 						String dbPortaitSavePath = ApplicationConfig.HTTP_PROTOCOL_IP + File.separator
-								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator + ApplicationConfig.FTP_EXPERT_PATH
-								+ File.separator + expertId + File.separator + "portrait" + File.separator
+								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator 
+								+ ApplicationConfig.FTP_EXPERT_PATH
+								+ File.separator + "portrait" + File.separator
 								+ portraitFileName;
 						expertTop.setExpertPortraitUrl(dbPortaitSavePath);
 					}
@@ -365,7 +366,7 @@ public class ExpertAction extends ActionSupport {
 					if (bool) {
 						String dbPortaitSavePath = ApplicationConfig.HTTP_PROTOCOL_IP + File.separator
 								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator + ApplicationConfig.FTP_EXPERT_PATH
-								+ File.separator + id + File.separator + "portrait" + File.separator
+								+ File.separator + "portrait" + File.separator
 								+ portraitFileName;
 						expertTop.setExpertPortraitUrl(dbPortaitSavePath);
 					}
@@ -395,7 +396,7 @@ public class ExpertAction extends ActionSupport {
 			File[] displayPicture = multipartRequest.getFiles("displayPicture");
 			if(displayPicture!=null){
 				String[] displaySavePath = { ApplicationConfig.FTP_SHOPPING_PATH,
-						ApplicationConfig.FTP_EXPERT_PATH, id, "display" };
+						ApplicationConfig.FTP_EXPERT_PATH, "display" };
 				for (File file : displayPicture) {
 					in = new FileInputStream(file);
 					String fileName = System.currentTimeMillis() + ".jpg";
@@ -405,18 +406,17 @@ public class ExpertAction extends ActionSupport {
 						String dbSavePath =ApplicationConfig.HTTP_PROTOCOL_IP+ File.separator
 								+ ApplicationConfig.FTP_SHOPPING_PATH + File.separator
 								+ ApplicationConfig.FTP_EXPERT_PATH
-								+ File.separator + id + File.separator
-								+ "display" + File.separator + fileName;
+								+ File.separator + "display" + File.separator + fileName;
 						displayList.add(dbSavePath);
 					}
 				}
 			}
 			expertTop.setExpertDisplayPicList(displayList.toString());
 			expertService.updateShopExpert(expertTop);
-			writer.print("<script>alert('修改成功!');window.location.href='expertTop_listData.action';</script>");
+			writer.print("<script>alert('修改成功!');window.location.href='expert_listData.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer.print("<script>alert('修改失败!');window.location.href='expertTop_listData.action';</script>");
+			writer.print("<script>alert('修改失败!');window.location.href='expert_listData.action';</script>");
 		}finally{
 			if(in!=null)
 				in.close();

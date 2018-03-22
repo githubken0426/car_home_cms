@@ -156,7 +156,7 @@ response.flushBuffer();%>
   <body>
    	<div id="middle">
   		<div class="right"  id="mainFrame">
-			<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/expertTop_addData.action" method="post" id="addForm">
+			<form enctype="multipart/form-data" action="${pageContext.request.contextPath}/expert_addData.action" method="post" id="addForm">
 			    <div class="content-box">
 <!-- 用户录入区  -->
 			     	<div class="content-box-header">
@@ -254,7 +254,7 @@ response.flushBuffer();%>
 							</td>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
 							<td>
-								<select id="cityCode" name="entity.cityCode" style="height:25px;margin-left:30px;width:200px;">
+								<select id="cityCode" name="expertTop.cityCode" style="height:25px;margin-left:30px;width:200px;">
 									<c:forEach var="city" items="${cityList}">
 										<option value="${city.id }">
 											${city.cityName}

@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.gtercn.carhome.cms.ApplicationConfig;
-
 public class ExpertTop {
 	private String id;
 	private String userId;
@@ -72,9 +70,7 @@ public class ExpertTop {
 	}
 
 	public void setExpertPortraitUrl(String expertPortraitUrl) {
-		String url = (expertPortraitUrl == null) ? null : ApplicationConfig
-				.appendFtpIpToURL(expertPortraitUrl.trim());
-		this.expertPortraitUrl = url;
+		this.expertPortraitUrl = expertPortraitUrl;
 	}
 
 	public String getExpertWechatNumber() {
@@ -117,10 +113,8 @@ public class ExpertTop {
 	}
 
 	public void setExpertDisplayPicList(String expertDisplayPicList) {
-		String url = (expertDisplayPicList == null) ? null : ApplicationConfig
-				.appendFtpIpToURL(expertDisplayPicList.trim());
-		this.expertDisplayPicList = url;
-		this.displayList = (url == null) ? null : Arrays.asList(url.split(","));
+		this.expertDisplayPicList = expertDisplayPicList;
+		this.displayList = (expertDisplayPicList == null) ? null : Arrays.asList(expertDisplayPicList.split(","));
 	}
 
 	public String getExpertDiscriptionDetail() {

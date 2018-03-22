@@ -6,7 +6,7 @@
 		select id, 
 		(select nickname from tc_user u where u.user_id=e.user_id) as user_id,
 		(select real_name from tc_user u where u.user_id=e.user_id) as expert_name,
-		(select type_value from tb_expert_type t where t.id=e.top_title) as top_title,
+		(select title from inn_goods_category t where t.id=e.top_title) as top_title,
 		city_code, expert_discription_short,
 		expert_portrait_url,expert_wechat_number,
 		expert_experience, expert_tel_number, motto, expert_display_pic_list,
@@ -89,6 +89,7 @@
 			motto = #{motto,jdbcType=VARCHAR},
 			expert_display_pic_list = #{expertDisplayPicList,jdbcType=VARCHAR},
 			expert_discription_detail = #{expertDiscriptionDetail,jdbcType=VARCHAR},
+			city_code=#{cityCode,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=VARCHAR}
 	</update>
 	<!-- 通过用户id,达人id获取达人 -->

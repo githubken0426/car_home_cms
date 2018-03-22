@@ -68,7 +68,10 @@
 		id = #{id,jdbcType=VARCHAR}
 	</update>
 	
-  	<delete id="delete" parameterType="java.lang.String">
-  		delete from inn_goods_category where id = #{id,jdbcType=VARCHAR}
-  	</delete>
+  	<delete id="deleteBatch" parameterType="java.lang.String">
+		delete from inn_goods_category where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

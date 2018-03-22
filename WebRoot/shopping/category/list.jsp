@@ -114,8 +114,8 @@ response.flushBuffer();
   	function deleteData(){
   		var checkboxs=$("input:checkbox[name=id]");
   		if(checkboxs.is(":checked")){
-  			if(confirm("确定要删除选中的数据吗?")){
-  				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteData.action");
+  			if(confirm("删除所选数据后,商品将无法关联此分类！确定要删除吗?")){
+  				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteBatch.action");
   		  		$("#totalForm").submit();
   			}
   		}else{
@@ -175,7 +175,10 @@ response.flushBuffer();
 							</c:if>
 						</td>
 						<td>${o.descriptiion }</td>
-						<td><a href="javascript:void(0)" onclick="updateDataPage('${o.id }','${o.title }','${o.url }','${o.descriptiion }')">修改</a></td>
+						<td>
+							<a href="javascript:void(0)" 
+							onclick="updateDataPage('${o.id }','${o.title }','${fn:replace(o.url,'\\','%5C')}','${o.descriptiion }')">修改</a>
+						</td>
 					</tr>					
 					</c:forEach>
 		     	  </tbody>
@@ -274,7 +277,7 @@ function addDataPage(){
 }
 
 function updateDataPage(id,title,url,descriptiion){
-	alert(url);
+	url = url .replace(/%5C/g, "\\");//全部替换
 	$("#updateId").val(id);
 	$("#updateTitle").val(title);
 	$("#updatePicturePath").val(url);

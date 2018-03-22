@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
-import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -36,8 +35,6 @@ public class GoodsCategoryAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private GoodsCategoryService categoryService;
-	@Autowired
-	private SpecService specService;
 	
 	private GoodsCategory entity;
 	public GoodsCategory getEntity() {
@@ -179,7 +176,7 @@ public class GoodsCategoryAction extends ActionSupport {
 			MultiPartRequestWrapper multipartRequest = (MultiPartRequestWrapper) request;
 			String ftpPaths[] = { ApplicationConfig.FTP_SHOPPING_PATH, ApplicationConfig.FTP_BRAND_PATH };
 			// 上传展示图片
-			File[] viewResUrlList = multipartRequest.getFiles("logo");
+			File[] viewResUrlList = multipartRequest.getFiles("updateUrl");
 			if(viewResUrlList!=null) {
 				for (File file : viewResUrlList) {
 					input = new FileInputStream(file);
@@ -194,10 +191,10 @@ public class GoodsCategoryAction extends ActionSupport {
 				}
 			}
 			categoryService.update(entity);
-			writer .print("<script>alert('修改成功!');window.location.href='brand_list.action';</script>");
+			writer .print("<script>alert('修改成功!');window.location.href='category_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer.print("<script>alert('修改失败!');window.location.href='brand_list.action';</script>");
+			writer.print("<script>alert('修改失败!');window.location.href='category_list.action';</script>");
 		}finally{
 			if(input!=null)
 				input.close();
@@ -218,10 +215,10 @@ public class GoodsCategoryAction extends ActionSupport {
 			writer = response.getWriter();
 			String ids[] = request.getParameterValues("id");
 			categoryService.deleteBatch(ids);
-			writer.print("<script>alert('删除成功!');window.location.href='brand_list.action';</script>");
+			writer.print("<script>alert('删除成功!');window.location.href='category_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer.print("<script>alert('删除失败!');window.location.href='brand_list.action';</script>");
+			writer.print("<script>alert('删除失败!');window.location.href='category_list.action';</script>");
 		}
 	}
 	
