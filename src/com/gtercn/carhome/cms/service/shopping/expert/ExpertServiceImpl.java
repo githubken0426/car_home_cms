@@ -29,22 +29,10 @@ public class ExpertServiceImpl implements ExpertService {
 	}
 
 	@Override
-	public int insert(ExpertTop record) {
-		return expertDao.insert(record);
-	}
-
-	@Override
 	public ExpertTop selectByPrimaryKey(String id) {
 		return expertDao.selectByPrimaryKey(id);
 	}
 
-	@Override
-	public int registerUserAndExpert(ExpertTop o, APIUser user, boolean isAdd) {
-		if(isAdd){
-			userDao.insert(user);
-		}
-		return expertDao.insert(o);
-	}
 
 	@Override
 	public int deleteBatch(String[] ids) {
@@ -52,13 +40,19 @@ public class ExpertServiceImpl implements ExpertService {
 	}
 
 	@Override
-	public int update(ExpertTop record) {
-		return expertDao.update(record);
-	}
-
-	@Override
 	public int getExcludeExpert(Map<String, Object> map) {
 		return expertDao.getExcludeExpert(map);
 	}
+	@Override
+	public int registerUserAndExpertShop(ExpertTop o,APIUser user,boolean isAdd) {
+		if(isAdd){
+			userDao.insert(user);
+		}
+		return expertDao.insertShopExpert(o);
+	}
 
+	@Override
+	public int updateShopExpert(ExpertTop record) {
+		return expertDao.updateShopExpert(record);
+	}
 }

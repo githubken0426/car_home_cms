@@ -23,17 +23,6 @@ public interface ExpertService {
 	 */
 	public int getTotalCount(Map<String, Object> map);
 	
-    int deleteBatch(String []ids);
-
-    int insert(ExpertTop record);
-    
-    int update(ExpertTop record);
-
-    ExpertTop selectByPrimaryKey(String id);
-
-    public int registerUserAndExpert(ExpertTop o, APIUser user,
-			boolean isAdd);
-    
     /**
      * 通过用户id,达人id获取达人
      * 用户一对一达人
@@ -42,4 +31,9 @@ public interface ExpertService {
      * 2017-2-22 下午01:53:30
      */
     int getExcludeExpert(Map<String,Object> map);
+    
+    ExpertTop selectByPrimaryKey(String id);
+    int deleteBatch(String []ids);
+    public int registerUserAndExpertShop(ExpertTop o,APIUser user,boolean isAdd);
+    int updateShopExpert(ExpertTop record);
 }

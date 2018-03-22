@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gtercn.carhome.cms.ApplicationConfig;
 import com.gtercn.carhome.cms.annotation.PermissionException;
 import com.gtercn.carhome.cms.entity.APIUser;
+import com.gtercn.carhome.cms.entity.City;
 import com.gtercn.carhome.cms.entity.ExpertTop;
 import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.apiuser.APIUserService;
+import com.gtercn.carhome.cms.service.city.CityService;
 import com.gtercn.carhome.cms.service.shopping.expert.ExpertService;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.util.CommonUtil;
@@ -51,6 +53,8 @@ public class ExpertAction extends ActionSupport {
 	private GoodsCategoryService goodsCategoryService;
 	@Autowired
 	private APIUserService apiUserService;
+	@Autowired
+	private CityService cityService;
 	
 	private APIUser apiUser;
 	private ExpertTop expertTop;
@@ -137,6 +141,9 @@ public class ExpertAction extends ActionSupport {
 			String expertName = request.getParameter("expertName");
 			String category = request.getParameter("category");
 			List<GoodsCategory> categoryList = goodsCategoryService.selectAllCategory();
+			List<City> cityList=cityService.getAllInfo();
+			
+			context.put("cityList", cityList);
 			context.put("categoryList", categoryList);
 			context.put("currentIndex", currentIndex);
 			context.put("expertName", expertName);
@@ -198,6 +205,7 @@ public class ExpertAction extends ActionSupport {
 			String expertId = CommonUtil.getUID();
 			expertTop.setId(expertId);
 			expertTop.setUserId(userId);
+			expertTop.setIsInn(1);
 			List<String> displayList = new MyArrayList<String>();
 			// 个人详细照片上传
 			File[] displayPicture = multipartRequest.getFiles("displayPicture");
@@ -241,7 +249,7 @@ public class ExpertAction extends ActionSupport {
 			expertTop.setExpertName(apiUser.getRealName());
 			expertTop.setExpertTelNumber(apiUser.getLoginPhone());
 			
-			expertService.registerUserAndExpert(expertTop, apiUser, isAdd);
+			expertService.registerUserAndExpertShop(expertTop, apiUser, isAdd);
 			writer = response.getWriter();
 			writer.print("<script>alert('添加成功!');window.location.href='expert_listData.action';</script>");
 		} catch (Exception e) {
@@ -305,7 +313,8 @@ public class ExpertAction extends ActionSupport {
 			context.put("categoryList", categoryList);
 			ExpertTop expert = expertService.selectByPrimaryKey(id);
 			context.put("expertTop", expert);
-			
+			List<City> cityList=cityService.getAllInfo();
+			context.put("cityList", cityList);
 			if(expert!=null){
 				APIUser user=apiUserService.getUserById(expert.getUserId());
 				context.put("apiUser",user);
@@ -403,7 +412,7 @@ public class ExpertAction extends ActionSupport {
 				}
 			}
 			expertTop.setExpertDisplayPicList(displayList.toString());
-			expertService.update(expertTop);
+			expertService.updateShopExpert(expertTop);
 			writer.print("<script>alert('修改成功!');window.location.href='expertTop_listData.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();

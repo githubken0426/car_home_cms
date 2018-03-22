@@ -52,7 +52,7 @@
 	      #{id,jdbcType=VARCHAR} 
 	    </foreach>
   </delete>
-	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
+	<insert id="insertShopExpert" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
 		insert into tb_expert_top (id,
 		user_id, top_title,city_code,
 		expert_name, expert_discription_short,
@@ -78,7 +78,7 @@
 		1,0, now(),now()
 		)
   </insert>
-	<update id="update" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
+	<update id="updateShopExpert" parameterType="com.gtercn.carhome.cms.entity.ExpertTop">
 		update tb_expert_top
 			set 
 			top_title = #{topTitle,jdbcType=VARCHAR},

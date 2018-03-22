@@ -3,7 +3,6 @@ package com.gtercn.carhome.cms.dao.shopping;
 import java.util.List;
 import java.util.Map;
 
-import com.gtercn.carhome.cms.entity.APIUser;
 import com.gtercn.carhome.cms.entity.ExpertTop;
 
 public interface ExpertMapper {
@@ -21,13 +20,10 @@ public interface ExpertMapper {
 	 * 2017-2-21 下午02:48:20
 	 */
 	public int getTotalCount(Map<String, Object> map);
+	ExpertTop selectByPrimaryKey(String id);
 	
-    int insert(ExpertTop record);
-    int update(ExpertTop record);
+    int insertShopExpert(ExpertTop record);
+    int updateShopExpert(ExpertTop record);
     int deleteBatch(String[] ids);
-    ExpertTop selectByPrimaryKey(String id);
-    
     int getExcludeExpert(Map<String,Object> map);
-	public int registerUserAndExpert(ExpertTop o, APIUser user,
-			boolean isAdd);
 }

@@ -85,33 +85,31 @@
     </update>
   
 	<insert id="insert" parameterType="com.gtercn.carhome.cms.entity.write.WriteExpertTop">
-		insert into tb_expert_top (id,
-		user_id, top_title,city_code,
-		expert_name, expert_discription_short,
-		expert_portrait_url,
-		expert_wechat_number, expert_experience,
-		expert_tel_number,
-		motto, expert_display_pic_list,
-		expert_discription_detail,
-		delete_flag, insert_time, update_time
-		)
+		insert into tb_expert_top (
+			id,user_id, top_title,city_code,
+			expert_name, expert_discription_short,
+			expert_portrait_url,
+			expert_wechat_number, expert_experience,
+			expert_tel_number,
+			motto, expert_display_pic_list,
+			expert_discription_detail,
+			delete_flag, insert_time, update_time,is_inn)
 		values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
-		#{topTitle,jdbcType=VARCHAR},
-		#{cityCode,jdbcType=VARCHAR},
-		#{expertName,jdbcType=VARCHAR},
-		#{expertDiscriptionShort,jdbcType=VARCHAR},
-		#{expertPortraitUrl,jdbcType=VARCHAR},
-		#{expertWechatNumber,jdbcType=VARCHAR},
-		#{expertExperience,jdbcType=VARCHAR},
-		#{expertTelNumber,jdbcType=VARCHAR},
-		#{motto,jdbcType=VARCHAR},
-		#{expertDisplayPicList,jdbcType=VARCHAR},
-		#{expertDiscriptionDetail,jdbcType=VARCHAR},
-		#{deleteFlag,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP},
-		#{updateTime,jdbcType=TIMESTAMP}
-		)
+			#{topTitle,jdbcType=VARCHAR},
+			#{cityCode,jdbcType=VARCHAR},
+			#{expertName,jdbcType=VARCHAR},
+			#{expertDiscriptionShort,jdbcType=VARCHAR},
+			#{expertPortraitUrl,jdbcType=VARCHAR},
+			#{expertWechatNumber,jdbcType=VARCHAR},
+			#{expertExperience,jdbcType=VARCHAR},
+			#{expertTelNumber,jdbcType=VARCHAR},
+			#{motto,jdbcType=VARCHAR},
+			#{expertDisplayPicList,jdbcType=VARCHAR},
+			#{expertDiscriptionDetail,jdbcType=VARCHAR},
+			#{deleteFlag,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP},
+			#{updateTime,jdbcType=TIMESTAMP},0)
   </insert>
-
+	
 	<update id="updateByPrimaryKey" parameterType="com.gtercn.carhome.cms.entity.write.WriteExpertTop">
 		update tb_expert_top
 			set 

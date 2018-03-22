@@ -31,6 +31,8 @@ public interface ExpertTopMapper {
 
     int updateByPrimaryKey(WriteExpertTop record);
     
+    int insertShopExpert(ExpertTop record);
+    int updateShopExpert(ExpertTop record);
     /**
      * 通过用户id,达人id获取达人
      * 用户一对一达人

@@ -246,11 +246,28 @@ response.flushBuffer();%>
 						<tr>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人类别：</td>
 							<td>
-								<select id="topTitle" name="expertTop.topTitle" tabindex="15" style="width:200px;margin-left:30px;">
-									<c:forEach var="type" items="${typeList}">
-										<option value="${type.id }">${type.typeValue}</option>
+								<select id="topTitle" name="expertTop.topTitle" tabindex="15" style="height:25px;margin-left:30px;width:200px;">
+									<c:forEach var="type" items="${categoryList}">
+										<option value="${type.id }">${type.title}</option>
 									</c:forEach>
 								</select>
+							</td>
+							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
+							<td>
+								<select id="cityCode" name="entity.cityCode" style="height:25px;margin-left:30px;width:200px;">
+									<c:forEach var="city" items="${cityList}">
+										<option value="${city.id }">
+											${city.cityName}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人头像：</td>
+							<td>
+								<input onchange="viewUploadImg(this,'expertViewPortrait')" type="file" name="expertPortrait" tabindex="18"  style="width:260px;margin-left:30px;"/>
+								<img style="width:50px;height:50px;display:none;" id="expertViewPortrait"/>
 							</td>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">状态：</td>
 							<td>
@@ -262,13 +279,6 @@ response.flushBuffer();%>
 			                		<input type="radio"value="1" name="expertTop.deleteFlag" tabindex="17" style="margin-top:0px;"/>
 			                		<span style="margin-left: 10px;">禁&nbsp;用</span>
 			                	</label>
-							</td>
-						</tr>
-						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人头像：</td>
-							<td colspan="3">
-								<input onchange="viewUploadImg(this,'expertViewPortrait')" type="file" name="expertPortrait" tabindex="18"  style="width:260px;margin-left:30px;"/>
-								<img style="width:50px;height:50px;display:none;" id="expertViewPortrait"/>
 							</td>
 						</tr>
 						<tr>

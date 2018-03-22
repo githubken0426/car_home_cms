@@ -20,7 +20,7 @@ public class ExpertTop {
 	private String expertDisplayPicList;
 	private String expertDiscriptionDetail;
 	private String deleteFlag;
-	private String isInn;
+	private Integer isInn;
 	private String cityCode;
 	private Date insertTime;
 	private Date updateTime;
@@ -164,11 +164,11 @@ public class ExpertTop {
 		this.displayList = displayList;
 	}
 
-	public String getIsInn() {
+	public Integer getIsInn() {
 		return isInn;
 	}
 
-	public void setIsInn(String isInn) {
+	public void setIsInn(Integer isInn) {
 		this.isInn = isInn;
 	}
 

@@ -159,10 +159,32 @@ response.flushBuffer();%>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人类别：</td>
 							<td>
 								<select id="topTitle" name="expertTop.topTitle" tabindex="15" style="width:200px;margin-left:30px;">
-									<c:forEach var="type" items="${typeList}">
-										<option value="${type.id }"<c:if test="${type.id== expertTop.topTitle}">selected="selected"</c:if>>${type.typeValue}</option>
+									<c:forEach var="type" items="${categoryList}">
+										<option value="${type.id }"<c:if test="${type.id== expertTop.topTitle}">selected="selected"</c:if>>${type.title}</option>
 									</c:forEach>
 								</select>
+							</td>
+							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
+							<td>
+			                <select id="cityCode" name="entity.cityCode" style="height:25px;margin-left:30px;width:200px;">
+									<c:forEach var="city" items="${cityList}">
+										<option value="${city.id }" <c:if test="${city.id== expertTop.cityCode}">selected='selected'</c:if>>
+											${city.cityName}
+										</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人头像：</td>
+							<td>
+								<input onchange="viewUploadImg(this,'expertViewPortrait')" type="file" name="expertPortrait" tabindex="18"  style="width:260px;margin-left:30px;"/>
+								<input type="button" value="删除" class="btn btn-info " style="width:80px;" onclick="deletePicture('expertPortrait','expertPortraitFlag')" />
+								<input type="hidden" name="expertPortraitFlag" id="expertPortraitFlag" 
+														value="${fn:substringAfter(expertTop.expertPortraitUrl,ftpServerIp) }" />
+								<c:if test="${not empty expertTop.expertPortraitUrl}">
+									<img src="${expertTop.expertPortraitUrl}"style="width:50px;height:50px;" id="expertViewPortrait"/>
+								</c:if>
 							</td>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">状态：</td>
 							<td>
@@ -188,18 +210,6 @@ response.flushBuffer();%>
 						                	</label>
 										</c:otherwise>
 									</c:choose>
-							</td>
-						</tr>
-						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">达人头像：</td>
-							<td colspan="3">
-								<input onchange="viewUploadImg(this,'expertViewPortrait')" type="file" name="expertPortrait" tabindex="18"  style="width:260px;margin-left:30px;"/>
-								<input type="button" value="删除" class="btn btn-info " style="width:80px;" onclick="deletePicture('expertPortrait','expertPortraitFlag')" />
-								<input type="hidden" name="expertPortraitFlag" id="expertPortraitFlag" 
-														value="${fn:substringAfter(expertTop.expertPortraitUrl,ftpServerIp) }" />
-								<c:if test="${not empty expertTop.expertPortraitUrl}">
-									<img src="${expertTop.expertPortraitUrl}"style="width:50px;height:50px;" id="expertViewPortrait"/>
-								</c:if>
 							</td>
 						</tr>
 						<tr>
