@@ -104,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							onclick="setMainContent('category_list.action');">
 							<i class="fa fa-angle-double-right"></i>商品分类管理</a>
 						</li>
-					</c:if>
+					</c:if> 
 					<c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('adver_listData.action');">

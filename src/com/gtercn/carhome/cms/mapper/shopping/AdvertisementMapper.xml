@@ -3,7 +3,8 @@
 <mapper namespace="com.gtercn.carhome.cms.dao.shopping.AdvertisementMapper">
 	<sql id="Base_Column_List">
 		id, title, picture_path, goods_id,city_id,insert_time,
-		update_time,(select goods_title from inn_goods where id=goods_id) goodsTitle
+		update_time,(select goods_title from inn_goods where id=goods_id) goodsTitle,
+		(select city_name from tb_city where city_id=id) cityName
 	</sql>
 	<!-- <![CDATA[ right(left(content,position('</' in content)-1),position('>' 
 		in content)) as content,]]> -->
@@ -13,7 +14,7 @@
 		select <include refid="Base_Column_List" />
 		from inn_advertisement
 		<where>
-			city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
+			<!-- city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR}) -->
 			<if test="title!=null and title!=''">
 				and title like '%${title}%'
 			</if>
@@ -32,7 +33,7 @@
 		parameterType="java.util.Map">
 		select count(1) from inn_advertisement
 		<where>
-			city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR})
+			<!-- city_id=(select id from tb_city where city_code=#{cityCode,jdbcType=VARCHAR}) -->
 			<if test="title!=null and title!=''">
 				and title like '%${title}%'
 			</if>

@@ -192,7 +192,7 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="120px"><strong>广告标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>关联商品</strong></td>
-						<td nowrap="nowrap" width="70px"><strong>城市编号</strong></td>
+						<td nowrap="nowrap" width="70px"><strong>城市</strong></td>
 						<td nowrap="nowrap" width="120px"><strong>创建时间</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${list}" varStatus="s">					
@@ -206,7 +206,7 @@ response.flushBuffer();
 							</c:if>
 						</td>
 						<td>${o.goodsTitle }</td>
-						<td>${o.cityCode }</td>
+						<td>${o.cityName }</td>
 						<td><fmt:formatDate value="${o.insertTime }" type="both" pattern="yyyy-MM-dd" dateStyle="long"/> </td>
 					</tr>					
 					</c:forEach>

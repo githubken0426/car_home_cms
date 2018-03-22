@@ -12,8 +12,17 @@ public class Advertisement {
     private Date insertTime;
     private Date updateTime;
     private String goodsTitle;
+    private String cityName;
     
-    public String getId() {
+    public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getId() {
         return id;
     }
 

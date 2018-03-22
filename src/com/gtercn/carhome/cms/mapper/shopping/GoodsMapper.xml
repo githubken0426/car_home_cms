@@ -60,7 +60,9 @@
 	</select>
 	
 	<select id="queryGoodsByCity" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String">
-		select G.* from inn_goods G where city_code=#{cityCode} and status!=1
+		select G.* from inn_goods G 
+		where city_id=(select id from tb_city where city_code=#{cityCode})
+		and status!=1
 	</select>
 	
   <!-- 主键查询 -->
