@@ -161,7 +161,7 @@ response.flushBuffer();
 						<td nowrap="nowrap" width="120px"><strong>分类标题</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
 						<td nowrap="nowrap" width="220px"><strong>描述</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>规格详情</strong></td>
+						<td nowrap="nowrap" width="220px"><strong>操作</strong></td>
 	       			</tr>
 		       		<c:forEach var="o" items="${categoryList}" varStatus="s">					
 					<tr align="center">
@@ -178,6 +178,9 @@ response.flushBuffer();
 						<td>
 							<a href="javascript:void(0)" 
 							onclick="updateDataPage('${o.id }','${o.title }','${fn:replace(o.url,'\\','%5C')}','${o.descriptiion }')">修改</a>
+							
+							<a href="javascript:void(0)" 
+							onclick="updateDataPage()">增加子分类</a>
 						</td>
 					</tr>					
 					</c:forEach>
