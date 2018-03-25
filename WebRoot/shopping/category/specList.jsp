@@ -15,7 +15,7 @@ response.flushBuffer();
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>分类列表</title>
+	<title>分类规格列表</title>
 	<link rel="stylesheet" href="<%=path%>/css/pubmain.css" />
 	<link href="<%=request.getContextPath() %>/css/commen.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=request.getContextPath() %>/css/global.css" rel="stylesheet" type="text/css"/>
@@ -35,9 +35,7 @@ response.flushBuffer();
 	}
   	$(function(){
 		//分页开始
-		var title = $.trim($("#title").val());
-		title=encodeURI(encodeURI(title));
-		
+		var categoryId = $.trim($("#searchCategory").val());
   		var totalPage = ${totalPages};
   		var totalRecords = ${totalCount};
   		var pageNo = getParameter('pno');
@@ -54,10 +52,10 @@ response.flushBuffer();
   			pno : pageNo,
   			total : totalPage,			 //总页码
   			totalRecords : totalRecords, //总数据条数
-  			hrefFormer : '${pageContext.request.contextPath}/category_list',//链接前部
+  			hrefFormer : '${pageContext.request.contextPath}/spec_list',//链接前部
   			hrefLatter : '.action',		 //链接尾部
   			getLink : function(n){
-  				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&title="+title;
+  				return this.hrefFormer + this.hrefLatter + "?pno="+ n +"&categoryId="+categoryId;
   			},
   			lang : {
   				prePageText : '上一页',
@@ -97,7 +95,7 @@ response.flushBuffer();
 
 	//按条件查询
   	function query(){
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/category_list.action");
+  		$("#totalForm").attr("action","${pageContext.request.contextPath}/spec_list.action");
 	  	$("#totalForm").submit();
   	}
   	//重置
@@ -141,8 +139,15 @@ response.flushBuffer();
 			    <div class=" margin-bottom-5 mt10">
 					<!--  条件检索区 -->
 					<span  style="font-size: 15px;margin-left:25px;">
-						标题 <input type="text" id="title" name="title" value="${title}" style="width:150px;padding:5px;" />
+						标题 
+						<select id="searchCategory" name="searchCategory" style="height:25px;width:120px;">
+							<option value="-1">全部</option>
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.id }" <c:if test='${searchCategory ==category.id}'>selected='selected'</c:if>>${category.title}</option>
+							</c:forEach>
+						</select>
 					</span>
+					
 			   		<span style="float:right;">
 			   			<input onclick="clean()" type="button" value="重置" class="btn btn-info" style="width:100px;margin-right:8px;" />
 			   			<input onclick="query()" type="button" value="查询" class="btn btn-info" style="width:100px;margin-right:8px;" />
@@ -156,27 +161,22 @@ response.flushBuffer();
 			    <table class="table table-bordered table-striped table-hover">
 		      	<tbody>
 			        <tr align="center">
-			       	 	<td nowrap="nowrap" width="40px"><input type="checkbox" id="isSelectAll"/></td>
+			       	 	<td nowrap="nowrap" width="5%"><input type="checkbox" id="isSelectAll"/></td>
 						<!--  检索结果表格题头 -->
-						<td nowrap="nowrap" width="120px"><strong>分类标题</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>图片</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>描述</strong></td>
-						<td nowrap="nowrap" width="220px"><strong>操作</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>所属分类</strong></td>
+						<td nowrap="nowrap" width="10%"><strong>规格名称</strong></td>
+						<td nowrap="nowrap" width="75%"><strong>规格选项</strong></td>
 	       			</tr>
-		       		<c:forEach var="o" items="${categoryList}" varStatus="s">					
+		       		<c:forEach var="o" items="${specList}" varStatus="s">					
 					<tr align="center">
 						<td><input type="checkbox" name="id" value="${o.id}"/></td>
 						<!--  检索结果表格内容 -->
 						<td>${o.title }</td>
+						<td>${o.name }</td>
 						<td>
-							<c:if test="${ not empty o.url }">
-								<img src="${ o.url }"  style="width:30px;height:30px;"/>
-							</c:if>
-						</td>
-						<td>${o.descriptiion }</td>
-						<td>
-							<a href="javascript:void(0)" 
-							onclick="updateDataPage('${o.id }','${o.title }','${fn:replace(o.url,'\\','%5C')}','${o.descriptiion }')">修改</a>
+							<c:forEach var="item" items="${o.items}" varStatus="index">
+								<span>[${item.item}]</span>
+							</c:forEach>
 						</td>
 					</tr>					
 					</c:forEach>
@@ -186,7 +186,7 @@ response.flushBuffer();
 			   <div class=" margin-left-20">
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
-				   		<input onclick="addDataPage();" type="button" value="增加" 
+				   		<input onclick="addDataPage();" type="button" value="增加规格" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="deleteData();"  type="button" value="删除" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
@@ -204,24 +204,30 @@ response.flushBuffer();
 		<form id="addForm" method="post" action="<%=basePath%>/category_add.action" enctype="multipart/form-data">
 			<table class="table table-condensed">
 				<tr>
-					<td width="12%" align="center">分类标题</td>
+					<td width="12%" align="center">选择分类</td>
 					<td width="30%">
-						<input type="text" id="addTitle" name="entity.title" tabindex="1" maxlength="100" 
-							style="font-size:14px;padding:8px;width:180px;"/>
+						<select id="categoryId" name="entity.categoryId" style="height:30px;width:200px;">
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.id }" >${category.title}</option>
+							</c:forEach>
+						</select>
 					</td>
-					<td width="12%" align="center">分类图标</td>
+					<td width="12%" align="center">规格名称</td>
 					<td width="45%">
-						<input id="resUrlList" name="resUrlList" onchange="viewUploadImg(this,'viewResUrlList')" type="file" 
-							tabindex="4" maxlength="300" style="padding:4px;width:180px;"/>
-						<img style="width:50px;height:50px;display:none;" id="viewResUrlList"/>
+						<input type="text" id="addName" name="entity.name" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:180px;"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="center">分类描述</td>
-					<td colspan="3">
-						<input type="text" id="descriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
+					<td align="center">规格选项</td>
+					<td>
+						<input type="text" name="items" tabindex="1" maxlength="100" 
 							style="font-size:14px;padding:8px;width:180px;"/>
 					</td>
+					<td align="center">
+						<a>追加选项</a>
+					</td>
+					<td></td>
 				</tr>
 			</table>
 		</form>

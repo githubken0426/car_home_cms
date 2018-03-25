@@ -8,6 +8,7 @@ public class Spec {
     private String groupId; 
     private String filter;
     private String name;
+    private String title;
     private Integer sort;
     private List<SpecItem> items;//规格选项
     
@@ -67,6 +68,14 @@ public class Spec {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public List<SpecItem> getItems() {

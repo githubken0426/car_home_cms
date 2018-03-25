@@ -8,6 +8,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="filter" property="filter" jdbcType="VARCHAR" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
     <collection property="items" column="id" javaType="ArrayList" 
                 ofType="com.gtercn.carhome.cms.entity.shopping.SpecItem" select="selectItemsBySpecId"/>
   </resultMap>
@@ -38,15 +39,33 @@
     order by sort
   </select>
   
-  <select id="selectAllSpec" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from inn_spec order by sort
-  </select>
-  
   <select id="selectDetailSpecByGoodsId" parameterType="java.lang.String" resultType="com.gtercn.carhome.cms.entity.shopping.Spec">
   	select S.*,I.item as item from inn_spec S inner join inn_spec_item I on S.id=I.spec_id
 	where I.id in 
 	(select id from inn_spec_item where id in  
 		(select spec_item_id from inn_spec_item_goods_relation where goods_id=#{goodsId,jdbcType=VARCHAR}))
 	order by sort
+  </select>
+  
+  <select id="queryAllData" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select G.*,(select title from inn_goods_category where G.category_id=id) title
+		from inn_spec G
+		<where>
+			category_id!='0'
+			<if test="categoryId!=null and categoryId!=''">
+				and category_id =#{categoryId}
+			</if>
+		</where>
+		order by category_id,sort limit #{beginResult},#{pageSize}
+  </select>
+  
+  <select id="getTotalCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select  count(1) from inn_spec
+    <where>
+    	category_id!='0'
+		<if test="categoryId!=null and categoryId!=''">
+			and category_id =#{categoryId}
+		</if>
+	</where>
   </select>
 </mapper>

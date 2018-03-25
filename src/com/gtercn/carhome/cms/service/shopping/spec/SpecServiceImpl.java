@@ -43,8 +43,13 @@ public class SpecServiceImpl implements SpecService {
 	public List<String> selectConcatSpecItems(List<String> specItemIds) {
 		return itemDao.selectConcatSpecItems(specItemIds);
 	}
+	
 	@Override
-	public List<Spec> selectAllSpec() {
-		return dao.selectAllSpec();
+	public List<Spec> queryAllData(Map<String, Object> map) {
+		return dao.queryAllData(map);
+	}
+	@Override
+	public int getTotalCount(Map<String, Object> map) {
+		return dao.getTotalCount(map);
 	}
 }

@@ -32,11 +32,19 @@ public interface SpecService {
      * @return
      */
     List<String> selectConcatSpecItems(List<String> specItemIds);
+    
     /**
-     * 查询所有spec
-     * @return
-     * @throws 
-     * @date 2018年3月19日 上午11:36:37
-     */
-    List<Spec> selectAllSpec();
+	 * 查询所有数据
+	 * @param map
+	 * @return
+	 * 2017-2-21 下午02:48:14
+	 */
+	List<Spec> queryAllData(Map<String, Object> map);
+	/**
+	 * 查询所有数据条数
+	 * @param map
+	 * @return
+	 * 2017-2-21 下午02:48:14
+	 */
+	public int getTotalCount(Map<String, Object> map);
 }

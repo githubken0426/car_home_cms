@@ -51,6 +51,7 @@
 	<include file="strutsxml/shopping/struts-order.xml" />
 	<include file="strutsxml/shopping/struts-expert.xml" />
 	<include file="strutsxml/shopping/struts-category.xml" />
+	<include file="strutsxml/shopping/struts-spec.xml" />
 	
 	<package name="globalResult" namespace="/"  extends="struts-default"> 
 		<!-- 配置拦截器 -->
