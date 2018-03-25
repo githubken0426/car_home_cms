@@ -41,4 +41,8 @@ public interface SpecMapper {
      * @return
      */
     List<Spec> selectDetailSpecByGoodsId(String goodsId);
+    
+    int insert(Spec spec);
+    int update(Spec spec);
+    int delteBatch(String ids[]);
 }

@@ -93,12 +93,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                	<c:if test="${menu0002}">
-						<li><a href="javascript:void(0);"
-							onclick="setMainContent('expert_listData.action');">
-							<i class="fa fa-angle-double-right"></i>商城达人管理</a>
-						</li>
-					</c:if>
 					<c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('category_list.action');">
@@ -108,9 +102,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('spec_list.action');">
-							<i class="fa fa-angle-double-right"></i>分类规格管理</a>
+							<i class="fa fa-angle-double-right"></i>商品规格管理</a>
 						</li>
 					</c:if> 
+					<c:if test="${menu0002}">
+						<li><a href="javascript:void(0);"
+							onclick="setMainContent('expert_listData.action');">
+							<i class="fa fa-angle-double-right"></i>商城达人管理</a>
+						</li>
+					</c:if>
 					<c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('adver_listData.action');">

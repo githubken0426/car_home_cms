@@ -53,7 +53,7 @@
 		(id, title, parent_code,sort,descriptiion,url,delete_flag)
 		values
 		(#{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},'0',
-		(select T.sort from (select max(sort)+1 as sort from inn_goods_category)T),
+		(select T.sort from (select IFNULL(max(sort),0)+1 as sort from inn_goods_category)T),
 		#{descriptiion,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},0)
 	</insert>
 

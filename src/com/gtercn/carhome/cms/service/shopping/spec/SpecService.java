@@ -47,4 +47,8 @@ public interface SpecService {
 	 * 2017-2-21 下午02:48:14
 	 */
 	public int getTotalCount(Map<String, Object> map);
+	
+	int insert(Spec spec);
+    int update(Spec spec);
+    int delteBatch(String ids[]);
 }

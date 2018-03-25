@@ -23,6 +23,8 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import net.sf.json.JSONObject;
+
 /**
  * 商品
  * @author ken 2017-2-23 下午03:39:05
@@ -98,8 +100,7 @@ public class SpecAction extends ActionSupport {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter writer  = response.getWriter();
 		try {
-			
-			//categoryService.insert(entity);
+			specService.insert(entity);
 			writer.print("<script>alert('添加成功!');window.location.href='category_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -186,4 +187,26 @@ public class SpecAction extends ActionSupport {
 		}
 	}
 	
+	public String selectByPrimaryKey() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		ServletResponse response = ServletActionContext.getResponse();
+		ServletRequest request = ServletActionContext.getRequest();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+			String id = request.getParameter("id");
+			Spec spec = specService.selectByPrimaryKey(id);
+			JSONObject json=JSONObject.fromObject(spec);
+			writer.write(json.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Action.ERROR;
+		} finally {
+			writer.flush();
+			writer.close();
+		}
+		return null;
+	}
 }

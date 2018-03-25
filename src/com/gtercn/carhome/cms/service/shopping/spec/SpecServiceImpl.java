@@ -52,4 +52,16 @@ public class SpecServiceImpl implements SpecService {
 	public int getTotalCount(Map<String, Object> map) {
 		return dao.getTotalCount(map);
 	}
+	@Override
+	public int insert(Spec spec) {
+		return dao.insert(spec);
+	}
+	@Override
+	public int update(Spec spec) {
+		return dao.update(spec);
+	}
+	@Override
+	public int delteBatch(String[] ids) {
+		return dao.delteBatch(ids);
+	}
 }

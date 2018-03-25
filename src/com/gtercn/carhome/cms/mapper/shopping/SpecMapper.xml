@@ -68,4 +68,25 @@
 		</if>
 	</where>
   </select>
+  <!-- 新增规格 -->
+  <insert id="insert" parameterType="com.gtercn.carhome.cms.entity.shopping.Spec">
+  	insert into inn_spec(id,category_id,name,filter,sort)values(#{id},#{categoryId},#{name},'A',
+  	(select T.sort from (select IFNULL(max(sort),0)+1 as sort from inn_spec where category_id=#{categoryId})T)
+  	)
+  </insert>
+  
+  <update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.Spec">
+  	update inn_spec set 
+  		category_id=#{categoryId}
+  		name=#{name}
+  	where id=#{id}
+  </update>
+  
+  <delete id="deleteBatch" parameterType="java.lang.String">
+		delete from inn_spec where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
 </mapper>

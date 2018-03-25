@@ -102,24 +102,6 @@ response.flushBuffer();
   	function clean(){
 		$("#title").attr("value","");
   	}
-  	//添加
-  	function addDataPage(){  		
-  		$("#totalForm").attr("action","${pageContext.request.contextPath}/category_addDataPage.action");
-	  	$("#totalForm").submit();
-  	}
-  	
-  	//批量修改状态
-  	function deleteData(){
-  		var checkboxs=$("input:checkbox[name=id]");
-  		if(checkboxs.is(":checked")){
-  			if(confirm("删除所选数据后,商品将无法关联此分类！确定要删除吗?")){
-  				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteBatch.action");
-  		  		$("#totalForm").submit();
-  			}
-  		}else{
-  			alert("请选择要删除的数据！");
-  		}
-  	}
 </script>
   <style type="">
   	.footer{margin-top:0px;}
@@ -186,7 +168,9 @@ response.flushBuffer();
 			   <div class=" margin-left-20">
 			   		<span style="font-size:14px;">操作:</span>
 			   		<span class=" margin-left-10">			   	
-				   		<input onclick="addDataPage();" type="button" value="增加规格" 
+				   		<input onclick="addDataPage();" type="button" value="增加" 
+				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
+				   			<input onclick="updateDataPage();" type="button" value="修改" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
 				   		<input onclick="deleteData();"  type="button" value="删除" 
 				   			class="btn btn-info" style="width:80px;margin-right:8px;margin-bottom:8px;" />
@@ -202,18 +186,18 @@ response.flushBuffer();
 <!-- 新增区域 -->
 	<div id="addDiv" style="display: none">
 		<form id="addForm" method="post" action="<%=basePath%>/category_add.action" enctype="multipart/form-data">
-			<table class="table table-condensed">
+			<table id="addTable" class="table table-condensed">
 				<tr>
-					<td width="12%" align="center">选择分类</td>
+					<td width="15%" align="center">选择分类</td>
 					<td width="30%">
-						<select id="categoryId" name="entity.categoryId" style="height:30px;width:200px;">
+						<select id="categoryId" name="entity.categoryId" style="height:30px;width:180px;">
 							<c:forEach var="category" items="${categoryList}">
 								<option value="${category.id }" >${category.title}</option>
 							</c:forEach>
 						</select>
 					</td>
-					<td width="12%" align="center">规格名称</td>
-					<td width="45%">
+					<td width="15%" align="center">规格名称</td>
+					<td width="40%">
 						<input type="text" id="addName" name="entity.name" tabindex="1" maxlength="100" 
 							style="font-size:14px;padding:8px;width:180px;"/>
 					</td>
@@ -222,10 +206,10 @@ response.flushBuffer();
 					<td align="center">规格选项</td>
 					<td>
 						<input type="text" name="items" tabindex="1" maxlength="100" 
-							style="font-size:14px;padding:8px;width:180px;"/>
+							style="font-size:14px;padding:8px;width:163px;"/>
 					</td>
 					<td align="center">
-						<a>追加选项</a>
+						<a onclick="appendItem('addTable','')" href="javascript:void(0);">追加选项</a>
 					</td>
 					<td></td>
 				</tr>
@@ -235,28 +219,32 @@ response.flushBuffer();
 	<!-- 修改区域 -->
 	<div id="updateDiv" style="display: none">
 		<form id="updateForm" method="post" action="<%=basePath%>/category_update.action" enctype="multipart/form-data">
-			<table class="table table-condensed">
+			<table id="updateTable" class="table table-condensed">
 				<tr>
-					<td width="12%" align="center">分类标题</td>
+					<td width="15%" align="center">选择分类</td>
 					<td width="30%">
-						<input type="text" id="updateTitle" name="entity.title" 
-							tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:180px;"/>
+						<select id="updateCategory" name="entity.categoryId" style="height:30px;width:180px;">
+							<c:forEach var="category" items="${categoryList}">
+								<option value="${category.id }" >${category.title}</option>
+							</c:forEach>
+						</select>
 					</td>
-					<td width="12%" align="center">分类图标</td>
-					<td width="45%">
-						<input id="updateUrl" name="updateUrl" onchange="viewUploadImg(this,'updateUrlList')" type="file" 
-							tabindex="4" maxlength="300" style="padding:4px;width:180px;"/>
-						<input type="hidden" name="entity.url" id="updatePicturePath"/>
-						<input type="hidden" name="entity.id" id="updateId"/>
-						<img style="width:50px;height:50px;" id="updateUrlList"/>
+					<td width="15%" align="center">规格名称</td>
+					<td width="40%">
+						<input type="text" id="updateName" name="entity.name" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:180px;"/>
 					</td>
 				</tr>
 				<tr>
-					<td align="center">分类描述</td>
-					<td colspan="3">
-						<input type="text" id="updateDescriptiion" name="entity.descriptiion" tabindex="1" maxlength="100" 
-							style="font-size:14px;padding:8px;width:180px;"/>
+					<td align="center">规格选项</td>
+					<td>
+						<input id="firstName" type="text" name="items" tabindex="1" maxlength="100" 
+							style="font-size:14px;padding:8px;width:163px;"/>
 					</td>
+					<td align="center">
+						<a onclick="appendItem('updateTable','')" href="javascript:void(0);">追加选项</a>
+					</td>
+					<td></td>
 				</tr>
 			</table>
 		</form>
@@ -266,7 +254,7 @@ function addDataPage(){
 	layer.open({
 		title: '<i class="icon-location-pin"></i>当前位置 / <strong>新增分类</strong>',
 		type : 1,
-		area: ['700px', '230px'],
+		area: ['40rem', '20rem'],
 		btn: ["<i class='fa fa-dot-circle-o'></i> 确定","<i class='fa fa-ban'></i> 返回"],
 		closeBtn: 1,
 		content : $("#addDiv"),
@@ -281,29 +269,95 @@ function addDataPage(){
 	});
 }
 
-function updateDataPage(id,title,url,descriptiion){
-	url = url .replace(/%5C/g, "\\");//全部替换
-	$("#updateId").val(id);
-	$("#updateTitle").val(title);
-	$("#updatePicturePath").val(url);
-	$("#updateUrlList").attr("src",url);
-	$("#updateDescriptiion").val(descriptiion);
+function updateDataPage(){
+	var checkboxs=$("input:checkbox[name=id]");
+	var ret = 0;  // 选中的记录数
+	var idx = 0;  // 被选中的数据索引号
+	for(var i=0; i<checkboxs.length; i++){ 
+		if(checkboxs[i].checked) {
+			ret = ret + 1;
+			idx = i;
+		}
+	} 
+	if (ret == 0) {
+		alert("请选择修改数据！");
+		return;
+	} else if (ret > 1) {
+		alert("请只选择一条数据！");
+		return;
+	}
+	var id=checkboxs[idx].value;
+	$.ajax({
+        type:"POST",  
+        dataType:"json",  
+        data:{id:id},
+        async:true,
+        url: "${pageContext.request.contextPath}/spec_selectByPrimaryKey.action",  
+        success: function (data) {
+        	var obj = eval(data);
+        	var name=obj.name;
+        	$("#updateName").val(name);
+        	var category=obj.categoryId;
+        	$("#updateCategory option").each(function(){
+        		if($(this).val()==category)
+        			$(this).attr("selected","selected");
+        	});
+        	var items=eval(obj.items);
+        	for(var i=0;i<items.length;i++){
+        		var item=items[i].item;
+        		if(i==0){
+        			$("#firstName").val(item);
+        			continue;
+        		}
+        		appendItem('updateTable',item);
+        	}
+        } 
+    });
 	layer.open({
 		title: '<i class="icon-location-pin"></i>当前位置 / <strong>修改分类</strong>',
 		type : 1,
-		area: ['700px', '230px'],
+		area: ['40rem', '20rem'],
 		btn: ["<i class='fa fa-dot-circle-o'></i> 确定","<i class='fa fa-ban'></i> 返回"],
 		closeBtn: 1,
 		content : $("#updateDiv"),
 		yes: function(index, layero){
-			if(!$.trim($("#updateTitle").val())){
-				layer.tips('请输入分类标题！','#updateTitle');
+			if(!$.trim($("#updateName").val())){
+				layer.tips('请输入规格名称！','#updateName');
 				return ;
 			}
 			$("#updateForm").submit();
 			layer.close(index);
 		}
 	});
+}
+
+	//批量修改状态
+	function deleteData(){
+		var checkboxs=$("input:checkbox[name=id]");
+		if(checkboxs.is(":checked")){
+			if(confirm("删除所选数据后,商品将无法关联此分类！确定要删除吗?")){
+				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteBatch.action");
+		  		$("#totalForm").submit();
+			}
+		}else{
+			alert("请选择要删除的数据！");
+		}
+	}
+	
+function appendItem(item,val){
+	var tr = "<tr><td></td>";
+		tr += "<td>";
+		tr += "<input type='text' name='items'style='font-size:14px;padding:8px;width:163px;'value='"+val+"'/>";
+		tr += "</td>";
+		tr += "<td align='center'><img onclick='deleteItem(this)' src='<%=path%>/img/cms/del.png' style='cursor:pointer;'/></td>";
+		tr += "<td></td>";
+		tr += "</tr>";
+	$('#'+item).append(tr);
+}
+//删除tr
+function deleteItem(item){
+	var tr=item.parentNode.parentNode;
+	tr.parentNode.removeChild(tr); 
 }
 </script>
 </body>
