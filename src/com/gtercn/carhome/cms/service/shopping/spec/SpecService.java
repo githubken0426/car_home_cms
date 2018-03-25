@@ -48,7 +48,7 @@ public interface SpecService {
 	 */
 	public int getTotalCount(Map<String, Object> map);
 	
-	int insert(Spec spec);
-    int update(Spec spec);
+	int insert(Spec spec,String items[]);
+    int update(Spec spec,String items[]);
     int delteBatch(String ids[]);
 }

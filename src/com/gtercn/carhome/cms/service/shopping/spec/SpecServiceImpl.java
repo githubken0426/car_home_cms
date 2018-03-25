@@ -1,5 +1,6 @@
 package com.gtercn.carhome.cms.service.shopping.spec;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.gtercn.carhome.cms.dao.shopping.SpecItemGoodsRelationMapper;
 import com.gtercn.carhome.cms.dao.shopping.SpecItemMapper;
 import com.gtercn.carhome.cms.dao.shopping.SpecMapper;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
+import com.gtercn.carhome.cms.entity.shopping.SpecItem;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
 @Transactional
@@ -53,11 +55,30 @@ public class SpecServiceImpl implements SpecService {
 		return dao.getTotalCount(map);
 	}
 	@Override
-	public int insert(Spec spec) {
+	public int insert(Spec spec,String items[]) {
+		List<SpecItem> itemList=new ArrayList<SpecItem>();
+		String specId=spec.getId();
+		for (String str : items) {
+			SpecItem it=new SpecItem();
+			it.setItem(str);
+			it.setSpecId(specId);
+			itemList.add(it);
+		}
+		itemDao.insert(itemList);
 		return dao.insert(spec);
 	}
 	@Override
-	public int update(Spec spec) {
+	public int update(Spec spec,String items[]) {
+		List<SpecItem> itemList=new ArrayList<SpecItem>();
+		String specId=spec.getId();
+		itemDao.deleteBySpec(specId);
+		for (String str : items) {
+			SpecItem it=new SpecItem();
+			it.setItem(str);
+			it.setSpecId(specId);
+			itemList.add(it);
+		}
+		itemDao.insert(itemList);
 		return dao.update(spec);
 	}
 	@Override

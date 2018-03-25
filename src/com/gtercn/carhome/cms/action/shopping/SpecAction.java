@@ -19,6 +19,7 @@ import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.entity.shopping.Spec;
 import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.service.shopping.spec.SpecService;
+import com.gtercn.carhome.cms.util.CommonUtil;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -100,44 +101,14 @@ public class SpecAction extends ActionSupport {
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter writer  = response.getWriter();
 		try {
-			specService.insert(entity);
-			writer.print("<script>alert('添加成功!');window.location.href='category_list.action';</script>");
+			String items[]=request.getParameterValues("items");
+			entity.setId(CommonUtil.getUID());
+			specService.insert(entity,items);
+			writer.print("<script>alert('添加成功!');window.location.href='spec_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer .print("<script>alert('添加失败!');window.location.href='category_list.action';</script>");
+			writer .print("<script>alert('添加失败!');window.location.href='spec_list.action';</script>");
 		}
-	}
-
-	/**
-	 * 修改数据(进入画面)
-	 * 
-	 * @return
-	 */
-	public String updateDataPage() {
-		ActionContext context = ActionContext.getContext();
-		HttpServletRequest request = ServletActionContext.getRequest();
-		try {
-			int currentIndex = 0;// 当前页
-			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
-			if (index != null && index != "") {
-				currentIndex = Integer.valueOf(index);
-			} else {
-				currentIndex = 1;
-			}
-			String categoryId = request.getParameter("categoryId");
-			String cnName = request.getParameter("cnName");
-			String id = request.getParameter("id");
-			entity=specService.selectByPrimaryKey(id);
-			context.put("entity", entity);
-			
-			context.put("currentIndex", currentIndex);
-			context.put("categoryId", categoryId);
-			context.put("cnName", cnName);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Action.ERROR;
-		}
-		return "update";
 	}
 
 	/**
@@ -156,10 +127,10 @@ public class SpecAction extends ActionSupport {
 		try {
 			
 			//specService.update(entity);
-			writer .print("<script>alert('修改成功!');window.location.href='category_list.action';</script>");
+			writer .print("<script>alert('修改成功!');window.location.href='spec_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer.print("<script>alert('修改失败!');window.location.href='category_list.action';</script>");
+			writer.print("<script>alert('修改失败!');window.location.href='spec_list.action';</script>");
 		}finally{
 			if(input!=null)
 				input.close();
@@ -180,15 +151,14 @@ public class SpecAction extends ActionSupport {
 			writer = response.getWriter();
 			String ids[] = request.getParameterValues("id");
 			//specService.deleteBatch(ids);
-			writer.print("<script>alert('删除成功!');window.location.href='category_list.action';</script>");
+			writer.print("<script>alert('删除成功!');window.location.href='spec_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
-			writer.print("<script>alert('删除失败!');window.location.href='category_list.action';</script>");
+			writer.print("<script>alert('删除失败!');window.location.href='spec_list.action';</script>");
 		}
 	}
 	
 	public String selectByPrimaryKey() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		ServletResponse response = ServletActionContext.getResponse();
 		ServletRequest request = ServletActionContext.getRequest();
 		response.setCharacterEncoding("utf-8");

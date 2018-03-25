@@ -6,8 +6,6 @@
 		<!-- 分类-->
 		<action name="spec_*" class="com.gtercn.carhome.cms.action.shopping.SpecAction" method="{1}">
 			<result name="list">/shopping/category/specList.jsp</result>
-			<result name="add">/shopping/category/addSpec.jsp</result>
-			<result name="update">/shopping/category/updateSpec.jsp</result>
 		</action>
 	</package>
 </struts>    

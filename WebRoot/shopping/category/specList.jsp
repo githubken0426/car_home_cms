@@ -185,7 +185,7 @@ response.flushBuffer();
 </div>
 <!-- 新增区域 -->
 	<div id="addDiv" style="display: none">
-		<form id="addForm" method="post" action="<%=basePath%>/category_add.action" enctype="multipart/form-data">
+		<form id="addForm" method="post" action="<%=basePath%>spec_add.action">
 			<table id="addTable" class="table table-condensed">
 				<tr>
 					<td width="15%" align="center">选择分类</td>
@@ -218,7 +218,7 @@ response.flushBuffer();
 	</div>
 	<!-- 修改区域 -->
 	<div id="updateDiv" style="display: none">
-		<form id="updateForm" method="post" action="<%=basePath%>/category_update.action" enctype="multipart/form-data">
+		<form id="updateForm" method="post" action="<%=basePath%>spec_update.action">
 			<table id="updateTable" class="table table-condensed">
 				<tr>
 					<td width="15%" align="center">选择分类</td>
@@ -259,8 +259,8 @@ function addDataPage(){
 		closeBtn: 1,
 		content : $("#addDiv"),
 		yes: function(index, layero){
-			if(!$.trim($("#addTitle").val())){
-				layer.tips('请输入分类标题！','#addTitle');
+			if(!$.trim($("#addName").val())){
+				layer.tips('请输入规格名称！','#addName');
 				return ;
 			}
 			$("#addForm").submit();
