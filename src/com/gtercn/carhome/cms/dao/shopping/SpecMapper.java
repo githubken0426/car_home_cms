@@ -44,5 +44,5 @@ public interface SpecMapper {
     
     int insert(Spec spec);
     int update(Spec spec);
-    int delteBatch(String ids[]);
+    int deleteBatch(String ids[]);
 }

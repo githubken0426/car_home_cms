@@ -86,6 +86,6 @@ public class SpecServiceImpl implements SpecService {
 		for (String specId : ids) {
 			itemDao.deleteBySpec(specId);
 		}
-		return dao.delteBatch(ids);
+		return dao.deleteBatch(ids);
 	}
 }

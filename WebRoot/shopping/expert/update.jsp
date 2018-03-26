@@ -317,7 +317,7 @@ response.flushBuffer();%>
 				</div>
 			</form>
 			<!-- 返回，记录列表页数据 -->
-			<form id="backForm" method="post" action="${pageContext.request.contextPath}/expertTop_listData.action">
+			<form id="backForm" method="post" action="${pageContext.request.contextPath}/expert_listData.action">
 				<input type="hidden" name="pno" value="${currentIndex}" />
 				<input type="hidden" name="deleteFlag" value="${deleteFlag}" />
 				<input type="hidden" name="topType" value="${topType}" />

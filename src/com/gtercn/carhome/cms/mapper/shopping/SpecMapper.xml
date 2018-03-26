@@ -77,7 +77,7 @@
   
   <update id="update" parameterType="com.gtercn.carhome.cms.entity.shopping.Spec">
   	update inn_spec set 
-  		category_id=#{categoryId}
+  		category_id=#{categoryId},
   		name=#{name}
   	where id=#{id}
   </update>
