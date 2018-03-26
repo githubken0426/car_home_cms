@@ -94,8 +94,11 @@ response.flushBuffer();%>
 		var fatherCheckBoxs=$("#father"+index);
 		var checkboxs=$("input[class='son"+index+"']");
 	 	for (var i=0;i<checkboxs.length;i++) {
-	  		var e=checkboxs[i];
-	  		e.checked=fatherCheckBoxs[0].checked;
+	  		checkboxs[i].checked=fatherCheckBoxs[0].checked;
+	 	}
+	 	var sonerCheckBoxs=$("input[class='soner"+sonIndex+"']");
+	 	for (var i=0;i<sonerCheckBoxs.length;i++) {
+	  		sonerCheckBoxs[i].checked =fatherCheckBoxs[0].checked;
 	 	}
 	}
 	//子权限，子权限选中，父权限也要被选中
