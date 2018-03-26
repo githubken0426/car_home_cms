@@ -50,5 +50,5 @@ public interface SpecService {
 	
 	int insert(Spec spec,String items[]);
     int update(Spec spec,String items[]);
-    int delteBatch(String ids[]);
+    int deleteBatch(String ids[]);
 }

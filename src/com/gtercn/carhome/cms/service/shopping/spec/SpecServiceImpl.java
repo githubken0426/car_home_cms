@@ -82,7 +82,10 @@ public class SpecServiceImpl implements SpecService {
 		return dao.update(spec);
 	}
 	@Override
-	public int delteBatch(String[] ids) {
+	public int deleteBatch(String[] ids) {
+		for (String specId : ids) {
+			itemDao.deleteBySpec(specId);
+		}
 		return dao.delteBatch(ids);
 	}
 }

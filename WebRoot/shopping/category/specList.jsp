@@ -100,7 +100,7 @@ response.flushBuffer();
   	}
   	//重置
   	function clean(){
-		$("#title").attr("value","");
+		$("#searchCategory").attr("value","-1");
   	}
 </script>
   <style type="">
@@ -223,9 +223,10 @@ response.flushBuffer();
 				<tr>
 					<td width="15%" align="center">选择分类</td>
 					<td width="30%">
+						<input type="hidden" name="entity.id" id="specId"/>
 						<select id="updateCategory" name="entity.categoryId" style="height:30px;width:180px;">
 							<c:forEach var="category" items="${categoryList}">
-								<option value="${category.id }" >${category.title}</option>
+								<option value="${category.id }">${category.title}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -295,6 +296,7 @@ function updateDataPage(){
         url: "${pageContext.request.contextPath}/spec_selectByPrimaryKey.action",  
         success: function (data) {
         	var obj = eval(data);
+        	$("#specId").val(obj.id);
         	var name=obj.name;
         	$("#updateName").val(name);
         	var category=obj.categoryId;
@@ -336,7 +338,7 @@ function updateDataPage(){
 		var checkboxs=$("input:checkbox[name=id]");
 		if(checkboxs.is(":checked")){
 			if(confirm("删除所选数据后,商品将无法关联此分类！确定要删除吗?")){
-				$("#totalForm").attr("action","${pageContext.request.contextPath}/category_deleteBatch.action");
+				$("#totalForm").attr("action","${pageContext.request.contextPath}/spec_deleteBatch.action");
 		  		$("#totalForm").submit();
 			}
 		}else{

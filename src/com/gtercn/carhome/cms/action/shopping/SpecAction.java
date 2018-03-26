@@ -125,8 +125,8 @@ public class SpecAction extends ActionSupport {
 		InputStream input =null;
 		PrintWriter writer = response.getWriter();
 		try {
-			
-			//specService.update(entity);
+			String items[]=request.getParameterValues("items");
+			specService.update(entity,items);
 			writer .print("<script>alert('修改成功!');window.location.href='spec_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class SpecAction extends ActionSupport {
 		try {
 			writer = response.getWriter();
 			String ids[] = request.getParameterValues("id");
-			//specService.deleteBatch(ids);
+			specService.deleteBatch(ids);
 			writer.print("<script>alert('删除成功!');window.location.href='spec_list.action';</script>");
 		} catch (Exception e) {
 			e.printStackTrace();
