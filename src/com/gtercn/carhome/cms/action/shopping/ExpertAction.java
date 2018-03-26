@@ -231,7 +231,7 @@ public class ExpertAction extends ActionSupport {
 			File[] portraitFile = multipartRequest.getFiles("expertPortrait");
 			if(portraitFile!=null){
 				String[] portraitSavePath = { ApplicationConfig.FTP_SHOPPING_PATH,
-						ApplicationConfig.FTP_EXPERT_PATH, expertId, "portrait" };
+						ApplicationConfig.FTP_EXPERT_PATH,  "portrait" };
 				for (File file : portraitFile) {
 					expertPortraitIn = new FileInputStream(file);
 					String portraitFileName = System.currentTimeMillis() + ".jpg";
@@ -357,7 +357,7 @@ public class ExpertAction extends ActionSupport {
 			File[] portraitFile = multipartRequest.getFiles("expertPortrait");
 			if(portraitFile!=null){
 				String[] portraitSavePath = { ApplicationConfig.FTP_SHOPPING_PATH,
-						ApplicationConfig.FTP_EXPERT_PATH, id, "portrait" };
+						ApplicationConfig.FTP_EXPERT_PATH, "portrait" };
 				for (File file : portraitFile) {
 					expertPortraitIn= new FileInputStream(file);
 					String portraitFileName = System.currentTimeMillis() + ".jpg";
