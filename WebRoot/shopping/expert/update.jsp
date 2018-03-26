@@ -104,9 +104,9 @@ response.flushBuffer();%>
 								<input onchange="viewUploadImg(this,'userViewPortrait')" type="file" name="userPortrait" readonly="readonly" tabindex="8"  style="width:260px;margin-left:30px;"/>
 								<img 
 									<c:if test="${not empty apiUser.avatarUrl}"> 
-									 src="${ftpServerIp}${apiUser.avatarUrl}" style="width:50px;height:50px;" 
+									 src="${ftpServerIp}${apiUser.avatarUrl}" 
 								 	</c:if>
-								 id="userViewPortrait"/>
+								 id="userViewPortrait" style="width:50px;height:50px;"/>
 							</td>
 							<td  align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">状态：</td>
 							<td>
