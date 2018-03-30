@@ -325,6 +325,7 @@ public class ExpertAction extends ActionSupport {
 			context.put("currentIndex", currentIndex);
 			context.put("expertName", expertName);
 			context.put("category", category);
+			context.put("ftpServerIp", ApplicationConfig.HTTP_PROTOCOL_IP);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Action.ERROR;

@@ -22,6 +22,7 @@ public class ExpertTop {
 	private String cityCode;
 	private Date insertTime;
 	private Date updateTime;
+	private String categoryTitle;
 	private List<String> displayList;
 	
 	public String getId() {
@@ -172,5 +173,13 @@ public class ExpertTop {
 
 	public void setCityCode(String cityCode) {
 		this.cityCode = cityCode;
+	}
+
+	public String getCategoryTitle() {
+		return categoryTitle;
+	}
+
+	public void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
 	}
 }

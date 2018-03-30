@@ -92,6 +92,11 @@ response.flushBuffer();
   				}
   			}
   		});
+  		$("#category option").each(function(){
+  			if($(this).val()=="${category}"){
+  				$(this).attr("selected","selected");
+  			}
+  		});
   	});
 
 	// 功能按钮区域
@@ -178,7 +183,7 @@ response.flushBuffer();
 						<select id="category" name="category" style="height:25px;">
 							<option value="-1">全部</option>
 							<c:forEach var="category" items="${categoryList}">
-								<option value="${category.id }" <c:if test='${category ==category.id}'>selected='selected'</c:if>>${category.title}</option>
+								<option value="${category.id }">${category.title}</option>
 							</c:forEach>
 						</select>
 					</span>
@@ -215,7 +220,7 @@ response.flushBuffer();
 						<td><img src="${o.expertPortraitUrl }" style="width:30px;height:30px;"/> </td>
 						<td>${o.expertName  }</td>
 						<td>${o.userId }</td>
-						<td>${o.topTitle }</td>
+						<td>${o.categoryTitle }</td>
 						<td>${o.expertWechatNumber }</td>
 						<td>
 							${o.expertExperience }<c:if test="${not empty o.expertExperience}">年</c:if>
