@@ -350,7 +350,6 @@ public class ExpertAction extends ActionSupport {
 		InputStream expertPortraitIn=null;
 		try {
 			writer = response.getWriter();
-			String id=expertTop.getId();
 			String expertPortraitFlag=request.getParameter("expertPortraitFlag");
 			if(StringUtils.isNotBlank(expertPortraitFlag))
 				expertTop.setExpertPortraitUrl(expertPortraitFlag);

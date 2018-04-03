@@ -59,4 +59,17 @@ public interface GoodsMapper {
 	 * @date 2018年2月6日 下午1:52:42
 	 */
 	int deleteBatch(@Param("ids")String []ids);
+	
+	/**
+	 * 根据规格显示不同商品
+	 * @param goodsId
+	 * @param cityId
+	 * @param brandId
+	 * @param itemList
+	 * @return
+	 * @throws 
+	 * @date 2018年4月3日 下午8:17:06
+	 */
+	Integer selectGoodsByItem(@Param("goodsId") String goodsId, @Param("cityId") String cityId,
+			@Param("brandId") String brandId, @Param("itemList") List<String> itemList);
 }

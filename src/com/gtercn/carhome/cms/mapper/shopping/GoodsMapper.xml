@@ -145,4 +145,21 @@
         </foreach>
    </update>
 	
+  <select id="selectGoodsByItem" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	select count(1) from inn_goods
+  	<where>
+  		city_id=#{cityId,jdbcType=VARCHAR}
+  		and brand_id=#{brandId,jdbcType=VARCHAR}
+  		<if test="itemList!=null and itemList.size()>0">
+    		and id in( select goods_id from inn_spec_item_goods_relation where spec_item_id in
+    		<foreach collection="itemList" index="index" item="item" open="(" separator="," close=")">  
+            	#{item,jdbcType=VARCHAR} 
+        	</foreach>
+        	 )
+    	</if>
+    	<if test="goodsId!=null and goodsId!=''">
+    		and id !=#{goodsId,jdbcType=VARCHAR}
+    	</if>
+  	</where>
+  </select>
 </mapper>

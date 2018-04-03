@@ -3,8 +3,6 @@ package com.gtercn.carhome.cms.service.shopping.goods;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.gtercn.carhome.cms.entity.shopping.Goods;
 import com.gtercn.carhome.cms.entity.shopping.SpecItemGoodsRelation;
 
@@ -55,7 +53,10 @@ public interface GoodsService {
 	 * @throws 
 	 * @date 2018年2月6日 下午1:52:42
 	 */
-	int deleteBatch(@Param("ids")String []ids);
+	int deleteBatch(String []ids);
 	
-	List<Goods> queryGoodsByCity(@Param("cityCode")String cityCode);
+	List<Goods> queryGoodsByCity(String cityCode);
+	
+	Integer selectGoodsByItem(String goodsId, String cityId,
+			String brandId,  List<String> itemList);
 }

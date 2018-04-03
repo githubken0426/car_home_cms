@@ -60,4 +60,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Goods> queryGoodsByCity(String cityCode) {
 		return dao.queryGoodsByCity(cityCode);
 	}
+
+	@Override
+	public Integer selectGoodsByItem(String goodsId, String cityId, String brandId,  List<String> itemList) {
+		return dao.selectGoodsByItem(goodsId, cityId, brandId, itemList);
+	}
 }

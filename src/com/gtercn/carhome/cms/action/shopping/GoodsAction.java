@@ -67,7 +67,7 @@ public class GoodsAction extends ActionSupport {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Map<String, Object> session = context.getSession();
+		//Map<String, Object> session = context.getSession();
 		try {
 			/*DealerUser user = (DealerUser) session.get("dealer_user");
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
@@ -182,11 +182,12 @@ public class GoodsAction extends ActionSupport {
 	public void add() throws Exception {
 		ServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Map<String, Object> session = ActionContext.getContext().getSession();
+		//Map<String, Object> session = ActionContext.getContext().getSession();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter writer  = response.getWriter();
 		try {
+			List<String> itemList=new ArrayList<String>();
 			String uuid = CommonUtil.getUID();
 			entity.setId(uuid);
 			String sku=CommonUtil.randomUpperCode(20, uuid+ System.currentTimeMillis());
@@ -205,7 +206,6 @@ public class GoodsAction extends ActionSupport {
 			String dtail[] = request.getParameterValues("detailPicture");
 			String dtailPaths = CommonUtil.arrayToString(dtail);
 			entity.setGoodsDetail(dtailPaths);
-			
 			//goods item关系表
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
@@ -214,9 +214,15 @@ public class GoodsAction extends ActionSupport {
 			for (Spec spec : specList) {
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
 				String specItemId=request.getParameter(spec.getId());
+				itemList.add(specItemId);
 				relation.setGoodsId(uuid);
 				relation.setSpecItemId(specItemId);
 				relationList.add(relation);
+			}
+			Integer goodsFlag=goodsService.selectGoodsByItem("", entity.getCityId(), entity.getBrandId(), itemList);
+			if (goodsFlag != null && goodsFlag > 0) {
+				writer.print("<script>alert('当前城市已存在相同品牌、规格的商品,请勿重复添加!');window.location.href='goods_list.action';</script>");
+				return;
 			}
 			goodsService.insert(entity, relationList);
 			writer.print("<script>alert('添加成功!');window.location.href='goods_list.action';</script>");
@@ -337,6 +343,7 @@ public class GoodsAction extends ActionSupport {
 			String dtailPaths = CommonUtil.arrayToString(dtail);
 			entity.setGoodsDetail(dtailPaths);
 			//goods item关系表
+			List<String> itemList=new ArrayList<String>();
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
 			map.put("categoryId", entity.getCategoryId());
@@ -347,6 +354,12 @@ public class GoodsAction extends ActionSupport {
 				relation.setGoodsId(entity.getId());
 				relation.setSpecItemId(specItemId);
 				relationList.add(relation);
+				itemList.add(specItemId);
+			}
+			Integer goodsFlag=goodsService.selectGoodsByItem(entity.getId(), entity.getCityId(), entity.getBrandId(), itemList);
+			if (goodsFlag != null && goodsFlag > 0) {
+				writer.print("<script>alert('当前城市已存在相同品牌、规格的商品,请勿重复添加!');window.location.href='goods_list.action';</script>");
+				return;
 			}
 			goodsService.update(entity, relationList);
 			writer .print("<script>alert('修改成功!');window.location.href='goods_list.action';</script>");
