@@ -62,7 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public Integer selectGoodsByItem(String goodsId, String cityId, String brandId,  List<String> itemList) {
-		return dao.selectGoodsByItem(goodsId, cityId, brandId, itemList);
+	public Integer selectGoodsByItem(String goodsId, String cityId, String brandId, String itemIds) {
+		return dao.selectGoodsByItem(goodsId, cityId, brandId, itemIds);
 	}
 }

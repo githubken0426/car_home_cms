@@ -58,5 +58,5 @@ public interface GoodsService {
 	List<Goods> queryGoodsByCity(String cityCode);
 	
 	Integer selectGoodsByItem(String goodsId, String cityId,
-			String brandId,  List<String> itemList);
+			String brandId, String itemIds);
 }

@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -207,19 +208,26 @@ public class GoodsAction extends ActionSupport {
 			String dtailPaths = CommonUtil.arrayToString(dtail);
 			entity.setGoodsDetail(dtailPaths);
 			//goods item关系表
+			StringBuffer itemIds=new StringBuffer();
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
 			map.put("categoryId", entity.getCategoryId());
 			List<Spec> specList=specService.selectGoodsSpec(map);
-			for (Spec spec : specList) {
+			Iterator<Spec> it=specList.iterator();
+			boolean hasNext=it.hasNext();
+			while(hasNext) {
+				Spec spec=it.next();
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
 				String specItemId=request.getParameter(spec.getId());
-				itemList.add(specItemId);
 				relation.setGoodsId(uuid);
 				relation.setSpecItemId(specItemId);
 				relationList.add(relation);
+				itemIds.append(specItemId);
+				hasNext=it.hasNext();
+				if(hasNext)
+					itemIds.append(",");
 			}
-			Integer goodsFlag=goodsService.selectGoodsByItem("", entity.getCityId(), entity.getBrandId(), itemList);
+			Integer goodsFlag=goodsService.selectGoodsByItem("", entity.getCityId(), entity.getBrandId(), itemIds.toString());
 			if (goodsFlag != null && goodsFlag > 0) {
 				writer.print("<script>alert('当前城市已存在相同品牌、规格的商品,请勿重复添加!');window.location.href='goods_list.action';</script>");
 				return;
@@ -343,20 +351,26 @@ public class GoodsAction extends ActionSupport {
 			String dtailPaths = CommonUtil.arrayToString(dtail);
 			entity.setGoodsDetail(dtailPaths);
 			//goods item关系表
-			List<String> itemList=new ArrayList<String>();
+			StringBuffer itemIds=new StringBuffer();
 			List<SpecItemGoodsRelation> relationList=new ArrayList<SpecItemGoodsRelation>();
 			Map<String,Object> map=new HashMap<String, Object>();
 			map.put("categoryId", entity.getCategoryId());
 			List<Spec> specList=specService.selectGoodsSpec(map);
-			for (Spec spec : specList) {
+			Iterator<Spec> it=specList.iterator();
+			boolean hasNext=it.hasNext();
+			while(hasNext) {
 				SpecItemGoodsRelation relation=new SpecItemGoodsRelation();
+				Spec spec=it.next();
 				String specItemId=request.getParameter(spec.getId());
 				relation.setGoodsId(entity.getId());
 				relation.setSpecItemId(specItemId);
 				relationList.add(relation);
-				itemList.add(specItemId);
+				itemIds.append(specItemId);
+				hasNext=it.hasNext();
+				if(hasNext)
+					itemIds.append(",");
 			}
-			Integer goodsFlag=goodsService.selectGoodsByItem(entity.getId(), entity.getCityId(), entity.getBrandId(), itemList);
+			Integer goodsFlag=goodsService.selectGoodsByItem(entity.getId(), entity.getCityId(), entity.getBrandId(), itemIds.toString());
 			if (goodsFlag != null && goodsFlag > 0) {
 				writer.print("<script>alert('当前城市已存在相同品牌、规格的商品,请勿重复添加!');window.location.href='goods_list.action';</script>");
 				return;

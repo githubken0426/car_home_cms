@@ -71,5 +71,5 @@ public interface GoodsMapper {
 	 * @date 2018年4月3日 下午8:17:06
 	 */
 	Integer selectGoodsByItem(@Param("goodsId") String goodsId, @Param("cityId") String cityId,
-			@Param("brandId") String brandId, @Param("itemList") List<String> itemList);
+			@Param("brandId") String brandId, @Param("itemIds") String itemIds);
 }
