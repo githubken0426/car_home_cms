@@ -22,9 +22,13 @@ import com.gtercn.carhome.cms.entity.City;
 import com.gtercn.carhome.cms.entity.DealerUser;
 import com.gtercn.carhome.cms.entity.shopping.Advertisement;
 import com.gtercn.carhome.cms.entity.shopping.Goods;
+import com.gtercn.carhome.cms.entity.shopping.GoodsBrand;
+import com.gtercn.carhome.cms.entity.shopping.GoodsCategory;
 import com.gtercn.carhome.cms.service.city.CityService;
 import com.gtercn.carhome.cms.service.shopping.advertisement.AdvertisementService;
+import com.gtercn.carhome.cms.service.shopping.brand.GoodsBrandService;
 import com.gtercn.carhome.cms.service.shopping.goods.GoodsService;
+import com.gtercn.carhome.cms.service.shopping.goodscategory.GoodsCategoryService;
 import com.gtercn.carhome.cms.util.CommonUtil;
 import com.gtercn.carhome.cms.util.UploadFtpFileTools;
 import com.opensymphony.xwork2.Action;
@@ -40,9 +44,13 @@ public class AdvertisementAction extends ActionSupport {
 	@Autowired
 	private AdvertisementService advertisementService;
 	@Autowired
+	private GoodsBrandService goodsBrandService;
+	@Autowired
 	private GoodsService goodsService;
 	@Autowired
 	private CityService cityService;
+	@Autowired
+	private GoodsCategoryService categoryService;
 	
 	private Advertisement entity;
 	public Advertisement getEntity() {
@@ -123,10 +131,15 @@ public class AdvertisementAction extends ActionSupport {
 			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
 			if(null!=user) 
 				cityCode = user.getCityCode();
-			List<Goods> goodsList=goodsService.queryGoodsByCity(cityCode);
-			context.put("goodsList", goodsList);
-			List<City> cityList=cityService.getAllInfo();
+			
+			List<City> cityList = cityService.getAllInfo();
 			context.put("cityList", cityList);
+			List<GoodsCategory> categoryList = categoryService.selectAllCategory();
+			context.put("categoryList", categoryList);
+			City city = cityService.getDataByCityCode(cityCode);
+			String cityId = null != city ? city.getId() : "";
+			List<Goods> goodsList = goodsService.selectGoodsByCity(cityId, "");
+			context.put("goodsList", goodsList);
 			
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
@@ -140,6 +153,7 @@ public class AdvertisementAction extends ActionSupport {
 			String endTime = request.getParameter("endTime");
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);
+			context.put("cityCode", cityCode);
 			context.put("beginTime", beginTime);
 			context.put("endTime", endTime);
 		} catch (Exception e) {
@@ -202,14 +216,6 @@ public class AdvertisementAction extends ActionSupport {
 		ActionContext context = ActionContext.getContext();
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
-			Map<String, Object> session = context.getSession();
-			DealerUser user = (DealerUser) session.get("dealer_user");
-			String cityCode =ApplicationConfig.DEFAULT_CITY_CODE;
-			if(null!=user) 
-				cityCode = user.getCityCode();
-			List<Goods> goodsList=goodsService.queryGoodsByCity(cityCode);
-			context.put("goodsList", goodsList);
-			
 			int currentIndex = 0;// 当前页
 			String index = request.getParameter("backPageNo");// 返回，记录列表页数据
 			if (index != null && index != "") {
@@ -222,9 +228,18 @@ public class AdvertisementAction extends ActionSupport {
 			String endTime = request.getParameter("endTime");
 			String id = request.getParameter("id");
 			entity=advertisementService.selectByPrimaryKey(id);
-			List<City> cityList=cityService.getAllInfo();
 			
+			List<City> cityList=cityService.getAllInfo();
 			context.put("cityList", cityList);
+			List<Goods> goodsList=goodsService.selectGoodsByCity(entity.getCityId(),"");
+			context.put("goodsList", goodsList);
+			
+			List<GoodsCategory> categoryList = categoryService.selectAllCategory();
+			context.put("categoryList", categoryList);
+			
+			List<GoodsBrand> brandList=goodsBrandService.queryDataByCategory(entity.getCategoryId());
+			context.put("brandList", brandList);
+			
 			context.put("entity", entity);
 			context.put("currentIndex", currentIndex);
 			context.put("title", title);

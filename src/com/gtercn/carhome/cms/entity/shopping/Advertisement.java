@@ -13,8 +13,26 @@ public class Advertisement {
     private Date updateTime;
     private String goodsTitle;
     private String cityName;
+    private String categoryId;
+    private String brandId;
     
-    public String getCityName() {
+    public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	
+	public String getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
+	}
+
+	public String getCityName() {
 		return cityName;
 	}
 

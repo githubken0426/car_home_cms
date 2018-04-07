@@ -33,6 +33,8 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import net.sf.json.JSONArray;
+
 /**
  * 商品
  * @author ken 2017-2-23 下午03:39:05
@@ -402,5 +404,31 @@ public class GoodsAction extends ActionSupport {
 			e.printStackTrace();
 			writer.print("<script>alert('商品下架失败!');window.location.href='goods_list.action';</script>");
 		}
+	}
+	/**
+	 * 按照分类、品牌、城市查询商品
+	 * @return
+	 */
+	public String selectGoodsByCity(){
+		ServletResponse response = ServletActionContext.getResponse();
+		ServletRequest request = ServletActionContext.getRequest();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter writer = null;
+		try {
+			writer = response.getWriter();
+			String brandId = request.getParameter("brandId");
+			String cityId = request.getParameter("cityId");
+			List<Goods> goodsList= goodsService.selectGoodsByCity(cityId,brandId);
+			JSONArray array=JSONArray.fromObject(goodsList);
+			writer.print(array);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Action.ERROR;
+		} finally {
+			writer.flush();
+			writer.close();
+		}
+		return null;
 	}
 }

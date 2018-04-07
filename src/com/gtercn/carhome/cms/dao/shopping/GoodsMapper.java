@@ -28,7 +28,14 @@ public interface GoodsMapper {
 	 */
 	List<Goods> queryAllData(Map<String, Object> map);
 	
-	List<Goods> queryGoodsByCity(@Param("cityCode")String cityCode);
+	/**
+	 * 根据城市、品牌查询
+	 * @param cityid
+	 * @param categoryId
+	 * @param brandId
+	 * @return
+	 */
+	List<Goods> selectGoodsByCity(@Param("cityId")String cityid,@Param("brandId")String brandId);
 	/**
 	 * 查询所有数据条数
 	 * @param map

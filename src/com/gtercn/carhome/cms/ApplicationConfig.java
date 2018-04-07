@@ -38,7 +38,7 @@ public final class ApplicationConfig {
 	/**
 	 * 默认城市编码(阜新)
 	 */
-	public static final String DEFAULT_CITY_CODE = "2102";
+	public static final String DEFAULT_CITY_CODE = "59";
 	// ftp存储根路径
 	public final static String FTP_ROOTPATH = "carhome";
 	// ftp app版本路径

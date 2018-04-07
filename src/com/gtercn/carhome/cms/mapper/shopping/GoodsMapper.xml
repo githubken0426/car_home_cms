@@ -59,10 +59,15 @@
 		</where>
 	</select>
 	
-	<select id="queryGoodsByCity" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String">
-		select G.* from inn_goods G 
-		where city_id=(select id from tb_city where city_code=#{cityCode})
-		and status!=1
+	<select id="selectGoodsByCity" resultType="com.gtercn.carhome.cms.entity.shopping.Goods" parameterType="java.lang.String">
+		select id, brand_id, sku_code,goods_title from inn_goods 
+		<where>
+			status!=1
+			and city_id=#{cityId}
+			<if test="brandId!=null and brandId!='' and brandId!='-1'">
+				and brand_id=#{brandId}
+			</if>
+		</where>
 	</select>
 	
   <!-- 主键查询 -->

@@ -54,8 +54,13 @@ public interface GoodsService {
 	 * @date 2018年2月6日 下午1:52:42
 	 */
 	int deleteBatch(String []ids);
-	
-	List<Goods> queryGoodsByCity(String cityCode);
+	/**
+	 * 根据城市、分类、品牌查询商品
+	 * @param cityid
+	 * @param brandId
+	 * @return
+	 */
+	List<Goods> selectGoodsByCity(String cityid,String brandId);
 	
 	Integer selectGoodsByItem(String goodsId, String cityId,
 			String brandId, String itemIds);

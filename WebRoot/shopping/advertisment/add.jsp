@@ -22,6 +22,63 @@ response.flushBuffer();
     <script type="text/javascript" src="<%=path%>/js/cms/view_image/view_image.js"></script>
     <script type="text/javascript" src="<%=path%>/js/layer/layer.js"></script>
 <script type="text/javascript">
+function getBrandByCtegory(ele) {
+	$("#brandId").empty();
+	var optA="<option value='-1'>请选择品牌</option>";
+	 $("#brandId").append(optA);
+	if (ele.value!=-1) {
+		$.ajax({
+			type : "POST",
+			dataType : "json",
+			data : {
+				categoryId : ele.value
+			},
+			async : true,
+			url : "${pageContext.request.contextPath}/brand_getBrandByCtegory.action",			
+			success : function(data) {
+				 var json = eval(data); //数组       
+	             $.each(json, function (index, item) {
+	                 //循环获取数据  
+	                 var name = json[index].cnName;
+	                 var id = json[index].id;
+	                 var opt="<option value="+id+">"+name+"</option>";
+	                 $("#brandId").append(opt);
+	             });
+			}		
+		});
+	}
+}
+
+function getGoodsByCity() {
+	$("#goodsId").empty();
+	var optA="<option value='-1'>请选择商品</option>";
+	$("#goodsId").append(optA);
+	var brandId=$("#brandId").val();
+	var cityId=$("#cityId").val();
+	if (brandId!=-1) {
+		$.ajax({
+			type : "POST",
+			dataType : "json",
+			data : {
+				brandId:brandId,
+				cityId : cityId
+			},
+			async : true,
+			url : "${pageContext.request.contextPath}/goods_selectGoodsByCity.action",			
+			success : function(data) {
+				 var json = eval(data); //数组       
+	             $.each(json, function (index, item) {
+	                 //循环获取数据  
+	                 var title = json[index].goodsTitle;
+	                 var id = json[index].id;
+	                 var opt="<option value="+id+">"+title+"</option>";
+	                 $("#goodsId").append(opt);
+	             });
+			}		
+		});
+	}
+}
+
    	//添加
 	function addSubmit(){
    		var title=$.trim($("#title").val());
@@ -53,21 +110,44 @@ response.flushBuffer();
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
 							<td colspan="3">
-								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
+								<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" 
+									style="padding:3px;height:35px;font-size:14px;margin-left:30px;width:195px;">
+									<option value="-1">请选择分类</option>
+									<c:forEach var="category" items="${categoryList}">
+										<option value="${category.id }"
+											<c:if test='${categoryId ==category.id}'>selected='selected'</c:if>>
+											${category.title}</option>
+									</c:forEach>
+								</select> - 
+								<select onclick="getGoodsByCity()" id="brandId" name="brandId" style="padding:3px;height:35px;font-size:14px;width:200px;">
+									<option value="-1">请选择品牌</option>
+									<c:forEach var="brand" items="${brandList}">
+										<option value="${brand.id }"
+											<c:if test='${brandId ==brand.id}'>selected='selected'</c:if>>
+											${brand.cnName}</option>
+									</c:forEach>
+								</select>
 							</td>
 						</tr>
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
 							<td colspan="3">
-								<select id="cityId" name="entity.cityId" style="height:25px;margin-left:30px;width:200px;">
+								<select onclick="getGoodsByCity(this)" id="cityId" name="entity.cityId" style="padding:3px;height:35px;font-size:14px;width:415px;margin-left:30px;">
 									<c:forEach var="city" items="${cityList}">
-										<option value="${city.id }" >
+										<option value="${city.id }" <c:if test='${city.cityCode eq cityCode}'>selected='selected'</c:if>>
 											${city.cityName}
 										</option>
 									</c:forEach>
 								</select>
 							</td>
 						</tr>
+						<tr>
+							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
+							<td colspan="3">
+								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
+							</td>
+						</tr>
+						
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
