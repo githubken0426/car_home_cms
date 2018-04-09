@@ -189,7 +189,7 @@ public class OrderAction extends ActionSupport {
 	
 	/**
 	 * 发货
-	 * 
+	 * (orderStatus=4已发货)
 	 * @return
 	 * @throws Exception 
 	 */
