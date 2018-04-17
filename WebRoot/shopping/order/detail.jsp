@@ -106,7 +106,7 @@ response.flushBuffer();
 							</td>
 						</tr>
 						<tr>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">收货地址：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">收货信息：</td>
 							<td>
 								<span style="margin-left:30px;">${entity.address}</span>
 							</td>

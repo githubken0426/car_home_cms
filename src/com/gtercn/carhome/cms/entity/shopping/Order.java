@@ -7,6 +7,8 @@ import java.util.List;
 public class Order {
 	private String id;
 	private String userId;
+	private String shopId;
+	private Integer flag;//0:客户，1:经销商
 	private String expertId;
 	private String orderNo;//订单号
 	/**
@@ -209,5 +211,17 @@ public class Order {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getShopId() {
+		return shopId;
+	}
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
+	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 }
