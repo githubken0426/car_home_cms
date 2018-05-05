@@ -105,12 +105,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<i class="fa fa-angle-double-right"></i>商品规格管理</a>
 						</li>
 					</c:if> 
-					<c:if test="${menu0002}">
+					<%-- <c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('expert_listData.action');">
 							<i class="fa fa-angle-double-right"></i>商城达人管理</a>
 						</li>
-					</c:if>
+					</c:if> --%>
 					<c:if test="${menu0002}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('adver_listData.action');">
@@ -123,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<i class="fa fa-angle-double-right"></i>品牌管理</a>
 						</li>
 					</c:if>
-					<c:if test="${menu0001}">
+					<%-- <c:if test="${menu0001}">
 						<li><a href="javascript:void(0);"
 							onclick="setMainContent('goods_list.action');">
 							<i class="fa fa-angle-double-right"></i>商品管理</a>
@@ -134,10 +134,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							onclick="setMainContent('order_list.action');">
 							<i class="fa fa-angle-double-right"></i>订单管理</a>
 						</li>
-					</c:if>
+					</c:if> --%>
 				</ul>
             </li>
         </ul>
     </div>
-    <!-- /.div -->
+   
 </div>
