@@ -72,7 +72,7 @@ response.flushBuffer();
 							<td>
 								<input type="text" id="cnName" name="entity.cnName" value="${entity.cnName }" tabindex="3" style="width:210px;margin-left:30px;"/>
 							</td>
-							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告图片：</td>
+							<td align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">品牌LOGO：</td>
 							<td>
 								<input onchange="viewUploadImg(this,'viewResUrlList')" type="file" id="resUrlList" name="logo" 
 									tabindex="4" maxlength="300" style="margin:0px;width:220px;margin-left:30px;"/>
