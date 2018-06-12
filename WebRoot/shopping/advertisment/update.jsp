@@ -107,7 +107,7 @@ function getGoodsByCity() {
 	            	<table class="table table-bordered" >
 						<!-- 数据修改  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
+							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告分类：</td>
 							<td colspan="3">
 								<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" 
 									style="padding:3px;height:35px;font-size:14px;margin-left:30px;width:195px;">

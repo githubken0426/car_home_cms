@@ -108,7 +108,7 @@ function getGoodsByCity() {
 	            	<table class="table table-bordered" >
 						<!-- 数据录入区  -->
 						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
+							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告分类：</td>
 							<td colspan="3">
 								<select onchange="getBrandByCtegory(this)" id="categoryId" name="categoryId" 
 									style="padding:3px;height:35px;font-size:14px;margin-left:30px;width:195px;">
@@ -130,6 +130,12 @@ function getGoodsByCity() {
 							</td>
 						</tr>
 						<tr>
+							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
+							<td colspan="3">
+								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
+							</td>
+						</tr>
+						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">城市：</td>
 							<td colspan="3">
 								<select onclick="getGoodsByCity(this)" id="cityId" name="entity.cityId" style="padding:3px;height:35px;font-size:14px;width:415px;margin-left:30px;">
@@ -141,13 +147,6 @@ function getGoodsByCity() {
 								</select>
 							</td>
 						</tr>
-						<tr>
-							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告标题：</td>
-							<td colspan="3">
-								<input type="text" id="title" name="entity.title" tabindex="1" maxlength="100" style="font-size:14px;padding:8px;width:400px;margin-left:30px;"/>
-							</td>
-						</tr>
-						
 						<tr>
 							<td width="120px" align="right" nowrap="nowrap" bgcolor="#f1f1f1" height="40px">广告链接：</td>
 							<td colspan="3">
